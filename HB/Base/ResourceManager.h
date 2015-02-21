@@ -66,7 +66,9 @@ namespace hb
 		// Get Resource with identifier id
 		const Resource& get(int id) const
 		{
-			return m_info_table.find(id)->second.data;
+			auto it = m_info_table.find(id);
+			assert(it != m_info_table.end());
+			return it->second.data;
 		}
 		// Returns wether the Resource resource with identifier id is loaded
 		bool isLoaded(int id) const

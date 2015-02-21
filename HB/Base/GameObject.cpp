@@ -64,18 +64,23 @@ void GameObject::updateAll()
 }
 
 
-GameObject::GameObject(const Vector3d& init_pos):
-Transform(init_pos),
+GameObject::GameObject():
+Transform(),
 m_marked_to_destroy(false)
 {
-	m_identifier = s_game_object_identifier++;	
+	m_identifier = s_game_object_identifier++;
 	s_game_objects_by_id.insert(std::pair<int, GameObject*>(m_identifier, this));
 }
 
 
-GameObject::GameObject():
-GameObject(Vector3d())
-{}
+GameObject::GameObject(std::initializer_list<GameObject::Component*> components):
+GameObject()
+{
+	for (Component* c : components)
+	{
+		addComponent(c);
+	}
+}
 
 
 GameObject::~GameObject()

@@ -19,6 +19,8 @@ namespace hb
 			friend class SpriteComponent;
 
 			Animation(const std::string& path = "t404", const sf::IntRect& area = sf::IntRect(), const Vector2d& frame_size = Vector2d(64, 64), const Vector2d& frame_margin = Vector2d(0, 0), int begin_frame = 0, int end_frame = 0, const Time& frame_time = Time::seconds(1));
+			Animation(const Animation& other);
+			Animation& operator=(const Animation& other);
 			~Animation();
 			void setTexture(const std::string& path, const sf::IntRect& area = sf::IntRect());
 			void setFrameTime(const Time& frame_time);
@@ -27,6 +29,8 @@ namespace hb
 			void setFrameMargin(const Vector2d& frame_margin);
 
 		private:
+			std::string m_path;
+			sf::IntRect m_area;
 			Time m_time_left;
 			Time m_frame_time;
 			Vector2d m_frame_size;

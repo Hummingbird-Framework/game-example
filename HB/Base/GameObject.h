@@ -3,6 +3,7 @@
 #include <vector>
 #include <string>
 #include <unordered_map>
+#include <initializer_list>
 #include "Transform.h"
 
 namespace hb
@@ -57,7 +58,7 @@ namespace hb
 		static void updateAll();
 
 		GameObject();
-		GameObject(const Vector3d& init_pos);
+		GameObject(std::initializer_list<Component*> components);
 		virtual ~GameObject();
 		int getIdentifier() const;
 		const std::string& getName() const;

@@ -15,5 +15,5 @@ private:
 	hb::SpriteComponent* m_sprite;
 	hb::Clock m_clock;
 	hb::Time m_life_time;
-	hb::SpriteComponent::Animation* m_animation;
+	hb::SpriteComponent::Animation m_animation;
 };

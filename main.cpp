@@ -6,9 +6,8 @@
 int main(int argc, char const *argv[])
 {
 	hb::RenderWindowManager window_manager1(new sf::RenderWindow(sf::VideoMode(1280, 720), "Game"));
-	hb::GameObject* player = new hb::GameObject;
-	player->addComponent(new Player(&window_manager1));
-
+	hb::GameObject* player = new hb::GameObject({new Player(&window_manager1)});
+	assert(player->getComponents<Player>().size() != 0);
 	hb::Clock clk;
 	hb::Time lastTime = hb::Time::microseconds(clk.getElapsedTime().asMicroseconds());
 	while(window_manager1.getWindow()->isOpen())
@@ -61,6 +60,7 @@ int main(int argc, char const *argv[])
 			}
 		}
 
+		//std::cout << player->getPosition().x << ", " << player->getPosition().y << std::endl;
 		hb::GameObject::updateAll();
 		window_manager1.draw();
 	}

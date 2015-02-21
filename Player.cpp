@@ -11,22 +11,22 @@ Player::Player(hb::RenderWindowManager* window_manager1):direction(hb::Vector2d(
 		if (code == sf::Keyboard::Key::W and direction.y >= 0)
 		{
 			direction.y = -value;
-			player_sprite->setAnimation(*animation_up);
+			player_sprite->setAnimation(animation_up);
 		}
 		else if (code == sf::Keyboard::Key::S and direction.y <= 0)
 		{
 			direction.y = value;
-			player_sprite->setAnimation(*animation_down);
+			player_sprite->setAnimation(animation_down);
 		}
 		else if (code == sf::Keyboard::Key::A and direction.x >= 0)
 		{
 			direction.x = -value;
-			player_sprite->setAnimation(*animation_left);
+			player_sprite->setAnimation(animation_left);
 		}
 		else if (code == sf::Keyboard::Key::D and direction.x <= 0)
 		{
 			direction.x = value;
-			player_sprite->setAnimation(*animation_right);
+			player_sprite->setAnimation(animation_right);
 		}
 		else if (code == sf::Keyboard::Key::Space)
 		{
@@ -56,10 +56,10 @@ Player::Player(hb::RenderWindowManager* window_manager1):direction(hb::Vector2d(
 		getGameObject()->setPosition(hb::Vector3d(e.x, e.y, getGameObject()->getPosition().z));
 	});
 
-	animation_down = new hb::SpriteComponent::Animation("res/drawable/walking-tiles.png", sf::IntRect(96, 128, 96, 128), hb::Vector2d(32, 32), hb::Vector2d(), 0, 2, hb::Time::seconds(0.3));
-	animation_left = new hb::SpriteComponent::Animation("res/drawable/walking-tiles.png", sf::IntRect(96, 128, 96, 128), hb::Vector2d(32, 32), hb::Vector2d(), 3, 5, hb::Time::seconds(0.3));
-	animation_right = new hb::SpriteComponent::Animation("res/drawable/walking-tiles.png", sf::IntRect(96, 128, 96, 128), hb::Vector2d(32, 32), hb::Vector2d(), 6, 8, hb::Time::seconds(0.3));
-	animation_up = new hb::SpriteComponent::Animation("res/drawable/walking-tiles.png", sf::IntRect(96, 128, 96, 128), hb::Vector2d(32, 32), hb::Vector2d(), 9, 11, hb::Time::seconds(0.3));
+	animation_down = hb::SpriteComponent::Animation("res/drawable/walking-tiles.png", sf::IntRect(96, 128, 96, 128), hb::Vector2d(32, 32), hb::Vector2d(), 0, 2, hb::Time::seconds(0.3));
+	animation_left = hb::SpriteComponent::Animation("res/drawable/walking-tiles.png", sf::IntRect(96, 128, 96, 128), hb::Vector2d(32, 32), hb::Vector2d(), 3, 5, hb::Time::seconds(0.3));
+	animation_right = hb::SpriteComponent::Animation("res/drawable/walking-tiles.png", sf::IntRect(96, 128, 96, 128), hb::Vector2d(32, 32), hb::Vector2d(), 6, 8, hb::Time::seconds(0.3));
+	animation_up = hb::SpriteComponent::Animation("res/drawable/walking-tiles.png", sf::IntRect(96, 128, 96, 128), hb::Vector2d(32, 32), hb::Vector2d(), 9, 11, hb::Time::seconds(0.3));
 
 	this->window_manager1 = window_manager1;
 }
@@ -69,11 +69,6 @@ Player::~Player()
 	hb::InputManager::instance()->ignore(keypressed_listener_id);
 	hb::InputManager::instance()->ignore(keyreleased_listener_id);
 	hb::InputManager::instance()->ignore(mousebuttonworld_listener_id);
-
-	delete animation_up;
-	delete animation_down;
-	delete animation_left;
-	delete animation_right;
 }
 
 hb::Vector2d direction;
@@ -83,7 +78,7 @@ bool running;
 void Player::init()
 {
 	getGameObject()->setPosition(hb::Vector3d(100, 100, 0));
-	getGameObject()->addComponent(new hb::SpriteComponent(window_manager1, *animation_down));
+	getGameObject()->addComponent(new hb::SpriteComponent(window_manager1, animation_down));
 
 	player_sprite = getGameObject()->getComponents<hb::SpriteComponent>()[0];
 	player_sprite->stop();
@@ -103,7 +98,6 @@ void Player::update()
 
 void Player::shoot()
 {
-	hb::GameObject* bullet = new hb::GameObject();
+	hb::GameObject* bullet = new hb::GameObject({new Bullet(window_manager1, direction)});
 	bullet->setPosition(getGameObject()->getPosition());
-	bullet->addComponent(new Bullet(window_manager1, direction));
 }

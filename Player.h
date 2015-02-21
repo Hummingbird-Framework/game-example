@@ -25,10 +25,10 @@ private:
 	hb::InputManager::ListenerId<hb::KeyReleased> keyreleased_listener_id;
 	hb::InputManager::ListenerId<hb::MouseButtonWorld> mousebuttonworld_listener_id;
 
-	hb::SpriteComponent::Animation* animation_up;
-	hb::SpriteComponent::Animation* animation_down;
-	hb::SpriteComponent::Animation* animation_left;
-	hb::SpriteComponent::Animation* animation_right;
+	hb::SpriteComponent::Animation animation_up;
+	hb::SpriteComponent::Animation animation_down;
+	hb::SpriteComponent::Animation animation_left;
+	hb::SpriteComponent::Animation animation_right;
 
 	hb::SpriteComponent* player_sprite;
 
