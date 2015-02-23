@@ -13,6 +13,7 @@ namespace hb
 		int loadFromFile(const std::string& path);
 
 	private:
+		SoundManager();
 		static SoundManager* s_instance;
 	};
 }

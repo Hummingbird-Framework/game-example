@@ -23,7 +23,7 @@ $(EXE): $(OBJ)
 	$(CC) -o $@ $(OBJ) $(STATIC_LIBS) $(CFLAGS)
 
 %.o: %.cpp
-	$(CC) -c -o $@ $< $(STATIC_LIBS) $(CFLAGS)
+	$(CC) -c -o $@ $< $(CFLAGS)
 
 $(BASE):
 	@$(MAKE) -C $@;

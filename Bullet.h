@@ -13,6 +13,7 @@ public:
 private:
 	hb::Vector2d m_direction;
 	hb::SpriteComponent* m_sprite;
+	hb::SoundComponent* m_sound;
 	hb::Clock m_clock;
 	hb::Time m_life_time;
 	hb::SpriteComponent::Animation m_animation;

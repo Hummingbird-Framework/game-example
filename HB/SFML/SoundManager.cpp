@@ -3,6 +3,12 @@ using namespace hb;
 
 SoundManager* SoundManager::s_instance = NULL;
 
+
+SoundManager::SoundManager():
+ResourceManager<sf::SoundBuffer, std::string>()
+{}
+
+
 SoundManager* SoundManager::instance()
 {
 	if (s_instance == NULL)

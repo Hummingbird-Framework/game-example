@@ -1,3 +1,4 @@
+#include <iostream>
 #include "SoundComponent.h"
 using namespace hb;
 
@@ -13,12 +14,16 @@ m_sound_id(-1)
 SoundComponent::~SoundComponent()
 {
 	SoundManager::instance()->release(m_sound_id);
+	std::cout << "releasing resource. " << SoundManager::instance()->countResourceUsage(m_sound_id) << " left" << std::endl;
 }
 
 
 void SoundComponent::setSound(const std::string& sound_path)
 {
-	int m_sound_id = SoundManager::instance()->loadFromFile(sound_path);
+	if (m_sound_id != -1)
+		SoundManager::instance()->release(m_sound_id);
+	m_sound_id = SoundManager::instance()->loadFromFile(sound_path);
+	std::cout << "loading resource. " << SoundManager::instance()->countResourceUsage(m_sound_id) << " left" << std::endl;
 	m_sound.setBuffer(SoundManager::instance()->get(m_sound_id));
 }
 

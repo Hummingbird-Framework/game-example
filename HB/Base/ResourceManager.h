@@ -83,7 +83,11 @@ namespace hb
 		// Returns number of active requests for resource id
 		int countResourceUsage(int id) const
 		{
-			return m_info_table.find(id)->second.count;
+			int count = 0;
+			auto it = m_info_table.find(id);
+			if (it != m_info_table.end())
+				count = it->second.count;
+			return count;
 		}
 		// Returns total number of resources loaded
 		int size() const

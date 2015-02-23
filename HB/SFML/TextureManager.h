@@ -17,7 +17,6 @@ namespace hb
 	class TextureManager : public ResourceManager<sf::Texture, detail::tex_id>
 	{
 	public:
-		TextureManager();
 		static TextureManager* instance();
 		/* Load a Texture resource from file and return its id.
 		   Returns -1 if error while loading texture. */
@@ -27,6 +26,7 @@ namespace hb
 		int getT404() const;
 
 	private:
+		TextureManager();
 		static detail::tex_id makeTexId(const std::string& path, const sf::IntRect& area);
 		static TextureManager* s_instance;
 		int t404;
