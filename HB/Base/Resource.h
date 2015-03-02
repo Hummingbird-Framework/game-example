@@ -1,7 +1,6 @@
 #ifndef HB_RESOURCE_H
 #define HB_RESOURCE_H
 
-// TODO: Terminar Resource y ResourceManager
 
 namespace hb
 {
