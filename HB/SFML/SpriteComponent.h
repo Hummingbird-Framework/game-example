@@ -13,7 +13,7 @@ namespace hb
 	class SpriteComponent : public GameObject::Component, public Transform
 	{
 	public:
-		class Animation
+		class Animation // TODO: Change hb::SpriteComponent::Animation to hb::Sprite
 		{
 		public:
 			friend class SpriteComponent;
