@@ -9,6 +9,13 @@ namespace hb
 	class ResourceManager
 	{
 	public:
+
+		static ResourceManager<Resource, ResourceId, Hash>* instance()
+		{
+			if (s_instance == nullptr)
+				s_instance = new ResourceManager<Resource, ResourceId, Hash>();
+			return s_instance;
+		}
 		// Constructor
 		ResourceManager()
 		{
@@ -70,6 +77,13 @@ namespace hb
 			assert(it != m_info_table.end());
 			return it->second.data;
 		}
+		// Get ResourceId of resource with identifier id 
+		const ResourceId& getId(int id) const
+		{
+			auto it = m_info_table.find(id);
+			assert(it != m_info_table.end());
+			return it->second.it->first;
+		}
 		// Returns wether the Resource resource with identifier id is loaded
 		bool isLoaded(int id) const
 		{
@@ -103,6 +117,7 @@ namespace hb
 		}
 
 	private:
+		static ResourceManager<Resource, ResourceId, Hash>* s_instance = nullptr;
 		struct ResourceInfo
 		{
 			int id, count;
