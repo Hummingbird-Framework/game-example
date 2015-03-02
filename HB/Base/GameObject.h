@@ -69,6 +69,16 @@ namespace hb
 		void destroy();
 		void addComponent(Component* component);
 		template <typename ComponentType>
+		ComponentType* getComponent() const
+		{
+			for (Component* component : m_components)
+			{
+				if (dynamic_cast<ComponentType*>(component))
+					return dynamic_cast<ComponentType*>(component);
+			}
+			return nullptr;
+		}
+		template <typename ComponentType>
 		std::vector<ComponentType*> getComponents() const
 		{
 			std::vector<ComponentType*> v;

@@ -31,8 +31,7 @@ void SpriteComponent::setAnimation(const Animation& animation)
 {
 	m_animation = animation;
 	m_current_frame = animation.m_current_frame;
-	m_sprite.setTexture(TextureManager::instance()->get(m_animation.m_texture_id));
-	//m_sprite.setOrigin(m_animation.m_frame_size.x / 2.0 + 0.5, m_animation.m_frame_size.y / 2.0 + 0.5);
+	m_sprite.setTexture(m_animation.m_texture.get());
 }
 
 RenderWindowManager* SpriteComponent::getRenderWindowManager()

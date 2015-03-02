@@ -51,7 +51,6 @@ void CollisionComponent::postUpdate()
 {
 	if (s_collisions_executed)
 		s_collisions_executed = false;
-	Vector3d p = getGameObject()->getPosition();
 	while(!m_collisions.empty())
 		m_collisions.pop();
 }

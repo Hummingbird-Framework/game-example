@@ -1,6 +1,8 @@
 #ifndef HUMMINGBIRD_BASE
 #define HUMMINGBIRD_BASE
+#include "Base/Color.h"
 #include "Base/ResourceManager.h"
+#include "Base/Resource.h"
 #include "Base/EventManager.h"
 #include "Base/Vector2d.h"
 #include "Base/Vector3d.h"

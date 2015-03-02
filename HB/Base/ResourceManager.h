@@ -5,15 +5,15 @@
 
 namespace hb
 {
-	template <typename Resource, typename ResourceId, typename Hash = std::hash<ResourceId>>
+	template <typename ManagerType, typename Resource, typename ResourceId, typename Hash = std::hash<ResourceId>>
 	class ResourceManager
 	{
 	public:
 
-		static ResourceManager<Resource, ResourceId, Hash>* instance()
+		static ManagerType* instance()
 		{
 			if (s_instance == nullptr)
-				s_instance = new ResourceManager<Resource, ResourceId, Hash>();
+				s_instance = new ManagerType();
 			return s_instance;
 		}
 		// Constructor
@@ -77,6 +77,13 @@ namespace hb
 			assert(it != m_info_table.end());
 			return it->second.data;
 		}
+		// Get Resource with identifier id
+		Resource& get(int id)
+		{
+			auto it = m_info_table.find(id);
+			assert(it != m_info_table.end());
+			return it->second.data;
+		}
 		// Get ResourceId of resource with identifier id 
 		const ResourceId& getId(int id) const
 		{
@@ -103,10 +110,15 @@ namespace hb
 				count = it->second.count;
 			return count;
 		}
-		// Returns total number of resources loaded
+		// Returns number of resources currently loaded
 		int size() const
 		{
 			return m_id_table.size();
+		}
+		// Returns number of all resources ever loaded
+		int resourceCount() const
+		{
+			return m_resource_count;
 		}
 		// Release all resources
 		void clear()
@@ -117,7 +129,7 @@ namespace hb
 		}
 
 	private:
-		static ResourceManager<Resource, ResourceId, Hash>* s_instance = nullptr;
+		static ManagerType* s_instance;
 		struct ResourceInfo
 		{
 			int id, count;
@@ -130,4 +142,6 @@ namespace hb
 		std::unordered_map<int, ResourceInfo> m_info_table;
 	};
 }
+template <typename ManagerType, typename Resource, typename ResourceId, typename Hash>
+ManagerType* hb::ResourceManager<ManagerType, Resource, ResourceId, Hash>::s_instance = nullptr;
 #endif

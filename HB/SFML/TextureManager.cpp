@@ -2,11 +2,9 @@
 #include <iostream>
 using namespace hb;
 
-TextureManager* TextureManager::s_instance = NULL;
-
 
 TextureManager::TextureManager():
-ResourceManager<sf::Texture, detail::tex_id>()
+ResourceManager<TextureManager, sf::Texture, detail::tex_id>()
 {
 	sf::Image i404;
 	sf::Color c1 (41, 128, 185);
@@ -31,28 +29,6 @@ ResourceManager<sf::Texture, detail::tex_id>()
 }
 
 
-TextureManager* TextureManager::instance()
-{
-	if (s_instance == NULL)
-		s_instance = new TextureManager();
-
-	return s_instance;
-}
-
-
-/* Load a Texture resource from file and return its id.
-   Returns -1 if error while loading texture. */
-int TextureManager::loadFromFile(const std::string& path, const sf::IntRect& area)
-{
-	sf::Texture tex;
-	if (!isLoaded(path, area))
-		if (!tex.loadFromFile(path, area))
-			return t404;
-
-	return this->addResource(makeTexId(path, area), tex);
-}
-
-
 void TextureManager::release(int id)
 {
 	if (id == t404) return;
@@ -62,7 +38,7 @@ void TextureManager::release(int id)
 
 bool TextureManager::isLoaded(const std::string& path, const sf::IntRect& area) const
 {
-	return ResourceManager<sf::Texture, detail::tex_id>::isLoaded(makeTexId(path, area));
+	return ResourceManager<TextureManager, sf::Texture, detail::tex_id>::isLoaded(makeTexId(path, area));
 }
 
 

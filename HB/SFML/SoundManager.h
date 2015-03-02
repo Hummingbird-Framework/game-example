@@ -6,15 +6,11 @@
 
 namespace hb
 {
-	class SoundManager : public ResourceManager<sf::SoundBuffer, std::string>
+	class SoundManager : public ResourceManager<SoundManager, sf::SoundBuffer, std::string>
 	{
 	public:
-		static SoundManager* instance();
-		int loadFromFile(const std::string& path);
-
-	private:
 		SoundManager();
-		static SoundManager* s_instance;
+		int loadFromFile(const std::string& path);
 	};
 }
 #endif

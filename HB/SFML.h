@@ -2,6 +2,7 @@
 #define HUMMINGBIRD_SFML
 #include "SFML/Rect.h"
 #include "SFML/TextureManager.h"
+#include "SFML/Texture.h"
 #include "SFML/SoundManager.h"
 #include "SFML/SoundComponent.h"
 #include "SFML/CollisionComponent.h"

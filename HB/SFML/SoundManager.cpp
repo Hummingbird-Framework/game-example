@@ -1,21 +1,11 @@
 #include "SoundManager.h"
 using namespace hb;
 
-SoundManager* SoundManager::s_instance = NULL;
-
 
 SoundManager::SoundManager():
-ResourceManager<sf::SoundBuffer, std::string>()
+ResourceManager<SoundManager, sf::SoundBuffer, std::string>()
 {}
 
-
-SoundManager* SoundManager::instance()
-{
-	if (s_instance == NULL)
-		s_instance = new SoundManager();
-
-	return s_instance;
-}
 
 int SoundManager::loadFromFile(const std::string& path)
 {
