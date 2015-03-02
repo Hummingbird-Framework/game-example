@@ -1,5 +1,6 @@
 #include "HB/Base.h"
 #include "HB/SFML.h"
+#include "Wall.h"
 
 class Bullet : public hb::GameObject::Component
 {
@@ -13,6 +14,7 @@ public:
 private:
 	hb::Vector2d m_direction;
 	hb::SpriteComponent* m_sprite;
+	hb::CollisionComponent* m_collision;
 	hb::SoundComponent* m_sound;
 	hb::Clock m_clock;
 	hb::Time m_life_time;

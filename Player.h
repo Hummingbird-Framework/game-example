@@ -21,6 +21,8 @@ public:
 	void shoot();
 
 private:
+	hb::Vector2d last_direction;
+
 	hb::InputManager::ListenerId<hb::KeyPressed> keypressed_listener_id;
 	hb::InputManager::ListenerId<hb::KeyReleased> keyreleased_listener_id;
 	hb::InputManager::ListenerId<hb::MouseButtonWorld> mousebuttonworld_listener_id;
@@ -31,6 +33,9 @@ private:
 	hb::SpriteComponent::Animation animation_right;
 
 	hb::SpriteComponent* player_sprite;
+	hb::CollisionComponent* m_collision;
+
+	hb::Vector3d last_position;
 
 	hb::RenderWindowManager* window_manager1;
 };
