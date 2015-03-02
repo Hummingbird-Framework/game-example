@@ -32,7 +32,7 @@ void SpriteComponent::setAnimation(const Animation& animation)
 	m_animation = animation;
 	m_current_frame = animation.m_current_frame;
 	m_sprite.setTexture(TextureManager::instance()->get(m_animation.m_texture_id));
-	m_sprite.setOrigin(m_animation.m_frame_size.x / 2.0 + 0.5, m_animation.m_frame_size.y / 2.0 + 0.5);
+	//m_sprite.setOrigin(m_animation.m_frame_size.x / 2.0 + 0.5, m_animation.m_frame_size.y / 2.0 + 0.5);
 }
 
 RenderWindowManager* SpriteComponent::getRenderWindowManager()
@@ -137,4 +137,10 @@ Vector2d SpriteComponent::getCoords()
 	int x_coord = (m_current_frame % nx) * (m_animation.m_frame_size.x + m_animation.m_frame_margin.x) + m_animation.m_frame_margin.x;
 	int y_coord = (m_current_frame / nx) * (m_animation.m_frame_size.y + m_animation.m_frame_margin.y) + m_animation.m_frame_margin.y;
 	return Vector2d(x_coord, y_coord);
+}
+
+
+Vector2d SpriteComponent::getSize() const
+{
+	return m_animation.m_frame_size;
 }

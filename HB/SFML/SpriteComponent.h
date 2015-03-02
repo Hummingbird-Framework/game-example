@@ -45,6 +45,7 @@ namespace hb
 		const RenderWindowManager* getRenderWindowManager() const;
 		void setAnimation(const Animation& animation);
 		const Animation& getAnimation() const;
+		Vector2d getSize() const;
 		bool isVisible() const;
 		void setVisible(bool visible);
 		bool isLooping() const;
