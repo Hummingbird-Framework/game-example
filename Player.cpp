@@ -93,9 +93,16 @@ void Player::init()
 	getGameObject()->setPosition(hb::Vector3d(100, 100, 0));
 	last_position = getGameObject()->getPosition();
 	getGameObject()->addComponent(new hb::SpriteComponent(window_manager1, sprite_down));
+	hb::Texture rec = hb::Texture::makeTexture(hb::Vector2d(32, 32));
+	rec.fill(hb::Rect(0,0,31,31), hb::Color(0,0,0,0));
+	rec.stroke(hb::Vector2d(0,0), hb::Vector2d(31,0), hb::Color(0, 255, 0));
+	rec.stroke(hb::Vector2d(0,0), hb::Vector2d(0,31), hb::Color(0, 255, 0));
+	rec.stroke(hb::Vector2d(0,31), hb::Vector2d(31,31), hb::Color(0, 255, 0));
+	rec.stroke(hb::Vector2d(31,0), hb::Vector2d(31,31), hb::Color(0, 255, 0));
+	getGameObject()->addComponent(new hb::SpriteComponent(window_manager1, hb::Sprite(rec, hb::Vector2d(32, 32))));
 	getGameObject()->addComponent(m_collision);
 
-	player_sprite = getGameObject()->getComponents<hb::SpriteComponent>()[0];
+	player_sprite = getGameObject()->getComponent<hb::SpriteComponent>();
 	player_sprite->stop();
 }
 

@@ -64,11 +64,14 @@ void Texture::stroke(const Vector2d& start, const Vector2d& end, const Color& co
 	sf::Image img = get().copyToImage();
 	sf::Color c (color.r*255, color.g*255, color.b*255, color.a*255);
 
-	double delta = (end.y - start.y)/(end.x - start.x);
+	Vector2d delta = end - start;
+	int steps = delta.module() + 0.5;
 
-	for (int i = start.x; i < end.x; ++i)
+	delta = delta.normalized();
+
+	for (int i = 0; i <= steps; ++i)
 	{
-		img.setPixel(i, start.y + delta * (i - start.x), c);
+		img.setPixel(start.x + (i * delta).x, start.y + (i * delta).y, c);
 	}
 
 	get().update(img);
