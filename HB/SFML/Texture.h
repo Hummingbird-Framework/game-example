@@ -17,8 +17,7 @@ namespace hb
 		static Texture loadFromFile(const std::string& path, const Rect& area = Rect());
 		static Texture makeTexture(const Vector2d& size);
 		void fill(const Rect& area, const Color& color);
-		void stroke(const Rect& area, const Color& color);
-		void line(const Vector2d& start, const Vector2d& end, const Color& color);
+		void stroke(const Vector2d& start, const Vector2d& end, const Color& color);
 		Vector2d size() const;
 		void smooth(bool smooth);
 		void repeat(bool repeat);

@@ -2,7 +2,7 @@
 using namespace hb;
 
 
-SpriteComponent::SpriteComponent(RenderWindowManager* render_manager, const Animation& animation):
+SpriteComponent::SpriteComponent(RenderWindowManager* render_manager, const Sprite& sprite):
 GameObject::Component(),
 m_time_left(Time::seconds(0)),
 m_current_frame(0),
@@ -12,7 +12,7 @@ m_looping(true),
 m_sprite(sf::Sprite()),
 m_render_manager(render_manager)
 {
-	setAnimation(animation);
+	setSprite(sprite);
 }
 
 
@@ -27,11 +27,13 @@ void SpriteComponent::setRenderWindowManager(RenderWindowManager* render_manager
 	m_render_manager = render_manager;
 }
 
-void SpriteComponent::setAnimation(const Animation& animation)
+void SpriteComponent::setSprite(const Sprite& sprite)
 {
-	m_animation = animation;
-	m_current_frame = animation.m_current_frame;
+	m_animation = sprite;
+	m_current_frame = sprite.m_current_frame;
 	m_sprite.setTexture(m_animation.m_texture.get());
+	if (m_animation.m_frame_time.asMiliseconds() == 0)
+		stop();
 }
 
 RenderWindowManager* SpriteComponent::getRenderWindowManager()

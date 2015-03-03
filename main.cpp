@@ -8,7 +8,7 @@ int main(int argc, char const *argv[])
 {
 	hb::RenderWindowManager window_manager1(new sf::RenderWindow(sf::VideoMode(1280, 720), "Game"));
 	hb::GameObject* player = new hb::GameObject({new Player(&window_manager1)});
-	hb::GameObject* wall = new hb::GameObject({new Wall(&window_manager1, hb::Vector2d(10, 100))});
+	hb::GameObject* wall = new hb::GameObject({new Wall(&window_manager1, hb::Vector2d(100, 100))});
 	wall->setPosition(hb::Vector2d(0, 0));
 	assert(player->getComponents<Player>().size() != 0);
 	hb::Clock clk;

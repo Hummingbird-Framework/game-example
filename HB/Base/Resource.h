@@ -30,6 +30,10 @@ namespace hb
 		{
 			return ResourceManager::instance()->get(m_id);
 		}
+		ResourceType& get()
+		{
+			return ResourceManager::instance()->get(m_id);
+		}
 		const ResourceId& id() const
 		{
 			return ResourceManager::instance()->getId(m_id);

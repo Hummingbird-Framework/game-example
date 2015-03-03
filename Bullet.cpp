@@ -2,7 +2,8 @@
 Bullet::Bullet(hb::RenderWindowManager* window_manager, const hb::Vector2d& direction)
 {
 	m_direction = direction.normalized();
-	m_animation = hb::SpriteComponent::Animation("res/drawable/fireballs.png", sf::IntRect(), hb::Vector2d(16, 16), hb::Vector2d(0, 0), 4, 7, hb::Time::seconds(0.1));
+	hb::Texture tex = hb::Texture::loadFromFile("res/drawable/fireballs.png", hb::Rect());
+	m_animation = hb::Sprite(tex, hb::Vector2d(16, 16), hb::Vector2d(0, 0), 4, 7, hb::Time::seconds(0.1));
 	m_sprite = new hb::SpriteComponent(window_manager, m_animation);
 	m_collision = new hb::CollisionComponent(hb::Vector2d(16, 16));
 	m_clock.reset();

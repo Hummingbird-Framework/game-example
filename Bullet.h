@@ -18,5 +18,5 @@ private:
 	hb::SoundComponent* m_sound;
 	hb::Clock m_clock;
 	hb::Time m_life_time;
-	hb::SpriteComponent::Animation m_animation;
+	hb::Sprite m_animation;
 };

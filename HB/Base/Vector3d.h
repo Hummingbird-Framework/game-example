@@ -44,4 +44,5 @@ hb::Vector3d& operator *=(hb::Vector3d& left, double right);
 hb::Vector3d operator /(const hb::Vector3d& left, double right);
 hb::Vector3d& operator /=(hb::Vector3d& left, double right);
 bool operator ==(const hb::Vector3d& left, const hb::Vector3d& right);
+bool operator !=(const hb::Vector3d& left, const hb::Vector3d& right);
 #endif

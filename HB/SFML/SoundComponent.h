@@ -6,7 +6,7 @@
 #include "../Base/Transform.h"
 #include "SoundManager.h"
 
-// TODO: Make SoundComponent equivalent of SpriteComponent::Animation
+// TODO: Make SoundComponent equivalent of SpriteComponent (Sprite)
 
 namespace hb
 {

@@ -89,3 +89,9 @@ bool operator ==(const Vector3d& left, const Vector3d& right)
 {
 	return (left.x == right.x and left.y == right.y and left.z == right.z);
 }
+
+
+bool operator !=(const Vector3d& left, const Vector3d& right)
+{
+	return not (left.x == right.x and left.y == right.y and left.z == right.z);
+}

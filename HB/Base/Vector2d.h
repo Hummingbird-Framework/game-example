@@ -41,4 +41,5 @@ hb::Vector2d& operator *=(hb::Vector2d& left, double right);
 hb::Vector2d operator /(const hb::Vector2d& left, double right);
 hb::Vector2d& operator /=(hb::Vector2d& left, double right);
 bool operator ==(const hb::Vector2d& left, const hb::Vector2d& right);
+bool operator !=(const hb::Vector2d& left, const hb::Vector2d& right);
 #endif

@@ -49,19 +49,29 @@ Texture Texture::makeTexture(const Vector2d& size)
 
 void Texture::fill(const Rect& area, const Color& color)
 {
-	// TODO: void Texture::fill(const Rect& area, const Color& color)
+	sf::Image img = get().copyToImage();
+	sf::Color c (color.r*255, color.g*255, color.b*255, color.a*255);
+	for (int i = 0; i < area.width; ++i)
+		for (int j = 0; j < area.height; ++j)
+			img.setPixel(area.left + i, area.top + j, c);
+
+	get().update(img);
 }
 
 
-void Texture::stroke(const Rect& area, const Color& color)
+void Texture::stroke(const Vector2d& start, const Vector2d& end, const Color& color)
 {
-	// TODO: void Texture::stroke(const Rect& area, const Color& color)
-}
+	sf::Image img = get().copyToImage();
+	sf::Color c (color.r*255, color.g*255, color.b*255, color.a*255);
 
+	double delta = (end.y - start.y)/(end.x - start.x);
 
-void Texture::line(const Vector2d& start, const Vector2d& end, const Color& color)
-{
-	// TODO: void Texture::line(const Vector2d& start, const Vector2d& end, const Color& color)
+	for (int i = start.x; i < end.x; ++i)
+	{
+		img.setPixel(i, start.y + delta * (i - start.x), c);
+	}
+
+	get().update(img);
 }
 
 

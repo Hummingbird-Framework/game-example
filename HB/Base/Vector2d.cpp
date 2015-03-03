@@ -82,3 +82,8 @@ bool operator ==(const Vector2d& left, const Vector2d& right)
 {
 	return (left.x == right.x and left.y == right.y);
 }
+
+bool operator !=(const Vector2d& left, const Vector2d& right)
+{
+	return not (left.x == right.x and left.y == right.y);
+}

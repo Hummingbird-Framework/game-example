@@ -13,25 +13,25 @@ Player::Player(hb::RenderWindowManager* window_manager1):direction(hb::Vector2d(
 		{
 			direction.y = -value;
 			last_direction = direction;
-			player_sprite->setAnimation(animation_up);
+			player_sprite->setSprite(sprite_up);
 		}
 		else if (code == sf::Keyboard::Key::S and direction.y <= 0)
 		{
 			direction.y = value;
 			last_direction = direction;
-			player_sprite->setAnimation(animation_down);
+			player_sprite->setSprite(sprite_down);
 		}
 		else if (code == sf::Keyboard::Key::A and direction.x >= 0)
 		{
 			direction.x = -value;
 			last_direction = direction;
-			player_sprite->setAnimation(animation_left);
+			player_sprite->setSprite(sprite_left);
 		}
 		else if (code == sf::Keyboard::Key::D and direction.x <= 0)
 		{
 			direction.x = value;
 			last_direction = direction;
-			player_sprite->setAnimation(animation_right);
+			player_sprite->setSprite(sprite_right);
 		}
 		else if (code == sf::Keyboard::Key::Space)
 		{
@@ -55,16 +55,23 @@ Player::Player(hb::RenderWindowManager* window_manager1):direction(hb::Vector2d(
 			direction.x = 0;
 		else if (code == sf::Keyboard::Key::D and direction.x > 0)
 			direction.x = 0;
+		if (direction != hb::Vector2d())
+			last_direction = direction;
+
 	});
 	mousebuttonworld_listener_id = hb::InputManager::instance()->listen([this](const hb::MouseButtonWorld& e)
 	{
 		getGameObject()->setPosition(hb::Vector3d(e.x, e.y, getGameObject()->getPosition().z));
 	});
 
-	animation_down = hb::SpriteComponent::Animation("res/drawable/walking-tiles.png", sf::IntRect(96, 128, 96, 128), hb::Vector2d(32, 32), hb::Vector2d(), 0, 2, hb::Time::seconds(0.3));
-	animation_left = hb::SpriteComponent::Animation("res/drawable/walking-tiles.png", sf::IntRect(96, 128, 96, 128), hb::Vector2d(32, 32), hb::Vector2d(), 3, 5, hb::Time::seconds(0.3));
-	animation_right = hb::SpriteComponent::Animation("res/drawable/walking-tiles.png", sf::IntRect(96, 128, 96, 128), hb::Vector2d(32, 32), hb::Vector2d(), 6, 8, hb::Time::seconds(0.3));
-	animation_up = hb::SpriteComponent::Animation("res/drawable/walking-tiles.png", sf::IntRect(96, 128, 96, 128), hb::Vector2d(32, 32), hb::Vector2d(), 9, 11, hb::Time::seconds(0.3));
+	hb::Texture tex = hb::Texture::loadFromFile("res/drawable/walking-tiles.png", hb::Rect(96, 128, 96, 128));
+	sprite_down = hb::Sprite(tex, hb::Vector2d(32, 32), hb::Vector2d(), 0, 2, hb::Time::seconds(0.3));
+	tex = hb::Texture::loadFromFile("res/drawable/walking-tiles.png", hb::Rect(96, 128, 96, 128));
+	sprite_left = hb::Sprite(tex, hb::Vector2d(32, 32), hb::Vector2d(), 3, 5, hb::Time::seconds(0.3));
+	tex = hb::Texture::loadFromFile("res/drawable/walking-tiles.png", hb::Rect(96, 128, 96, 128));
+	sprite_right = hb::Sprite(tex, hb::Vector2d(32, 32), hb::Vector2d(), 6, 8, hb::Time::seconds(0.3));
+	tex = hb::Texture::loadFromFile("res/drawable/walking-tiles.png", hb::Rect(96, 128, 96, 128));
+	sprite_up = hb::Sprite(tex, hb::Vector2d(32, 32), hb::Vector2d(), 9, 11, hb::Time::seconds(0.3));
 
 	this->window_manager1 = window_manager1;
 	m_collision = new hb::CollisionComponent(hb::Vector2d(32, 32));
@@ -85,7 +92,7 @@ void Player::init()
 {
 	getGameObject()->setPosition(hb::Vector3d(100, 100, 0));
 	last_position = getGameObject()->getPosition();
-	getGameObject()->addComponent(new hb::SpriteComponent(window_manager1, animation_down));
+	getGameObject()->addComponent(new hb::SpriteComponent(window_manager1, sprite_down));
 	getGameObject()->addComponent(m_collision);
 
 	player_sprite = getGameObject()->getComponents<hb::SpriteComponent>()[0];
@@ -101,7 +108,6 @@ void Player::update()
 
 	while(!m_collision->empty())
 	{
-		std::cout << "Collision" << std::endl;
 		hb::CollisionComponent::Collision c = m_collision->nextCollision();
 		if (c.object->getComponents<Wall>().size() != 0)
 		{
