@@ -134,6 +134,8 @@ void SpriteComponent::stop()
 
 Vector2d SpriteComponent::getCoords()
 {
+	if (m_animation.m_frame_size.x > m_sprite.getTexture()->getSize().x or m_animation.m_frame_size.y > m_sprite.getTexture()->getSize().y)
+		return Vector2d();
 	int nx = m_sprite.getTexture()->getSize().x / (m_animation.m_frame_size.x + m_animation.m_frame_margin.x);
 	int x_coord = (m_current_frame % nx) * (m_animation.m_frame_size.x + m_animation.m_frame_margin.x) + m_animation.m_frame_margin.x;
 	int y_coord = (m_current_frame / nx) * (m_animation.m_frame_size.y + m_animation.m_frame_margin.y) + m_animation.m_frame_margin.y;
@@ -144,4 +146,14 @@ Vector2d SpriteComponent::getCoords()
 Vector2d SpriteComponent::getSize() const
 {
 	return m_animation.m_frame_size;
+}
+
+const Sprite& SpriteComponent::getSprite() const
+{
+	return m_animation;
+}
+
+Sprite& SpriteComponent::getSprite()
+{
+	return m_animation;
 }

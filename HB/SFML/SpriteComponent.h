@@ -20,6 +20,7 @@ namespace hb
 		const RenderWindowManager* getRenderWindowManager() const;
 		void setSprite(const Sprite& sprite);
 		const Sprite& getSprite() const;
+		Sprite& getSprite();
 		Vector2d getSize() const;
 		bool isVisible() const;
 		void setVisible(bool visible);

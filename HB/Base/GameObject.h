@@ -5,7 +5,7 @@
 #include <unordered_map>
 #include <initializer_list>
 #include "Transform.h"
-
+// TODO: Add to game object a std::unordered_map<std::string, union{.....}> to store gameobject variables. Make getters too.
 namespace hb
 {
 	class GameObject : public Transform
