@@ -1,16 +1,14 @@
 #include <iostream>
 #include "HB/Base.h"
 #include "HB/SFML.h"
-#include "Player.h"
-#include "Wall.h"
+#include "makeObjects.h"
 
 int main(int argc, char const *argv[])
 {
 	hb::RenderWindowManager window_manager1(new sf::RenderWindow(sf::VideoMode(1280, 720), "Game"));
-	hb::GameObject* player = new hb::GameObject({new Player(&window_manager1)});
-	hb::GameObject* wall = new hb::GameObject({new Wall(&window_manager1, hb::Vector2d(100, 100))});
-	wall->setPosition(hb::Vector2d(0, 0));
-	assert(player->getComponents<Player>().size() != 0);
+	makePlayer(&window_manager1);
+	makeWall(&window_manager1, hb::Vector2d(10, 40), hb::Vector2d(10, 100));
+	makeWall(&window_manager1, hb::Vector2d(20, 140), hb::Vector2d(100, 10));
 	hb::Clock clk;
 	hb::Time lastTime = hb::Time::microseconds(clk.getElapsedTime().asMicroseconds());
 	while(window_manager1.getWindow()->isOpen())

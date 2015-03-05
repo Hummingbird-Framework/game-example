@@ -1,5 +1,6 @@
 #ifndef HUMMINGBIRD_BASE
 #define HUMMINGBIRD_BASE
+#include "Base/DataRepository.h"
 #include "Base/Color.h"
 #include "Base/ResourceManager.h"
 #include "Base/Resource.h"

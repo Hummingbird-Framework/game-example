@@ -3,43 +3,62 @@ using namespace hb;
 
 FunctionComponent::FunctionComponent()
 {
-	m_pre_update = [&] (GameObject*) {};
-	m_update = [&] (GameObject*) {};
-	m_post_update = [&] (GameObject*) {};
+	m_pre_update = [&] () {};
+	m_update = [&] () {};
+	m_post_update = [&] () {};
+	m_destroy = [&] () {};
 }
 
 
-void FunctionComponent::setPreUpdateFunction(std::function<void(GameObject*)> pre_update)
+FunctionComponent::~FunctionComponent()
+{
+	m_destroy();
+}
+
+
+void FunctionComponent::setPreUpdateFunction(std::function<void(void)> pre_update)
 {
 	m_pre_update = pre_update;
 }
 
 
-void FunctionComponent::setUpdateFunction(std::function<void(GameObject*)> update)
+void FunctionComponent::setUpdateFunction(std::function<void(void)> update)
 {
 	m_update = update;
 }
 
 
-void FunctionComponent::setPostUpdateFunction(std::function<void(GameObject*)> post_update)
+void FunctionComponent::setPostUpdateFunction(std::function<void(void)> post_update)
 {
 	m_post_update = post_update;
 }
 
 
+void FunctionComponent::setDestroyFunction(std::function<void(void)> destroy)
+{
+	m_destroy = destroy;
+}
+
+
+void FunctionComponent::run(std::function<void(void)> method)
+{
+	method();
+}
+
+
 void FunctionComponent::preUpdate()
 {
-	m_pre_update(getGameObject());
+	m_pre_update();
 }
 
 
 void FunctionComponent::update()
 {
-	m_update(getGameObject());
+	m_update();
 }
 
 
 void FunctionComponent::postUpdate()
 {
-	m_post_update(getGameObject());
+	m_post_update();
 }
