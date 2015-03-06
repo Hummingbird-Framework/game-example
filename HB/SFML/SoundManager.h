@@ -10,7 +10,6 @@ namespace hb
 	{
 	public:
 		SoundManager();
-		int loadFromFile(const std::string& path);
 	};
 }
 #endif

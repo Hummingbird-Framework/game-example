@@ -9,6 +9,16 @@ int main(int argc, char const *argv[])
 	makePlayer(&window_manager1);
 	makeWall(&window_manager1, hb::Vector2d(10, 40), hb::Vector2d(10, 100));
 	makeWall(&window_manager1, hb::Vector2d(20, 140), hb::Vector2d(100, 10));
+	auto beep = new hb::GameObject
+	{
+		new hb::SoundComponent(hb::SoundBuffer::loadFromFile("res/sound/beep.ogg")),
+		new hb::SpriteComponent(&window_manager1)
+	};
+	beep->setPosition(500, 500, 0);
+	beep->getComponent<hb::SoundComponent>()->play();
+	beep->getComponent<hb::SoundComponent>()->loop(true);
+	beep->getComponent<hb::SoundComponent>()->setRelativeToListener(true);
+	beep->getComponent<hb::SpriteComponent>()->getSprite().setFrameSize(hb::Vector2d(16, 16));
 	hb::Clock clk;
 	hb::Time lastTime = hb::Time::microseconds(clk.getElapsedTime().asMicroseconds());
 	while(window_manager1.getWindow()->isOpen())

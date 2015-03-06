@@ -7,7 +7,8 @@ hb::GameObject* makePlayer(hb::RenderWindowManager* window_manager1)
 	{
 		new hb::SpriteComponent(window_manager1),
 		new hb::CollisionComponent(hb::Vector2d(32, 32)),
-		new hb::FunctionComponent()
+		new hb::FunctionComponent(),
+		new hb::ListenerComponent()
 	};
 
 	// Set name
@@ -28,13 +29,21 @@ hb::GameObject* makePlayer(hb::RenderWindowManager* window_manager1)
 		fc->setPointer("last_position", new hb::Vector3d(fc->getGameObject()->getPosition()));
 
 		hb::Texture tex = hb::Texture::loadFromFile("res/drawable/walking-tiles.png", hb::Rect(96, 128, 96, 128));
-		fc->setPointer("sprite_down", new hb::Sprite(tex, hb::Vector2d(32, 32), hb::Vector2d(), 0, 2, hb::Time::seconds(0.3)));
+		hb::Sprite* sprite_down = new hb::Sprite(tex, hb::Vector2d(32, 32), hb::Vector2d(), 0, 2, hb::Time::seconds(0.3));
+		sprite_down->setCenter(hb::Vector2d(16, 16));
+		fc->setPointer("sprite_down", sprite_down);
 		tex = hb::Texture::loadFromFile("res/drawable/walking-tiles.png", hb::Rect(96, 128, 96, 128));
-		fc->setPointer("sprite_left", new hb::Sprite(tex, hb::Vector2d(32, 32), hb::Vector2d(), 3, 5, hb::Time::seconds(0.3)));
+		hb::Sprite* sprite_left = new hb::Sprite(tex, hb::Vector2d(32, 32), hb::Vector2d(), 3, 5, hb::Time::seconds(0.3));
+		sprite_left->setCenter(hb::Vector2d(16, 16));
+		fc->setPointer("sprite_left", sprite_left);
 		tex = hb::Texture::loadFromFile("res/drawable/walking-tiles.png", hb::Rect(96, 128, 96, 128));
-		fc->setPointer("sprite_right", new hb::Sprite(tex, hb::Vector2d(32, 32), hb::Vector2d(), 6, 8, hb::Time::seconds(0.3)));
+		hb::Sprite* sprite_right = new hb::Sprite(tex, hb::Vector2d(32, 32), hb::Vector2d(), 6, 8, hb::Time::seconds(0.3));
+		sprite_right->setCenter(hb::Vector2d(16, 16));
+		fc->setPointer("sprite_right", sprite_right);
 		tex = hb::Texture::loadFromFile("res/drawable/walking-tiles.png", hb::Rect(96, 128, 96, 128));
-		fc->setPointer("sprite_up", new hb::Sprite(tex, hb::Vector2d(32, 32), hb::Vector2d(), 9, 11, hb::Time::seconds(0.3)));
+		hb::Sprite* sprite_up = new hb::Sprite(tex, hb::Vector2d(32, 32), hb::Vector2d(), 9, 11, hb::Time::seconds(0.3));
+		sprite_up->setCenter(hb::Vector2d(16, 16));
+		fc->setPointer("sprite_up", sprite_up);
 
 		fc->getPointer<hb::SpriteComponent>("player_sprite")->setSprite(*fc->getPointer<hb::Sprite>("sprite_down"));
 	});
@@ -75,24 +84,28 @@ hb::GameObject* makePlayer(hb::RenderWindowManager* window_manager1)
 		sf::Keyboard::Key code = event.code;
 		if (code == sf::Keyboard::Key::W and (*fc->getPointer<hb::Vector2d>("direction")).y >= 0)
 		{
+			fc->getGameObject()->getComponent<hb::ListenerComponent>()->setDirection(hb::Vector3d(0, -1, 0));
 			(*fc->getPointer<hb::Vector2d>("direction")).y = -value;
 			(*fc->getPointer<hb::Vector2d>("last_direction")) = (*fc->getPointer<hb::Vector2d>("direction"));
 			fc->getPointer<hb::SpriteComponent>("player_sprite")->setSprite((*fc->getPointer<hb::Sprite>("sprite_up")));
 		}
 		else if (code == sf::Keyboard::Key::S and (*fc->getPointer<hb::Vector2d>("direction")).y <= 0)
 		{
+			fc->getGameObject()->getComponent<hb::ListenerComponent>()->setDirection(hb::Vector3d(0, 1, 0));
 			(*fc->getPointer<hb::Vector2d>("direction")).y = value;
 			(*fc->getPointer<hb::Vector2d>("last_direction")) = (*fc->getPointer<hb::Vector2d>("direction"));
 			fc->getPointer<hb::SpriteComponent>("player_sprite")->setSprite(*fc->getPointer<hb::Sprite>("sprite_down"));
 		}
 		else if (code == sf::Keyboard::Key::A and (*fc->getPointer<hb::Vector2d>("direction")).x >= 0)
 		{
+			fc->getGameObject()->getComponent<hb::ListenerComponent>()->setDirection(hb::Vector3d(-1, 0, 0));
 			(*fc->getPointer<hb::Vector2d>("direction")).x = -value;
 			(*fc->getPointer<hb::Vector2d>("last_direction")) = (*fc->getPointer<hb::Vector2d>("direction"));
 			fc->getPointer<hb::SpriteComponent>("player_sprite")->setSprite(*fc->getPointer<hb::Sprite>("sprite_left"));
 		}
 		else if (code == sf::Keyboard::Key::D and (*fc->getPointer<hb::Vector2d>("direction")).x <= 0)
 		{
+			fc->getGameObject()->getComponent<hb::ListenerComponent>()->setDirection(hb::Vector3d(1, 0, 0));
 			(*fc->getPointer<hb::Vector2d>("direction")).x = value;
 			(*fc->getPointer<hb::Vector2d>("last_direction")) = (*fc->getPointer<hb::Vector2d>("direction"));
 			fc->getPointer<hb::SpriteComponent>("player_sprite")->setSprite(*fc->getPointer<hb::Sprite>("sprite_right"));

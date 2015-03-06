@@ -22,7 +22,7 @@ all: $(MODULES) $(EXE)
 $(EXE): $(OBJ)
 	$(CC) -o $@ $(OBJ) $(STATIC_LIBS) $(CFLAGS)
 
-%.o: %.cpp
+%.o: %.cpp $(STATIC_LIBS)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
 $(BASE):

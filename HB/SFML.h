@@ -6,6 +6,7 @@
 #include "SFML/Sprite.h"
 #include "SFML/SoundManager.h"
 #include "SFML/SoundComponent.h"
+#include "SFML/ListenerComponent.h"
 #include "SFML/CollisionComponent.h"
 #include "SFML/SpriteComponent.h"
 #include "SFML/RenderWindowManager.h"
