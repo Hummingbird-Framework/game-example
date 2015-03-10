@@ -18,7 +18,6 @@ namespace hb
 			Component()
 			{
 				m_game_object = nullptr;
-				m_relative = true;
 			}
 			inline virtual ~Component(){}
 			virtual void init(){}
@@ -31,7 +30,6 @@ namespace hb
 			void setGameObject(GameObject* game_object)
 			{m_game_object = game_object;}
 			GameObject* m_game_object;
-			bool m_relative;
 		};
 
 		static GameObject* getGameObjectById(int id);

@@ -21,19 +21,16 @@ hb::GameObject* makeWall(hb::RenderWindowManager* window_manager, const hb::Vect
 	wall->setPosition(hb::Vector3d(position, 0));
 
 	auto fc = wall->getComponent<hb::FunctionComponent>();
-	fc->run([fc]()
-	{
-		hb::InputManager::ListenerId<hb::MouseButtonWorld>* mousebuttonworld_listener_id = new hb::InputManager::ListenerId<hb::MouseButtonWorld>();
-		*mousebuttonworld_listener_id = hb::InputManager::instance()->listen([fc](const hb::MouseButtonWorld& e)
-		{
-			fc->getGameObject()->setPosition(hb::Vector3d(e.x, e.y, fc->getGameObject()->getPosition().z));
-		});
 
-		fc->setPointer("mousebuttonworld_listener_id", mousebuttonworld_listener_id);
-	});
-	fc->setDestroyFunction([fc]()
+	hb::InputManager::ListenerId<hb::MouseButtonWorld> mousebuttonworld_listener_id = hb::InputManager::ListenerId<hb::MouseButtonWorld>();
+	mousebuttonworld_listener_id = hb::InputManager::instance()->listen([=](const hb::MouseButtonWorld& e)
 	{
-		hb::InputManager::instance()->ignore(*fc->getPointer<hb::InputManager::ListenerId<hb::MouseButtonWorld>>("mousebuttonworld_listener_id"));
+		fc->getGameObject()->setPosition(hb::Vector3d(e.x, e.y, fc->getGameObject()->getPosition().z));
+	});
+
+	fc->setDestroyFunction([=]()
+	{
+		hb::InputManager::instance()->ignore(mousebuttonworld_listener_id);
 	});
 
 	return wall;

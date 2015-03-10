@@ -1,6 +1,9 @@
 #ifndef HB_VECTOR_3D_H
 #define HB_VECTOR_3D_H
+#include <cmath>
 #include "Vector2d.h"
+
+#define PI 3.14159265
 
 namespace hb
 {
@@ -13,6 +16,9 @@ namespace hb
 		Vector3d(const Vector3d& v): x(v.x), y(v.y), z(v.z){};
 		Vector3d(const Vector2d& v): x(v.x), y(v.y), z(0){};
 		Vector3d(const Vector2d& v, double z): x(v.x), y(v.y), z(z){};
+		Vector3d rotatedXZ(double degrees) const;
+		Vector3d rotatedXY(double degrees) const;
+		Vector3d rotatedYZ(double degrees) const;
 
 		double module() const
 		{return sqrt(pow(x, 2) + pow(y, 2));}

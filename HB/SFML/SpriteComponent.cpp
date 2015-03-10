@@ -32,6 +32,7 @@ void SpriteComponent::setSprite(const Sprite& sprite)
 	m_animation = sprite;
 	m_current_frame = sprite.m_current_frame;
 	m_sprite.setTexture(m_animation.m_texture.get());
+	m_sprite.setOrigin(sprite.m_center.x, sprite.m_center.y);
 	if (m_animation.m_frame_time.asMiliseconds() == 0)
 		stop();
 }

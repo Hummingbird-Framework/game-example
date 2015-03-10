@@ -95,3 +95,26 @@ Vector2d Sprite::getFrameMargin() const
 {
 	return m_frame_margin;
 }
+
+const Texture& Sprite::getTexture() const
+{
+	return m_texture;
+}
+
+
+Texture& Sprite::getTexture()
+{
+	return m_texture;
+}
+
+
+void Sprite::setCenter(const Vector2d& center)
+{
+	m_center = center;
+}
+
+
+const Vector2d& Sprite::getCenter() const
+{
+	return m_center;
+}

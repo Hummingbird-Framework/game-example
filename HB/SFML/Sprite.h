@@ -23,6 +23,10 @@ namespace hb
 		std::pair<int, int> getFrameInterval() const;
 		Vector2d getFrameSize() const;
 		Vector2d getFrameMargin() const;
+		const Texture& getTexture() const;
+		Texture& getTexture();
+		void setCenter(const Vector2d& center);
+		const Vector2d& getCenter() const;
 
 	private:
 		Texture m_texture;
@@ -30,6 +34,7 @@ namespace hb
 		Time m_frame_time;
 		Vector2d m_frame_size;
 		Vector2d m_frame_margin;
+		Vector2d m_center;
 		int m_begin_frame, m_current_frame, m_end_frame;
 	};
 }

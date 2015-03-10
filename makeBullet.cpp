@@ -7,9 +7,10 @@ hb::GameObject* makeBullet(hb::RenderWindowManager* window_manager, const hb::Ve
 	hb::Sprite m_animation = hb::Sprite(tex, hb::Vector2d(16, 16), hb::Vector2d(0, 0), 4, 7, hb::Time::seconds(0.1));
 	auto m_sprite = new hb::SpriteComponent(window_manager, m_animation);
 	auto m_collision = new hb::CollisionComponent(hb::Vector2d(16, 16));
-	hb::SoundComponent* sound = new hb::SoundComponent();
-	sound->setSound("res/sound/Fire-ball.wav");
-	sound->getSound().play();
+	hb::SoundBuffer sound_buffer = hb::SoundBuffer::loadFromFile("res/sound/Fire-ball.wav");
+	hb::SoundComponent* sound = new hb::SoundComponent(sound_buffer);
+	sound->play();
+	sound->setRelativeToListener(true);
 
 	auto bullet = new hb::GameObject
 	{
