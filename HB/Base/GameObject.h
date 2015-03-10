@@ -35,30 +35,12 @@ namespace hb
 		};
 
 		static GameObject* getGameObjectById(int id);
-		static std::vector<GameObject*> getGameObjectsByName(const std::string& name);
-		template <typename T>
-		static std::vector<T*> getGameObjectsByName(const std::string& name)
-		{
-			std::vector<GameObject*> v;
-			std::vector<T*> ts;
-			
-			auto s = s_game_objects_by_name.find(name);
-			if (s != s_game_objects_by_name.end())
-				v = s->second;
-
-			for (GameObject* go : v)
-			{
-				T* t = dynamic_cast<T*>(go);
-				if (t != nullptr)
-					ts.push_back(t);
-			}
-			return ts;
-		}
+		static void getGameObjectsByName(const std::string& name, std::vector<GameObject*>& out);
 		static void destroyAll();
 		static void updateAll();
 
 		GameObject();
-		GameObject(std::initializer_list<Component*> components);
+		GameObject(const std::initializer_list<Component*>& components);
 		virtual ~GameObject();
 		int getIdentifier() const;
 		const std::string& getName() const;
@@ -79,15 +61,13 @@ namespace hb
 			return nullptr;
 		}
 		template <typename ComponentType>
-		std::vector<ComponentType*> getComponents() const
+		void getComponents(std::vector<ComponentType*>& out) const
 		{
-			std::vector<ComponentType*> v;
 			for (Component* component : m_components)
 			{
 				if (dynamic_cast<ComponentType*>(component))
-					v.push_back(dynamic_cast<ComponentType*>(component));
+					out.push_back(dynamic_cast<ComponentType*>(component));
 			}
-			return v;
 		}
 
 	private:

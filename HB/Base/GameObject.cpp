@@ -17,14 +17,11 @@ GameObject* GameObject::getGameObjectById(int id)
 }
 
 
-std::vector<GameObject*> GameObject::getGameObjectsByName(const std::string& name)
+void GameObject::getGameObjectsByName(const std::string& name, std::vector<GameObject*>& out)
 {
-	std::vector<GameObject*> v;
-	
 	auto s = s_game_objects_by_name.find(name);
 	if (s != s_game_objects_by_name.end())
-		v = s->second;
-	return v;
+		out = s->second;
 }
 
 
@@ -73,13 +70,11 @@ m_marked_to_destroy(false)
 }
 
 
-GameObject::GameObject(std::initializer_list<GameObject::Component*> components):
+GameObject::GameObject(const std::initializer_list<GameObject::Component*>& components):
 GameObject()
 {
 	for (Component* c : components)
-	{
 		addComponent(c);
-	}
 }
 
 
