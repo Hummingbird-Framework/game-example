@@ -75,6 +75,7 @@ hb::GameObject* makePlayer()
 		hb::Vector3d dir = hb::Vector3d(fc->getPointer<hb::Vector2d>("direction")->x, fc->getPointer<hb::Vector2d>("direction")->y, 0);
 		fc->getGameObject()->setPosition(p + (dir.normalized() * 100 * (running? 2:1) * hb::Time::deltaTime.asSeconds()));
 
+		hb::Renderer::getCamera().setPosition(fc->getGameObject()->getPosition());
 	});
 
 	// Define input listeners

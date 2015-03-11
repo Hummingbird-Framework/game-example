@@ -9,7 +9,7 @@ int main(int argc, char const *argv[])
 	//hb::Renderer::getCamera().setAxisX(hb::Vector3d(1, 0, 0));
 	//hb::Renderer::getCamera().setAxisY(hb::Vector3d(-1, 1, 0));
 	//hb::Renderer::getCamera().setAxisZ(hb::Vector3d(0, 0, 0));
-	auto player = makePlayer();
+	makePlayer();
 	makeWall(hb::Vector2d(50, 40), hb::Vector2d(10, 100));
 	makeWall(hb::Vector2d(20, 140), hb::Vector2d(100, 10));
 

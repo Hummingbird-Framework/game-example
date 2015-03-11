@@ -1,5 +1,4 @@
 #include "Renderer.h"
-#include <iostream>
 using namespace hb;
 
 
@@ -54,6 +53,9 @@ void Renderer::addDrawable(std::pair<Vector3d, sf::Drawable*> drawable)
 void Renderer::draw()
 {
 	m_window->clear();
+	sf::View view = getWindow().getView();
+	view.setCenter(m_camera.getPosition().x, m_camera.getPosition().y);
+	getWindow().setView(view);
 	while (not m_drawables.empty())
 	{
 		sf::Drawable* d = m_drawables.top().second;

@@ -15,12 +15,13 @@ namespace hb
 	typedef sf::Keyboard Keyboard;
 	typedef sf::Joystick Joystick;
 	typedef sf::Mouse Mouse;
+	typedef sf::Event Event;
 
 	struct MouseButtonWindow
 	{
 		Mouse::Button button;
 		int x, y;
-		explicit MouseButtonWindow(const sf::Event::MouseButtonEvent& ev):
+		explicit MouseButtonWindow(const Event::MouseButtonEvent& ev):
 		button(ev.button),
 		x(ev.x),
 		y(ev.y)
@@ -31,7 +32,7 @@ namespace hb
 	{
 		Mouse::Button button;
 		int x, y;
-		explicit MouseButtonWorld(const sf::Event::MouseButtonEvent& ev):
+		explicit MouseButtonWorld(const Event::MouseButtonEvent& ev):
 		button(ev.button),
 		x(ev.x),
 		y(ev.y)
@@ -45,7 +46,7 @@ namespace hb
 	{
 		Keyboard::Key code;
 		bool alt, control, shift, system;
-		explicit KeyPressed(const sf::Event::KeyEvent& ev):
+		explicit KeyPressed(const Event::KeyEvent& ev):
 		code(ev.code),
 		alt(ev.alt),
 		control(ev.control),
@@ -58,7 +59,7 @@ namespace hb
 	{
 		Keyboard::Key code;
 		bool alt, control, shift, system;
-		explicit KeyReleased(const sf::Event::KeyEvent& ev):
+		explicit KeyReleased(const Event::KeyEvent& ev):
 		code(ev.code),
 		alt(ev.alt),
 		control(ev.control),
@@ -71,7 +72,7 @@ namespace hb
 	struct JoyButtonPressed
 	{
 		unsigned int joystickId, button;
-		explicit JoyButtonPressed(const sf::Event::JoystickButtonEvent& ev):
+		explicit JoyButtonPressed(const Event::JoystickButtonEvent& ev):
 		joystickId(ev.joystickId),
 		button(ev.button)
 		{}
@@ -81,7 +82,7 @@ namespace hb
 	struct JoyButtonReleased
 	{
 		unsigned int joystickId, button;
-		explicit JoyButtonReleased(const sf::Event::JoystickButtonEvent& ev):
+		explicit JoyButtonReleased(const Event::JoystickButtonEvent& ev):
 		joystickId(ev.joystickId),
 		button(ev.button)
 		{}
@@ -91,9 +92,9 @@ namespace hb
 	struct JoyAxis
 	{
 		unsigned int joystickId;
-		sf::Joystick::Axis axis;
+		Joystick::Axis axis;
 		float position;
-		explicit JoyAxis(const sf::Event::JoystickMoveEvent& ev):
+		explicit JoyAxis(const Event::JoystickMoveEvent& ev):
 		joystickId(ev.joystickId),
 		axis(ev.axis),
 		position(ev.position)
@@ -109,6 +110,9 @@ namespace hb
 
 	private:
 		static std::unique_ptr<InputManager> s_instance;
+
+		std::map<Keyboard::Key, bool> m_pressed_keys;
+		std::map<std::pair<int, int>, bool> m_pressed_buttons;
 	};
 }
 #endif

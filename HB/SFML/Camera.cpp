@@ -1,5 +1,4 @@
 #include "Camera.h"
-#include <iostream>
 using namespace hb;
 
 
@@ -23,7 +22,8 @@ Camera::~Camera()
 
 void Camera::setPosition(const Vector3d& pos)
 {
-	m_position = pos.normalized();
+	Vector3d v = (m_x * pos.x) + (m_y * pos.y) + (m_z * pos.z);
+	m_position = v;
 }
 
 

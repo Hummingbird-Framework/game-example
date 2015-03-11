@@ -13,44 +13,54 @@ InputManager* InputManager::instance()
 
 void InputManager::update()
 {
-	sf::Event event;
+	Event event;
 	while (Renderer::getWindow().pollEvent(event))
 	{
-		if (event.type == sf::Event::Closed)
+		if (event.type == Event::Closed)
 		{
 			Renderer::getWindow().close();
 		}
-		else if (event.type == sf::Event::MouseButtonPressed)
+		else if (event.type == Event::MouseButtonPressed)
 		{
-				hb::MouseButtonWorld mbw(event.mouseButton);
-				hb::InputManager::instance()->message(mbw);
+			hb::MouseButtonWorld mbw(event.mouseButton);
+			hb::InputManager::instance()->message(mbw);
 		}
-		else if (event.type == sf::Event::KeyPressed)
+		else if (event.type == Event::KeyPressed)
 		{
+			if (not m_pressed_keys[event.key.code])
+			{
+				m_pressed_keys[event.key.code] = true;
 				hb::KeyPressed kp(event.key);
 				hb::InputManager::instance()->message(kp);
+			}
 		}
-		else if (event.type == sf::Event::KeyReleased)
+		else if (event.type == Event::KeyReleased)
 		{
+			m_pressed_keys[event.key.code] = false;
 			hb::KeyReleased kr(event.key);
 			hb::InputManager::instance()->message(kr);
 		}
-		else if (event.type == sf::Event::JoystickButtonPressed)
+		else if (event.type == Event::JoystickButtonPressed)
 		{
+			if (not m_pressed_buttons[std::pair<int, int>(event.joystickButton.joystickId, event.joystickButton.button)])
+			{
+				m_pressed_buttons[std::pair<int, int>(event.joystickButton.joystickId, event.joystickButton.button)] = true;
 				hb::JoyButtonPressed jbp(event.joystickButton);
 				hb::InputManager::instance()->message(jbp);
+			}
 		}
-		else if (event.type == sf::Event::JoystickButtonReleased)
+		else if (event.type == Event::JoystickButtonReleased)
 		{
+			m_pressed_buttons[std::pair<int, int>(event.joystickButton.joystickId, event.joystickButton.button)] = false;
 			hb::JoyButtonReleased jbr(event.joystickButton);
 			hb::InputManager::instance()->message(jbr);
 		}
-		else if (event.type == sf::Event::JoystickMoved)
+		else if (event.type == Event::JoystickMoved)
 		{
 			hb::JoyAxis ja(event.joystickMove);
 			hb::InputManager::instance()->message(ja);
 		}
-		else if (event.type == sf::Event::Resized)
+		else if (event.type == Event::Resized)
 		{
 			auto view = Renderer::getWindow().getView();
 			view.setSize(sf::Vector2f(event.size.width, event.size.height));

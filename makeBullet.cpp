@@ -1,5 +1,4 @@
 #include "makeObjects.h"
-#include <iostream>
 
 hb::GameObject* makeBullet(const hb::Vector2d& direction)
 {
@@ -36,10 +35,8 @@ hb::GameObject* makeBullet(const hb::Vector2d& direction)
 		auto life_time = fc->getPointer<hb::Time>("life_time");
 		hb::Vector3d p = fc->getGameObject()->getPosition();
 		fc->getGameObject()->setPosition((p + hb::Vector3d(m_direction, 0) * 250 *  hb::Time::deltaTime.asSeconds()));
-		std::cout << fc->getGameObject()->getPosition().z << ", " << fc->getGameObject()->getPosition().y << std::endl;
 		if (clk->getElapsedTime() > *life_time)
 		{
-			std::cout << "Tiempo!!" << std::endl;
 			fc->getGameObject()->destroy();
 		}
 
@@ -48,7 +45,6 @@ hb::GameObject* makeBullet(const hb::Vector2d& direction)
 			hb::CollisionComponent::Collision c = m_collision->nextCollision();
 			if (c.object->getName() == "Wall")
 			{
-				std::cout << "Collision!!" << std::endl;
 				fc->getGameObject()->destroy();
 			}
 		}
