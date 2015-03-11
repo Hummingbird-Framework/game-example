@@ -1,7 +1,7 @@
 #ifndef HB_SPRITE_COMPONENT_H
 #define HB_SPRITE_COMPONENT_H
 #include <SFML/Graphics.hpp>
-#include "RenderWindowManager.h"
+#include "Renderer.h"
 #include "../Base/GameObject.h"
 #include "../Base/Transform.h"
 #include "../Base/Time.h"
@@ -13,11 +13,8 @@ namespace hb
 	class SpriteComponent : public GameObject::Component, public Transform
 	{
 	public:
-		SpriteComponent(RenderWindowManager* render_manager, const Sprite& sprite = Sprite());
+		SpriteComponent(const Sprite& sprite = Sprite());
 		virtual ~SpriteComponent() override;
-		void setRenderWindowManager(RenderWindowManager* render_manager);
-		RenderWindowManager* getRenderWindowManager();
-		const RenderWindowManager* getRenderWindowManager() const;
 		void setSprite(const Sprite& sprite);
 		const Sprite& getSprite() const;
 		Sprite& getSprite();
@@ -40,7 +37,6 @@ namespace hb
 		bool m_playing, m_looping;
 		sf::Sprite m_sprite;
 		Sprite m_animation;
-		RenderWindowManager* m_render_manager;
 	};
 }
 #endif

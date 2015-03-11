@@ -14,24 +14,21 @@ InputManager* InputManager::instance()
 void InputManager::update()
 {
 	sf::Event event;
-	while (window_manager1.getWindow()->pollEvent(event))
+	while (Renderer::getWindow().pollEvent(event))
 	{
 		if (event.type == sf::Event::Closed)
 		{
-			window_manager1.getWindow()->close();
+			Renderer::getWindow().close();
 		}
 		else if (event.type == sf::Event::MouseButtonPressed)
 		{
-				hb::MouseButtonWorld mbw(event.mouseButton, window_manager1);
+				hb::MouseButtonWorld mbw(event.mouseButton);
 				hb::InputManager::instance()->message(mbw);
 		}
 		else if (event.type == sf::Event::KeyPressed)
 		{
-			if (not sf::Keyboard::isKeyPressed(event.key.code))
-			{
 				hb::KeyPressed kp(event.key);
 				hb::InputManager::instance()->message(kp);
-			}
 		}
 		else if (event.type == sf::Event::KeyReleased)
 		{
@@ -40,11 +37,8 @@ void InputManager::update()
 		}
 		else if (event.type == sf::Event::JoystickButtonPressed)
 		{
-			if (not sf::Joystick::isButtonPressed(event.joystickButton.joystickId, event.joystickButton.button))
-			{
 				hb::JoyButtonPressed jbp(event.joystickButton);
 				hb::InputManager::instance()->message(jbp);
-			}
 		}
 		else if (event.type == sf::Event::JoystickButtonReleased)
 		{
@@ -58,9 +52,9 @@ void InputManager::update()
 		}
 		else if (event.type == sf::Event::Resized)
 		{
-			auto view = window_manager1.getWindow()->getView();
+			auto view = Renderer::getWindow().getView();
 			view.setSize(sf::Vector2f(event.size.width, event.size.height));
-			window_manager1.getWindow()->setView(view);
+			Renderer::getWindow().setView(view);
 		}
 	}
 }

@@ -20,6 +20,9 @@ namespace hb
 		Vector3d rotatedXY(double degrees) const;
 		Vector3d rotatedYZ(double degrees) const;
 
+		Vector3d multiply(const Vector3d& v) const
+		{return Vector3d(x * v.x, y * v.y, z * v.z);}
+
 		double module() const
 		{return sqrt(pow(x, 2) + pow(y, 2));}
 

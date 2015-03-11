@@ -1,11 +1,12 @@
 #include "makeObjects.h"
+#include <iostream>
 
-hb::GameObject* makeBullet(hb::RenderWindowManager* window_manager, const hb::Vector2d& direction)
+hb::GameObject* makeBullet(const hb::Vector2d& direction)
 {
 	hb::Vector2d m_direction = direction.normalized();
 	hb::Texture tex = hb::Texture::loadFromFile("res/drawable/fireballs.png", hb::Rect());
 	hb::Sprite m_animation = hb::Sprite(tex, hb::Vector2d(16, 16), hb::Vector2d(0, 0), 4, 7, hb::Time::seconds(0.1));
-	auto m_sprite = new hb::SpriteComponent(window_manager, m_animation);
+	auto m_sprite = new hb::SpriteComponent(m_animation);
 	auto m_collision = new hb::CollisionComponent(hb::Vector2d(16, 16));
 	hb::SoundBuffer sound_buffer = hb::SoundBuffer::loadFromFile("res/sound/Fire-ball.wav");
 	hb::SoundComponent* sound = new hb::SoundComponent(sound_buffer);
@@ -34,15 +35,20 @@ hb::GameObject* makeBullet(hb::RenderWindowManager* window_manager, const hb::Ve
 		auto clk = fc->getPointer<hb::Clock>("clock");
 		auto life_time = fc->getPointer<hb::Time>("life_time");
 		hb::Vector3d p = fc->getGameObject()->getPosition();
-		fc->getGameObject()->setPosition((p + hb::Vector3d(m_direction, 2) * 250 *  hb::Time::deltaTime.asSeconds()));
+		fc->getGameObject()->setPosition((p + hb::Vector3d(m_direction, 0) * 250 *  hb::Time::deltaTime.asSeconds()));
+		std::cout << fc->getGameObject()->getPosition().z << ", " << fc->getGameObject()->getPosition().y << std::endl;
 		if (clk->getElapsedTime() > *life_time)
+		{
+			std::cout << "Tiempo!!" << std::endl;
 			fc->getGameObject()->destroy();
+		}
 
 		while(not m_collision->empty())
 		{
 			hb::CollisionComponent::Collision c = m_collision->nextCollision();
 			if (c.object->getName() == "Wall")
 			{
+				std::cout << "Collision!!" << std::endl;
 				fc->getGameObject()->destroy();
 			}
 		}

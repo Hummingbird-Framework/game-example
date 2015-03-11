@@ -1,11 +1,11 @@
 #include "makeObjects.h"
 
-hb::GameObject* makePlayer(hb::RenderWindowManager* window_manager1)
+hb::GameObject* makePlayer()
 {
 	// Define the player GameObject
 	auto player = new hb::GameObject
 	{
-		new hb::SpriteComponent(window_manager1),
+		new hb::SpriteComponent(),
 		new hb::CollisionComponent(hb::Vector2d(32, 32)),
 		new hb::FunctionComponent(),
 		new hb::ListenerComponent()
@@ -27,6 +27,8 @@ hb::GameObject* makePlayer(hb::RenderWindowManager* window_manager1)
 		fc->setPointer("player_sprite", fc->getGameObject()->getComponent<hb::SpriteComponent>());
 		fc->setPointer("m_collision", fc->getGameObject()->getComponent<hb::CollisionComponent>());
 		fc->setPointer("last_position", new hb::Vector3d(fc->getGameObject()->getPosition()));
+
+		fc->getGameObject()->getComponent<hb::CollisionComponent>()->setPosition(hb::Vector3d(-16, -16, 0));
 
 		hb::Texture tex = hb::Texture::loadFromFile("res/drawable/walking-tiles.png", hb::Rect(96, 128, 96, 128));
 		hb::Sprite* sprite_down = new hb::Sprite(tex, hb::Vector2d(32, 32), hb::Vector2d(), 0, 2, hb::Time::seconds(0.3));
@@ -69,7 +71,9 @@ hb::GameObject* makePlayer(hb::RenderWindowManager* window_manager1)
 		hb::Vector3d p = fc->getGameObject()->getPosition();
 		fc->setPointer("last_position", new hb::Vector3d(p));
 		bool running = fc->getBool("running");
-		fc->getGameObject()->setPosition((p + (*fc->getPointer<hb::Vector2d>("direction")).normalized() * 100 * (running? 2:1) * hb::Time::deltaTime.asSeconds()));
+		//hb::Vector3d dir = hb::Vector3d(fc->getPointer<hb::Vector2d>("direction")->x, 0, fc->getPointer<hb::Vector2d>("direction")->y);
+		hb::Vector3d dir = hb::Vector3d(fc->getPointer<hb::Vector2d>("direction")->x, fc->getPointer<hb::Vector2d>("direction")->y, 0);
+		fc->getGameObject()->setPosition(p + (dir.normalized() * 100 * (running? 2:1) * hb::Time::deltaTime.asSeconds()));
 
 	});
 
@@ -81,61 +85,69 @@ hb::GameObject* makePlayer(hb::RenderWindowManager* window_manager1)
 	{
 		int value = 1;
 
-		sf::Keyboard::Key code = event.code;
-		if (code == sf::Keyboard::Key::W and (*fc->getPointer<hb::Vector2d>("direction")).y >= 0)
+		hb::Keyboard::Key code = event.code;
+		if (code == hb::Keyboard::Key::W and (*fc->getPointer<hb::Vector2d>("direction")).y >= 0)
 		{
 			fc->getGameObject()->getComponent<hb::ListenerComponent>()->setDirection(hb::Vector3d(0, -1, 0));
 			(*fc->getPointer<hb::Vector2d>("direction")).y = -value;
 			(*fc->getPointer<hb::Vector2d>("last_direction")) = (*fc->getPointer<hb::Vector2d>("direction"));
 			fc->getPointer<hb::SpriteComponent>("player_sprite")->setSprite((*fc->getPointer<hb::Sprite>("sprite_up")));
 		}
-		else if (code == sf::Keyboard::Key::S and (*fc->getPointer<hb::Vector2d>("direction")).y <= 0)
+		else if (code == hb::Keyboard::Key::S and (*fc->getPointer<hb::Vector2d>("direction")).y <= 0)
 		{
 			fc->getGameObject()->getComponent<hb::ListenerComponent>()->setDirection(hb::Vector3d(0, 1, 0));
 			(*fc->getPointer<hb::Vector2d>("direction")).y = value;
 			(*fc->getPointer<hb::Vector2d>("last_direction")) = (*fc->getPointer<hb::Vector2d>("direction"));
 			fc->getPointer<hb::SpriteComponent>("player_sprite")->setSprite(*fc->getPointer<hb::Sprite>("sprite_down"));
 		}
-		else if (code == sf::Keyboard::Key::A and (*fc->getPointer<hb::Vector2d>("direction")).x >= 0)
+		else if (code == hb::Keyboard::Key::A and (*fc->getPointer<hb::Vector2d>("direction")).x >= 0)
 		{
 			fc->getGameObject()->getComponent<hb::ListenerComponent>()->setDirection(hb::Vector3d(-1, 0, 0));
 			(*fc->getPointer<hb::Vector2d>("direction")).x = -value;
 			(*fc->getPointer<hb::Vector2d>("last_direction")) = (*fc->getPointer<hb::Vector2d>("direction"));
 			fc->getPointer<hb::SpriteComponent>("player_sprite")->setSprite(*fc->getPointer<hb::Sprite>("sprite_left"));
 		}
-		else if (code == sf::Keyboard::Key::D and (*fc->getPointer<hb::Vector2d>("direction")).x <= 0)
+		else if (code == hb::Keyboard::Key::D and (*fc->getPointer<hb::Vector2d>("direction")).x <= 0)
 		{
 			fc->getGameObject()->getComponent<hb::ListenerComponent>()->setDirection(hb::Vector3d(1, 0, 0));
 			(*fc->getPointer<hb::Vector2d>("direction")).x = value;
 			(*fc->getPointer<hb::Vector2d>("last_direction")) = (*fc->getPointer<hb::Vector2d>("direction"));
 			fc->getPointer<hb::SpriteComponent>("player_sprite")->setSprite(*fc->getPointer<hb::Sprite>("sprite_right"));
 		}
-		else if (code == sf::Keyboard::Key::Space)
+		else if (code == hb::Keyboard::Key::Space)
 		{
-			auto bullet = makeBullet(window_manager1, (*fc->getPointer<hb::Vector2d>("last_direction")));
+			auto bullet = makeBullet(hb::Vector2d(fc->getPointer<hb::Vector2d>("last_direction")->x, fc->getPointer<hb::Vector2d>("last_direction")->y));
 			bullet->setPosition(fc->getGameObject()->getPosition());
 		}
-
-		if (event.shift)
+		else if (code == hb::Keyboard::Key::LShift)
+		{
 			fc->setBool("running", true);
-		else
-			fc->setBool("running", false);
+		}
 	});
 	keyreleased_listener_id = hb::InputManager::instance()->listen(
 	[=](const hb::KeyReleased& event)
 	{
-		sf::Keyboard::Key code = event.code;
-		if (code == sf::Keyboard::Key::W and (*fc->getPointer<hb::Vector2d>("direction")).y < 0)
+		hb::Keyboard::Key code = event.code;
+		if (code == hb::Keyboard::Key::W and (*fc->getPointer<hb::Vector2d>("direction")).y < 0)
 			(*fc->getPointer<hb::Vector2d>("direction")).y = 0;
-		else if (code == sf::Keyboard::Key::S and (*fc->getPointer<hb::Vector2d>("direction")).y > 0)
+		else if (code == hb::Keyboard::Key::S and (*fc->getPointer<hb::Vector2d>("direction")).y > 0)
 			(*fc->getPointer<hb::Vector2d>("direction")).y = 0;
-		else if (code == sf::Keyboard::Key::A and (*fc->getPointer<hb::Vector2d>("direction")).x < 0)
+		else if (code == hb::Keyboard::Key::A and (*fc->getPointer<hb::Vector2d>("direction")).x < 0)
 			(*fc->getPointer<hb::Vector2d>("direction")).x = 0;
-		else if (code == sf::Keyboard::Key::D and (*fc->getPointer<hb::Vector2d>("direction")).x > 0)
+		else if (code == hb::Keyboard::Key::D and (*fc->getPointer<hb::Vector2d>("direction")).x > 0)
 			(*fc->getPointer<hb::Vector2d>("direction")).x = 0;
+		else if (code == hb::Keyboard::Key::LShift)
+			fc->setBool("running", false);
+
 		if ((*fc->getPointer<hb::Vector2d>("direction")) != hb::Vector2d())
 			(*fc->getPointer<hb::Vector2d>("last_direction")) = (*fc->getPointer<hb::Vector2d>("direction"));
 
+
+	});
+	hb::InputManager::ListenerId<hb::MouseButtonWorld> mousebuttonworld_listener_id = hb::InputManager::ListenerId<hb::MouseButtonWorld>();
+	mousebuttonworld_listener_id = hb::InputManager::instance()->listen([=](const hb::MouseButtonWorld& e)
+	{
+		fc->getGameObject()->setPosition(hb::Vector3d(e.x, e.y, fc->getGameObject()->getPosition().z));
 	});
 
 	//define destructor function
@@ -143,6 +155,7 @@ hb::GameObject* makePlayer(hb::RenderWindowManager* window_manager1)
 	{
 		hb::InputManager::instance()->ignore(keypressed_listener_id);
 		hb::InputManager::instance()->ignore(keyreleased_listener_id);
+		hb::InputManager::instance()->ignore(mousebuttonworld_listener_id);
 	});
 
 	return player;

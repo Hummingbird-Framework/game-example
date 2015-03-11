@@ -5,7 +5,7 @@
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 #include "../Base/EventManager.h"
-#include "RenderWindowManager.h"
+#include "Renderer.h"
 
 // WISHLIST: Gestionar el input de manera que se de solo una vez el evento de pressed y released y que se le pueda preguntar por el estado de las teclas.
 
@@ -31,13 +31,13 @@ namespace hb
 	{
 		Mouse::Button button;
 		int x, y;
-		explicit MouseButtonWorld(const sf::Event::MouseButtonEvent& ev, const hb::RenderWindowManager& window):
+		explicit MouseButtonWorld(const sf::Event::MouseButtonEvent& ev):
 		button(ev.button),
 		x(ev.x),
 		y(ev.y)
 		{
-			x += window.getWindow()->getView().getCenter().x - window.getWindow()->getSize().x / 2;
-			y += window.getWindow()->getView().getCenter().y - window.getWindow()->getSize().y / 2;
+			x += Renderer::getWindow().getView().getCenter().x - Renderer::getWindow().getSize().x / 2;
+			y += Renderer::getWindow().getView().getCenter().y - Renderer::getWindow().getSize().y / 2;
 		}
 	};
 

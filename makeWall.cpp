@@ -1,16 +1,16 @@
 #include "makeObjects.h"
 
-hb::GameObject* makeWall(hb::RenderWindowManager* window_manager, const hb::Vector2d& position, const hb::Vector2d& size)
+hb::GameObject* makeWall(const hb::Vector2d& position, const hb::Vector2d& size)
 {
 	hb::Texture tex = hb::Texture(hb::TextureManager::instance()->get(hb::TextureManager::instance()->getT404()), hb::TextureManager::makeTexId("t404moded", sf::IntRect()));
-	tex.fill(hb::Rect(16, 16, 32, 32), hb::Color(142, 68, 173));
-	tex.stroke(hb::Vector2d(16, 16), hb::Vector2d(48, 48), hb::Color(192, 57, 43));
+	//tex.fill(hb::Rect(16, 16, 32, 32), hb::Color(142, 68, 173));
+	//tex.stroke(hb::Vector2d(16, 16), hb::Vector2d(48, 48), hb::Color(192, 57, 43));
 	tex.repeat(true);
 
 	auto wall = new hb::GameObject
 	{
 		new hb::CollisionComponent(size),
-		new hb::SpriteComponent(window_manager, tex),
+		new hb::SpriteComponent(tex),
 		new hb::FunctionComponent()
 	};
 

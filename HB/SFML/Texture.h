@@ -2,6 +2,7 @@
 #define HB_TEXTURE_H
 #include <sstream>
 #include "../Base/Resource.h"
+#include "../Base/Vector2d.h"
 #include "../Base/Color.h"
 #include "TextureManager.h"
 #include "Rect.h"

@@ -14,9 +14,20 @@ namespace hb
 			typedef std::function<void(const Event&)> Listener;
 			int listen(Listener&& listener)
 			{
-				m_listeners.push_back(std::move(listener));
-				m_is_active.push_back(true);
-				return m_listeners.size()-1;
+				if (m_disabled.size() != 0)
+				{
+					int i = m_disabled.back();
+					m_disabled.pop_back();
+					m_listeners[i] = std::move(listener);
+					m_is_active[i] = true;
+					return i;
+				}
+				else
+				{
+					m_listeners.push_back(std::move(listener));
+					m_is_active.push_back(true);
+					return m_listeners.size()-1;
+				}
 			}
 
 			void message(const Event& event)
