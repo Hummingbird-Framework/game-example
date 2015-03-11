@@ -17,11 +17,9 @@ GameObject* GameObject::getGameObjectById(int id)
 }
 
 
-void GameObject::getGameObjectsByName(const std::string& name, std::vector<GameObject*>& out)
+const std::vector<GameObject*>& GameObject::getGameObjectsByName(const std::string& name)
 {
-	auto s = s_game_objects_by_name.find(name);
-	if (s != s_game_objects_by_name.end())
-		out = s->second;
+	return s_game_objects_by_name[name];
 }
 
 
