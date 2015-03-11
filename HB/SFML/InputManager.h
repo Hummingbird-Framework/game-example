@@ -1,6 +1,7 @@
 #ifndef HB_INPUT_MANAGER_H
 #define HB_INPUT_MANAGER_H
 #include <memory>
+#include <map>
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 #include "../Base/EventManager.h"
@@ -10,9 +11,14 @@
 
 namespace hb
 {
+
+	typedef sf::Keyboard Keyboard;
+	typedef sf::Joystick Joystick;
+	typedef sf::Mouse Mouse;
+
 	struct MouseButtonWindow
 	{
-		sf::Mouse::Button button;
+		Mouse::Button button;
 		int x, y;
 		explicit MouseButtonWindow(const sf::Event::MouseButtonEvent& ev):
 		button(ev.button),
@@ -23,7 +29,7 @@ namespace hb
 
 	struct MouseButtonWorld
 	{
-		sf::Mouse::Button button;
+		Mouse::Button button;
 		int x, y;
 		explicit MouseButtonWorld(const sf::Event::MouseButtonEvent& ev, const hb::RenderWindowManager& window):
 		button(ev.button),
@@ -37,7 +43,7 @@ namespace hb
 
 	struct KeyPressed
 	{
-		sf::Keyboard::Key code;
+		Keyboard::Key code;
 		bool alt, control, shift, system;
 		explicit KeyPressed(const sf::Event::KeyEvent& ev):
 		code(ev.code),
@@ -50,7 +56,7 @@ namespace hb
 
 	struct KeyReleased
 	{
-		sf::Keyboard::Key code;
+		Keyboard::Key code;
 		bool alt, control, shift, system;
 		explicit KeyReleased(const sf::Event::KeyEvent& ev):
 		code(ev.code),
@@ -94,11 +100,12 @@ namespace hb
 		{}
 	};
 
-
 	class InputManager : public hb::EventManager<MouseButtonWindow, MouseButtonWorld, KeyPressed, KeyReleased, JoyButtonPressed, JoyButtonReleased, JoyAxis>
 	{
 	public:
 		static InputManager* instance();
+
+		void update();
 
 	private:
 		static std::unique_ptr<InputManager> s_instance;

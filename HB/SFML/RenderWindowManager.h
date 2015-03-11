@@ -2,19 +2,20 @@
 #define HB_RENDER_WINDOW_MANAGER_H
 #include <queue>
 #include <SFML/Graphics.hpp>
+#include "../Base/Transform.h"
 
 namespace hb
 {
-	class RenderWindowManager
+	typedef sf::RenderWindow Window;
+
+	class Renderer
 	{
 	public:
-		RenderWindowManager();
-		RenderWindowManager(sf::RenderWindow* window);
-		~RenderWindowManager();
-		void setWindow(sf::RenderWindow* window);
-		sf::RenderWindow* getWindow();
-		const sf::RenderWindow* getWindow() const;
-		void addDrawable(std::pair<double, sf::Sprite> drawable);
+		Renderer();
+		~Renderer();
+		const Window& getWindow();
+		const Window& getWindow() const;
+		void addDrawable(std::pair<const Transform&, sf::Sprite> drawable);
 		void draw();
 
 	private:
