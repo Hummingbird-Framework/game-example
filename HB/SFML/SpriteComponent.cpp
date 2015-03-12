@@ -56,10 +56,10 @@ void SpriteComponent::postUpdate()
 			{
 				m_time_left = m_animation.m_frame_time + m_time_left;
 				m_current_frame++;
-				if (m_current_frame > m_animation.m_end_frame)
+				if (m_current_frame >= m_animation.m_frame_order.size())
 				{
 					if (m_looping)
-						m_current_frame = m_animation.m_begin_frame;
+						m_current_frame = 0;
 					else
 					{
 						stop();
@@ -120,8 +120,8 @@ Vector2d SpriteComponent::getCoords()
 	if (m_animation.m_frame_size.x > m_sprite.getTexture()->getSize().x or m_animation.m_frame_size.y > m_sprite.getTexture()->getSize().y)
 		return Vector2d();
 	int nx = m_sprite.getTexture()->getSize().x / (m_animation.m_frame_size.x + m_animation.m_frame_margin.x);
-	int x_coord = (m_current_frame % nx) * (m_animation.m_frame_size.x + m_animation.m_frame_margin.x) + m_animation.m_frame_margin.x;
-	int y_coord = (m_current_frame / nx) * (m_animation.m_frame_size.y + m_animation.m_frame_margin.y) + m_animation.m_frame_margin.y;
+	int x_coord = (m_animation.m_frame_order[m_current_frame] % nx) * (m_animation.m_frame_size.x + m_animation.m_frame_margin.x) + m_animation.m_frame_margin.x;
+	int y_coord = (m_animation.m_frame_order[m_current_frame] / nx) * (m_animation.m_frame_size.y + m_animation.m_frame_margin.y) + m_animation.m_frame_margin.y;
 	return Vector2d(x_coord, y_coord);
 }
 

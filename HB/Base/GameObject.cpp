@@ -38,10 +38,12 @@ void GameObject::updateAll()
 	std::vector<GameObject*> to_destroy;
 	for (std::unordered_map<int, GameObject*>::iterator it = s_game_objects_by_id.begin(); it != s_game_objects_by_id.end(); it++)
 	{
+		if (not it->second->isActive()) continue;
 		it->second->preUpdate();
 	}
 	for (std::unordered_map<int, GameObject*>::iterator it = s_game_objects_by_id.begin(); it != s_game_objects_by_id.end(); it++)
 	{
+		if (not it->second->isActive()) continue;
 		it->second->update();
 		if (it->second->m_marked_to_destroy)
 		{
@@ -54,6 +56,7 @@ void GameObject::updateAll()
 	}
 	for (std::unordered_map<int, GameObject*>::iterator it = s_game_objects_by_id.begin(); it != s_game_objects_by_id.end(); it++)
 	{
+		if (not it->second->isActive()) continue;
 		it->second->postUpdate();
 	}
 }
@@ -61,6 +64,7 @@ void GameObject::updateAll()
 
 GameObject::GameObject():
 Transform(),
+m_active(true),
 m_marked_to_destroy(false)
 {
 	m_identifier = s_game_object_identifier++;
@@ -152,6 +156,18 @@ void GameObject::setName(const std::string& name)
 			go_group->second.push_back(this);
 		}
 	}
+}
+
+
+void GameObject::setActive(bool active)
+{
+	m_active = active;
+}
+
+
+bool GameObject::isActive() const
+{
+	return m_active;
 }
 
 

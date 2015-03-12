@@ -20,10 +20,10 @@ EXE         := exe
 all: $(MODULES) $(EXE)
 
 $(EXE): $(OBJ)
-	$(CC) -o $@ $(OBJ) $(STATIC_LIBS) $(CFLAGS)
+	$(CC) -o $@ $(OBJ) $(STATIC_LIBS) $(CFLAGS) -O3
 
 %.o: %.cpp $(STATIC_LIBS)
-	$(CC) -c -o $@ $< $(CFLAGS)
+	$(CC) -c -o $@ $< $(CFLAGS) -O3
 
 $(BASE):
 	@$(MAKE) -C $@;

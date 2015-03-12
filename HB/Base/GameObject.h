@@ -1,3 +1,4 @@
+
 #ifndef HB_GAME_OBJECT_H
 #define HB_GAME_OBJECT_H
 #include <vector>
@@ -43,6 +44,8 @@ namespace hb
 		int getIdentifier() const;
 		const std::string& getName() const;
 		void setName(const std::string& name);
+		void setActive(bool active);
+		bool isActive() const;
 		void preUpdate();
 		void update();
 		void postUpdate();
@@ -73,7 +76,7 @@ namespace hb
 		static std::unordered_map<int, GameObject*> s_game_objects_by_id;
 		static std::unordered_map<std::string, std::vector<GameObject*>> s_game_objects_by_name;
 
-		bool m_marked_to_destroy;
+		bool m_active, m_marked_to_destroy;
 		int m_identifier;
 		std::string m_name;
 		std::vector<Component*> m_components;

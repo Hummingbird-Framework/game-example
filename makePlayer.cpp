@@ -31,19 +31,19 @@ hb::GameObject* makePlayer()
 		fc->getGameObject()->getComponent<hb::CollisionComponent>()->setPosition(hb::Vector3d(-16, -16, 0));
 
 		hb::Texture tex = hb::Texture::loadFromFile("res/drawable/walking-tiles.png", hb::Rect(96, 128, 96, 128));
-		hb::Sprite* sprite_down = new hb::Sprite(tex, hb::Vector2d(32, 32), hb::Vector2d(), 0, 2, hb::Time::seconds(0.3));
+		hb::Sprite* sprite_down = new hb::Sprite(tex, hb::Vector2d(32, 32), hb::Vector2d(), 0, 1, hb::Time::seconds(0.3));
 		sprite_down->setCenter(hb::Vector2d(16, 16));
 		fc->setPointer("sprite_down", sprite_down);
 		tex = hb::Texture::loadFromFile("res/drawable/walking-tiles.png", hb::Rect(96, 128, 96, 128));
-		hb::Sprite* sprite_left = new hb::Sprite(tex, hb::Vector2d(32, 32), hb::Vector2d(), 3, 5, hb::Time::seconds(0.3));
+		hb::Sprite* sprite_left = new hb::Sprite(tex, hb::Vector2d(32, 32), hb::Vector2d(), 3, 4, hb::Time::seconds(0.3));
 		sprite_left->setCenter(hb::Vector2d(16, 16));
 		fc->setPointer("sprite_left", sprite_left);
 		tex = hb::Texture::loadFromFile("res/drawable/walking-tiles.png", hb::Rect(96, 128, 96, 128));
-		hb::Sprite* sprite_right = new hb::Sprite(tex, hb::Vector2d(32, 32), hb::Vector2d(), 6, 8, hb::Time::seconds(0.3));
+		hb::Sprite* sprite_right = new hb::Sprite(tex, hb::Vector2d(32, 32), hb::Vector2d(), 6, 7, hb::Time::seconds(0.3));
 		sprite_right->setCenter(hb::Vector2d(16, 16));
 		fc->setPointer("sprite_right", sprite_right);
 		tex = hb::Texture::loadFromFile("res/drawable/walking-tiles.png", hb::Rect(96, 128, 96, 128));
-		hb::Sprite* sprite_up = new hb::Sprite(tex, hb::Vector2d(32, 32), hb::Vector2d(), 9, 11, hb::Time::seconds(0.3));
+		hb::Sprite* sprite_up = new hb::Sprite(tex, hb::Vector2d(32, 32), hb::Vector2d(), 9, 10, hb::Time::seconds(0.3));
 		sprite_up->setCenter(hb::Vector2d(16, 16));
 		fc->setPointer("sprite_up", sprite_up);
 
