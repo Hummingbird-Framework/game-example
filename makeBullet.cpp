@@ -21,13 +21,11 @@ hb::GameObject* makeBullet(const hb::Vector2d& direction)
 	};
 
 	auto fc = bullet->getComponent<hb::FunctionComponent>();
-	fc->run([fc]()
-	{
-		hb::Time* life_time = new hb::Time;
-		*life_time = hb::Time::seconds(2);
-		fc->setPointer("clock", new hb::Clock);
-		fc->setPointer("life_time", life_time);
-	});
+	
+	hb::Time* life_time = new hb::Time;
+	*life_time = hb::Time::seconds(2);
+	fc->setPointer("clock", new hb::Clock);
+	fc->setPointer("life_time", life_time);
 
 	fc->setUpdateFunction([fc, m_collision, m_direction]()
 	{

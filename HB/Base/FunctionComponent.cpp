@@ -40,12 +40,6 @@ void FunctionComponent::setDestroyFunction(std::function<void(void)> destroy)
 }
 
 
-void FunctionComponent::run(std::function<void(void)> method)
-{
-	method();
-}
-
-
 void FunctionComponent::preUpdate()
 {
 	m_pre_update();

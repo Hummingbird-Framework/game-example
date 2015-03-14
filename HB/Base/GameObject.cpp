@@ -12,7 +12,7 @@ GameObject* GameObject::getGameObjectById(int id)
 	auto s = s_game_objects_by_id.find(id);
 	if (s != s_game_objects_by_id.end())
 		go = s->second;
-
+	assert(go != nullptr);
 	return go;
 }
 
@@ -200,6 +200,7 @@ void GameObject::destroy()
 
 void GameObject::addComponent(Component* component)
 {
+	assert(component != nullptr);
 	m_components.push_back(component);
 	component->setGameObject(this);
 	component->init();

@@ -38,6 +38,7 @@ namespace hb
 		Vector2d m_size;
 		std::queue<Collision> m_collisions;
 		std::set<CollisionComponent*>::iterator m_me;
+		sf::ConvexShape back;
 	};
 }
 #endif

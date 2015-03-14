@@ -1,11 +1,13 @@
 #include "CollisionComponent.h"
+#include "Renderer.h"
 using namespace hb;
 
 bool CollisionComponent::s_collisions_executed = false;
 std::set<CollisionComponent*> CollisionComponent::s_components = std::set<CollisionComponent*>();
 
 CollisionComponent::CollisionComponent(const Vector2d& size):
-m_size(size)
+m_size(size),
+back(4)
 {
 	m_me = s_components.insert(this).first;
 }
@@ -51,8 +53,7 @@ void CollisionComponent::postUpdate()
 {
 	if (s_collisions_executed)
 		s_collisions_executed = false;
-	while(!m_collisions.empty())
-		m_collisions.pop();
+	std::queue<Collision>().swap(m_collisions); // Clear collision queue
 }
 
 

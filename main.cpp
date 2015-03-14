@@ -35,12 +35,12 @@ void makeRandomObject()
 	{
 		hb::Vector2d& direction = *(fc->getPointer<hb::Vector2d>("direction"));
 		const hb::Vector3d& pos = obj->getPosition();
-		while (not collision->empty())
+		/*while (not collision->empty())
 		{
 			collision->nextCollision();
 			//if (sound->getStatus() != hb::SoundComponent::Playing and rand() % 10000 < 1)
 			//	sound->play();
-		}
+		}*/
 
 		if (pos.x < 0 or pos.x + 32 > hb::Renderer::getWindow().getSize().x)
 			direction.x *= -1;
@@ -57,12 +57,18 @@ int main(int argc, char const *argv[])
 	srand (time(NULL));
 
 	hb::Renderer::createWindow(hb::Vector2d(1280, 720), "Game");
+
+	// Perpectiva caballera
 	//hb::Renderer::getCamera().setAxisX(hb::Vector3d(1, 0, 0));
 	//hb::Renderer::getCamera().setAxisY(hb::Vector3d(-1, 1, 0));
 	//hb::Renderer::getCamera().setAxisZ(hb::Vector3d(0, 0, 0));
+	// Perspectiva isometrica
+	//hb::Renderer::getCamera().setAxisX(hb::Vector3d(1, 0.5, 0.5));
+	//hb::Renderer::getCamera().setAxisY(hb::Vector3d(-1, 0.5, 0.5));
+	//hb::Renderer::getCamera().setAxisZ(hb::Vector3d(0, 0, 0));
 	//auto player = makePlayer();
-	//makeWall(hb::Vector2d(50, 40), hb::Vector2d(10, 100));
-	//makeWall(hb::Vector2d(20, 140), hb::Vector2d(100, 10));
+	//makeWall(hb::Vector2d(50, 40), hb::Vector2d(64, 64));
+	//makeWall(hb::Vector2d(100, 140), hb::Vector2d(64, 64));
 
 	int N = 1000;
 	for (int i = 0; i < N; ++i)
@@ -70,6 +76,16 @@ int main(int argc, char const *argv[])
 
 	std::cout << "TextureManager: " << hb::TextureManager::instance()->size() << std::endl;
 	std::cout << "SoundManager: " << hb::SoundManager::instance()->size() << std::endl;
+
+	sf::ConvexShape back (4);
+	back.setPoint(0, sf::Vector2f());
+	hb::Vector3d p1 = (hb::Renderer::getCamera().getAxisX() * hb::Renderer::getWindow().getSize().x);
+	back.setPoint(1, sf::Vector2f(p1.x, p1.y));
+	hb::Vector3d p2 = (hb::Renderer::getCamera().getAxisY() * hb::Renderer::getWindow().getSize().y);
+	back.setPoint(3, sf::Vector2f(p2.x, p2.y));
+	p1 = p1 + p2;
+	back.setPoint(2, sf::Vector2f(p1.x, p1.y));
+	back.setFillColor(sf::Color(255, 255, 0));
 
 	hb::Vector2d center(hb::Renderer::getWindow().getSize().x/2, hb::Renderer::getWindow().getSize().y/2);
 	hb::Renderer::getCamera().setPosition(center);
@@ -86,6 +102,7 @@ int main(int argc, char const *argv[])
 		//std::cout << "window: " << hb::Renderer::getWindow().getSize().x << ", " << hb::Renderer::getWindow().getSize().y << std::endl;
 		//std::cout << "player: " << player->getPosition().x << ", " << player->getPosition().y << std::endl;
 		hb::GameObject::updateAll();
+		hb::Renderer::addDrawable(std::pair<hb::Vector3d, sf::Drawable*>(hb::Vector3d(0,0,-1000), &back));
 		hb::Renderer::draw();
 	}
 	hb::GameObject::destroyAll();

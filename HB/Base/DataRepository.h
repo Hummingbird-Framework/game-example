@@ -27,7 +27,10 @@ namespace hb
 		template <typename T>
 		T* getPointer(const std::string& name, T* default_value = nullptr)
 		{
-			return static_cast<T*>(m_data[name].p);
+			auto it = m_data.find(name);
+			if (it != m_data.end())
+				return static_cast<T*>(m_data[name].p);
+			return default_value;
 		}
 
 	private:

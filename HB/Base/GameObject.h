@@ -1,6 +1,7 @@
 
 #ifndef HB_GAME_OBJECT_H
 #define HB_GAME_OBJECT_H
+#include <cassert>
 #include <vector>
 #include <string>
 #include <unordered_map>

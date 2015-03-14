@@ -73,7 +73,7 @@ SoundComponent::Status SoundComponent::getStatus() const
 		case sf::SoundSource::Status::Paused:
 			ret = Status::Paused;
 			break;
-		case sf::SoundSource::Status::Stopped:
+		default:
 			ret = Status::Stopped;
 	}
 	return ret;
