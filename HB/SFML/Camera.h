@@ -1,7 +1,7 @@
 #ifndef HB_CAMERA_H
 #define HB_CAMERA_H
 #include <utility>
-#include "../Base/Transform.h"
+#include "../Core/Transform.h"
 
 namespace hb
 {

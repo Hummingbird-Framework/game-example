@@ -2,8 +2,8 @@
 #define HB_SPRITE_H
 #include <utility>
 #include <vector>
-#include "../Base/Time.h"
-#include "../Base/Vector2d.h"
+#include "../Core/Time.h"
+#include "../Core/Vector2d.h"
 #include "Texture.h"
 
 namespace hb

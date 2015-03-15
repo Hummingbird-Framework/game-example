@@ -1,7 +1,7 @@
 #ifndef HB_LISTENER_COMPONENT_H
 #define HB_LISTENER_COMPONENT_H
 #include <SFML/Audio.hpp>
-#include "../Base/GameObject.h"
+#include "../Core/GameObject.h"
 
 
 namespace hb

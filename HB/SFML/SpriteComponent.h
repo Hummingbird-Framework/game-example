@@ -2,9 +2,9 @@
 #define HB_SPRITE_COMPONENT_H
 #include <SFML/Graphics.hpp>
 #include "Renderer.h"
-#include "../Base/GameObject.h"
-#include "../Base/Transform.h"
-#include "../Base/Time.h"
+#include "../Core/GameObject.h"
+#include "../Core/Transform.h"
+#include "../Core/Time.h"
 #include "Sprite.h"
 
 

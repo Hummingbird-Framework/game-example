@@ -2,7 +2,7 @@
 #define HB_SOUND_MANAGER
 #include <string>
 #include <SFML/Audio.hpp>
-#include "../Base/ResourceManager.h"
+#include "../Core/ResourceManager.h"
 
 namespace hb
 {

@@ -1,7 +1,7 @@
 #ifndef HB_SOUND_BUFFER_H
 #define HB_SOUND_BUFFER_H
-#include "../Base/Resource.h"
-#include "../Base/Time.h"
+#include "../Core/Resource.h"
+#include "../Core/Time.h"
 #include "SoundManager.h"
 
 namespace hb

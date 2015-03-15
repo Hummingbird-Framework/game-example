@@ -19,6 +19,7 @@ void InputManager::update()
 		if (event.type == Event::Closed)
 		{
 			Renderer::getWindow().close();
+			hb::Game::running(false);
 		}
 		else if (event.type == Event::MouseButtonPressed)
 		{

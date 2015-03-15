@@ -3,7 +3,7 @@
 #include <string>
 #include <SFML/Graphics.hpp>
 #include "hash_pair.h"
-#include "../Base/ResourceManager.h"
+#include "../Core/ResourceManager.h"
 
 namespace hb
 {

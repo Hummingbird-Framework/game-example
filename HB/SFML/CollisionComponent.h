@@ -2,10 +2,10 @@
 #define HB_COLLISION_COMPONENT_H
 #include <queue>
 #include <set>
-#include "../Base/Transform.h"
-#include "../Base/GameObject.h"
-#include "../Base/Vector2d.h"
-#include "../Base/Vector3d.h"
+#include "../Core/Transform.h"
+#include "../Core/GameObject.h"
+#include "../Core/Vector2d.h"
+#include "../Core/Vector3d.h"
 #include "Rect.h"
 
 namespace hb

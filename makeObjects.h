@@ -1,4 +1,4 @@
-#include "HB/Base.h"
+#include "HB/Core.h"
 #include "HB/SFML.h"
 
 hb::GameObject* makePlayer();

@@ -2,8 +2,8 @@
 #define HB_SOUND_COMPONENT_H
 #include <string>
 #include <SFML/Audio.hpp>
-#include "../Base/GameObject.h"
-#include "../Base/Transform.h"
+#include "../Core/GameObject.h"
+#include "../Core/Transform.h"
 #include "SoundManager.h"
 #include "SoundBuffer.h"
 

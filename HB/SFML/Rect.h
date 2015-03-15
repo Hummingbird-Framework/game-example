@@ -1,7 +1,7 @@
 #ifndef HB_RECT_H
 #define HB_RECT_H
 #include <SFML/Graphics.hpp>
-#include "../Base/Vector2d.h"
+#include "../Core/Vector2d.h"
 
 namespace hb
 {

@@ -2,7 +2,7 @@ CC          := g++
 
 CFLAGS      := -std=c++11 -Wall -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system
 
-BASE        := HB/Base
+BASE        := HB/Core
 SFML        := HB/SFML
 
 MODULES     := $(BASE) $(SFML)

@@ -4,7 +4,8 @@
 #include <map>
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
-#include "../Base/EventManager.h"
+#include "../Core/EventManager.h"
+#include "../Core/Game.h"
 #include "Renderer.h"
 
 namespace hb

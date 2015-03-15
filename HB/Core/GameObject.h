@@ -21,7 +21,7 @@ namespace hb
 			{
 				m_game_object = nullptr;
 			}
-			inline virtual ~Component(){}
+			virtual ~Component(){}
 			virtual void init(){}
 			virtual void preUpdate(){}
 			virtual void update(){}
@@ -41,7 +41,7 @@ namespace hb
 
 		GameObject();
 		GameObject(const std::initializer_list<Component*>& components);
-		virtual ~GameObject();
+		~GameObject();
 		int getIdentifier() const;
 		const std::string& getName() const;
 		void setName(const std::string& name);

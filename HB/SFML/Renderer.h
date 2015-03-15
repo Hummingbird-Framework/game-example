@@ -5,8 +5,8 @@
 #include <queue>
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
-#include "../Base/Vector2d.h"
-#include "../Base/Vector3d.h"
+#include "../Core/Vector2d.h"
+#include "../Core/Vector3d.h"
 #include "Camera.h"
 
 namespace hb
