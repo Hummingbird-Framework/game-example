@@ -7,8 +7,6 @@
 #include "SoundManager.h"
 #include "SoundBuffer.h"
 
-// TODO: Make SoundComponent equivalent of SpriteComponent (Sprite)
-
 namespace hb
 {
 	class SoundComponent : public GameObject::Component, public Transform

@@ -21,19 +21,22 @@ hb::GameObject* makeBullet(const hb::Vector2d& direction)
 	};
 
 	auto fc = bullet->getComponent<hb::FunctionComponent>();
-	
-	hb::Time* life_time = new hb::Time;
-	*life_time = hb::Time::seconds(2);
-	fc->setPointer("clock", new hb::Clock);
-	fc->setPointer("life_time", life_time);
-
-	fc->setUpdateFunction([fc, m_collision, m_direction]()
+	struct Data
 	{
-		auto clk = fc->getPointer<hb::Clock>("clock");
-		auto life_time = fc->getPointer<hb::Time>("life_time");
+		hb::Clock clock;
+		hb::Time life_time;
+	};
+	Data* data = new Data;
+
+	data->life_time = hb::Time::seconds(2);
+
+	fc->setUpdateFunction([=]()
+	{
+		auto clk = data->clock;
+		auto life_time = data->life_time;
 		hb::Vector3d p = fc->getGameObject()->getPosition();
 		fc->getGameObject()->setPosition((p + hb::Vector3d(m_direction, 0) * 250 *  hb::Time::deltaTime.asSeconds()));
-		if (clk->getElapsedTime() > *life_time)
+		if (clk.getElapsedTime() > life_time)
 		{
 			fc->getGameObject()->destroy();
 		}

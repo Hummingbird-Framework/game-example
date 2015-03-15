@@ -6,7 +6,7 @@
 
 namespace hb
 {
-	class FunctionComponent : public GameObject::Component, public hb::DataRepository
+	class FunctionComponent : public GameObject::Component
 	{
 	public:
 		FunctionComponent();

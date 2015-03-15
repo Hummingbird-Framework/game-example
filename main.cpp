@@ -4,7 +4,7 @@
 #include "HB/SFML.h"
 #include "makeObjects.h"
 
-void makeRandomObject()
+hb::GameObject* makeRandomObject()
 {
 	hb::Sprite sprite(
 		hb::Texture::loadFromFile("res/drawable/walking-tiles.png", hb::Rect(192, 0, 32*3, 32)),
@@ -15,25 +15,31 @@ void makeRandomObject()
 	//hb::SoundBuffer sound_buf = hb::SoundBuffer::loadFromFile("res/sound/beep.ogg");
 	auto obj = new hb::GameObject
 	{
-		new hb::CollisionComponent(hb::Vector2d(32, 32)),
+		//new hb::CollisionComponent(hb::Vector2d(32, 32)),
 		new hb::SpriteComponent(sprite),
 		new hb::FunctionComponent(),
 		//new hb::SoundComponent(sound_buf)
 	};
 	obj->setName("RandomObject");
-	auto collision = obj->getComponent<hb::CollisionComponent>();
+	//auto collision = obj->getComponent<hb::CollisionComponent>();
 	auto fc = obj->getComponent<hb::FunctionComponent>();
 	//auto sound = obj->getComponent<hb::SoundComponent>();
 	//sound->loop(false);
 
-	fc->setPointer("direction", new hb::Vector2d((double)(rand() % 100)/100.,
-												 (double)(rand() % 100)/100.));
+	struct Data // NOTE: No necesito DataRepository
+	{
+		hb::Vector2d direction;
+	};
+	Data* data = new Data;
+
+	data->direction = hb::Vector2d((double)(rand() % 100)/100., (double)(rand() % 100)/100.);
+
 	obj->setPosition(hb::Vector2d(rand() % hb::Renderer::getWindow().getSize().x-32,
 								  rand() % hb::Renderer::getWindow().getSize().y-32));
 
 	fc->setUpdateFunction([=]()
 	{
-		hb::Vector2d& direction = *(fc->getPointer<hb::Vector2d>("direction"));
+		hb::Vector2d& direction = data->direction;
 		const hb::Vector3d& pos = obj->getPosition();
 		/*while (not collision->empty())
 		{
@@ -50,6 +56,18 @@ void makeRandomObject()
 		fc->getGameObject()->setPosition(pos + direction * 100. * hb::Time::deltaTime.asSeconds());
 	});
 
+	hb::InputManager::instance()->listen([=](const hb::KeyPressed& e)
+	{
+		if (e.code == hb::Keyboard::Key::Space)
+			data->direction *= -1;
+	});
+
+	fc->setDestroyFunction(
+	[=]()
+	{
+		delete data;
+	});
+	return obj;
 }
 
 int main(int argc, char const *argv[])
@@ -66,13 +84,15 @@ int main(int argc, char const *argv[])
 	//hb::Renderer::getCamera().setAxisX(hb::Vector3d(1, 0.5, 0.5));
 	//hb::Renderer::getCamera().setAxisY(hb::Vector3d(-1, 0.5, 0.5));
 	//hb::Renderer::getCamera().setAxisZ(hb::Vector3d(0, 0, 0));
-	//auto player = makePlayer();
-	//makeWall(hb::Vector2d(50, 40), hb::Vector2d(64, 64));
-	//makeWall(hb::Vector2d(100, 140), hb::Vector2d(64, 64));
+	makePlayer();
+	makeWall(hb::Vector2d(50, 40), hb::Vector2d(64, 64));
+	makeWall(hb::Vector2d(70, 140), hb::Vector2d(64, 64));
 
-	int N = 1000;
+	int N = 20000;
 	for (int i = 0; i < N; ++i)
+	{
 		makeRandomObject();
+	}
 
 	std::cout << "TextureManager: " << hb::TextureManager::instance()->size() << std::endl;
 	std::cout << "SoundManager: " << hb::SoundManager::instance()->size() << std::endl;

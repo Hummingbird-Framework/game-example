@@ -1,10 +1,10 @@
-
 #ifndef HB_GAME_OBJECT_H
 #define HB_GAME_OBJECT_H
 #include <cassert>
 #include <vector>
 #include <string>
 #include <unordered_map>
+#include <typeindex>
 #include <initializer_list>
 #include "Transform.h"
 
@@ -63,13 +63,15 @@ namespace hb
 			return nullptr;
 		}
 		template <typename ComponentType>
-		void getComponents(std::vector<ComponentType*>& out) const
+		std::vector<ComponentType*> getComponents() const
 		{
+			std::vector<ComponentType*> r;
 			for (Component* component : m_components)
 			{
 				if (dynamic_cast<ComponentType*>(component))
-					out.push_back(dynamic_cast<ComponentType*>(component));
+					r.push_back(dynamic_cast<ComponentType*>(component));
 			}
+			return r;
 		}
 
 	private:

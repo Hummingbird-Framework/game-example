@@ -7,8 +7,6 @@
 #include "../Base/EventManager.h"
 #include "Renderer.h"
 
-// WISHLIST: Gestionar el input de manera que se de solo una vez el evento de pressed y released y que se le pueda preguntar por el estado de las teclas.
-
 namespace hb
 {
 
