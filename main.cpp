@@ -70,13 +70,26 @@ hb::GameObject* makeRandomObject()
 	return obj;
 }
 
+class FPSPlugin : public hb::Plugin
+{
+public:
+	FPSPlugin(){}
+	~FPSPlugin(){}
+	
+	void preUpdate() override
+	{
+		std::cout << "FPS: " << 1./hb::Time::deltaTime.asSeconds() << std::endl;
+	}
+};
+
 int main(int argc, char const *argv[])
 {
 	srand (time(NULL));
 
 	hb::Renderer::createWindow(hb::Vector2d(1280, 720), "Game");
-
+	hb::Renderer::getCamera().setPosition(hb::Vector3d());
 	hb::Game::addPlugin<hb::SFMLPlugin>();
+	hb::Game::addPlugin<FPSPlugin>();
 
 	hb::Game::addScene(hb::Scene("main",
 	[=]()
@@ -89,15 +102,19 @@ int main(int argc, char const *argv[])
 		//hb::Renderer::getCamera().setAxisX(hb::Vector3d(1, 0.5, 0.5));
 		//hb::Renderer::getCamera().setAxisY(hb::Vector3d(-1, 0.5, 0.5));
 		//hb::Renderer::getCamera().setAxisZ(hb::Vector3d(0, 0, 0));
+		// Escala 1:32
+		hb::Renderer::getCamera().setAxisX(hb::Vector3d(32, 0, 0));
+		hb::Renderer::getCamera().setAxisY(hb::Vector3d(0, 32, 0));
+		hb::Renderer::getCamera().setAxisZ(hb::Vector3d(0, 0, 32));
 		makePlayer();
-		makeWall(hb::Vector2d(50, 40), hb::Vector2d(64, 64));
-		makeWall(hb::Vector2d(70, 140), hb::Vector2d(64, 64));
+		makeWall(hb::Vector2d(0, (hb::Renderer::getWindow().getSize().y-10)/32.), hb::Vector2d(hb::Renderer::getWindow().getSize().x/32., 0.2));
+	//		makeWall(hb::Vector2d(70, 140), hb::Vector2d(64, 64));
 
-		int N = 20000;
+	/*	int N = 20000;
 		for (int i = 0; i < N; ++i)
 		{
 			makeRandomObject();
-		}
+		}*/
 	}));
 	hb::Game::setScene("main");
 	hb::Game::run();

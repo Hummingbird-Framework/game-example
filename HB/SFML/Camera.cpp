@@ -29,19 +29,19 @@ void Camera::setPosition(const Vector3d& pos)
 
 void Camera::setAxisX(const Vector3d& x)
 {
-	m_x = x.normalized();
+	m_x = x;
 }
 
 
 void Camera::setAxisY(const Vector3d& y)
 {
-	m_y = y.normalized();
+	m_y = y;
 }
 
 
 void Camera::setAxisZ(const Vector3d& z)
 {
-	m_z = z.normalized();
+	m_z = z;
 }
 
 

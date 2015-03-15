@@ -52,6 +52,7 @@ void Game::changeScene()
 
 void Game::run()
 {
+	assert(s_change_scene);
 	s_game_running = true;
 
 	for (Plugin* p : s_plugins)
