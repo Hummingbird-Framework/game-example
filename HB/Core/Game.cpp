@@ -56,7 +56,7 @@ void Game::run()
 	s_game_running = true;
 
 	for (Plugin* p : s_plugins)
-			p->gameStart();
+		p->gameStart();
 
 	hb::Clock clk;
 	while(s_game_running)
@@ -80,7 +80,7 @@ void Game::run()
 	s_current_scene->second.exit();
 
 	for (Plugin* p : s_plugins)
-			p->gameEnd();
+		p->gameEnd();
 
 	hb::GameObject::destroyAll();
 }

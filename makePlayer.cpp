@@ -35,7 +35,6 @@ hb::GameObject* makePlayer()
 
 	data->direction      = hb::Vector2d();
 	data->last_direction = hb::Vector2d(1, 0);
-	data->running        = false;
 	data->player_sprite  = player->getComponent<hb::SpriteComponent>();
 	data->m_collision    = player->getComponent<hb::CollisionComponent>();
 	data->last_position  = hb::Vector3d(player->getPosition());
@@ -54,8 +53,8 @@ hb::GameObject* makePlayer()
 	// define update function
 	fc->setUpdateFunction([=] ()
 	{
-		if (data->direction.y > 300./32.)
-			data->direction.y = 300./32.;
+		if (data->direction.y > 10.)
+			data->direction.y = 10.;
 
 		if (data->direction.x == 0)
 			data->player_sprite->stop();
@@ -76,11 +75,11 @@ hb::GameObject* makePlayer()
 				}
 				else
 				{
-					if (c.intersection.top > player->getPosition().y + 0.75)
+					if (c.intersection.top > player->getPosition().y + 0.5)
 					{
 						still_grounded = true;
 					}
-					else if (c.intersection.top < player->getPosition().y + 0.24)
+					else if (c.intersection.top < player->getPosition().y + 0.5)
 					{
 						data->direction.y = 0;
 					}
@@ -92,7 +91,7 @@ hb::GameObject* makePlayer()
 		data->is_grounded = still_grounded;
 		if (not data->is_grounded)
 		{
-			data->direction.y += 0.1/32.;
+			data->direction.y += 9.8 * hb::Time::deltaTime.asSeconds();
 		}
 		else
 		{
@@ -100,10 +99,10 @@ hb::GameObject* makePlayer()
 		}
 		hb::Vector3d p = player->getPosition();
 		data->last_position = p;
-		bool running = data->running;
 		//hb::Vector3d dir = hb::Vector3d(fc->getPointer<hb::Vector2d>("direction")->x, 0, fc->getPointer<hb::Vector2d>("direction")->y);
-		hb::Vector3d dir = hb::Vector3d(data->direction.x, data->direction.y, 0);
-		player->setPosition(p + (dir * hb::Time::deltaTime.asSeconds()));
+		hb::Vector3d dir = hb::Vector3d(data->direction.x * hb::Time::deltaTime.asSeconds(), data->direction.y * hb::Time::deltaTime.asSeconds(), 0);
+		std::cout << "dir: " << dir.x << ", " << dir.y/hb::Time::deltaTime.asSeconds() << std::endl;
+		player->setPosition(p + dir);
 
 		hb::Renderer::getCamera().setPosition(player->getPosition());
 	});
@@ -120,7 +119,7 @@ hb::GameObject* makePlayer()
 		if (code == hb::Keyboard::Key::W and data->direction.y >= 0)
 		{
 			if (data->is_grounded)
-				data->direction.y = -value*1.5;
+				data->direction.y = -5;
 		}
 		else if (code == hb::Keyboard::Key::A and data->direction.x >= 0)
 		{
@@ -142,10 +141,6 @@ hb::GameObject* makePlayer()
 			else
 				bullet->setPosition(player->getPosition() + hb::Vector3d(0.5,0.25,0));
 		}
-		else if (code == hb::Keyboard::Key::LShift)
-		{
-			data->running = true;
-		}
 	});
 	keyreleased_listener_id = hb::InputManager::instance()->listen(
 	[=](const hb::KeyReleased& event)
@@ -155,8 +150,6 @@ hb::GameObject* makePlayer()
 			data->direction.x = 0;
 		else if (code == hb::Keyboard::Key::D and data->direction.x > 0)
 			data->direction.x = 0;
-		else if (code == hb::Keyboard::Key::LShift)
-			data->running = false;
 	});
 	hb::InputManager::ListenerId<hb::MouseButtonWorld> mousebuttonworld_listener_id = hb::InputManager::ListenerId<hb::MouseButtonWorld>();
 	mousebuttonworld_listener_id = hb::InputManager::instance()->listen([=](const hb::MouseButtonWorld& e)
