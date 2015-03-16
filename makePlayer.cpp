@@ -101,7 +101,6 @@ hb::GameObject* makePlayer()
 		data->last_position = p;
 		//hb::Vector3d dir = hb::Vector3d(fc->getPointer<hb::Vector2d>("direction")->x, 0, fc->getPointer<hb::Vector2d>("direction")->y);
 		hb::Vector3d dir = hb::Vector3d(data->direction.x * hb::Time::deltaTime.asSeconds(), data->direction.y * hb::Time::deltaTime.asSeconds(), 0);
-		std::cout << "dir: " << dir.x << ", " << dir.y/hb::Time::deltaTime.asSeconds() << std::endl;
 		player->setPosition(p + dir);
 
 		hb::Renderer::getCamera().setPosition(player->getPosition());
@@ -154,7 +153,7 @@ hb::GameObject* makePlayer()
 	hb::InputManager::ListenerId<hb::MouseButtonWorld> mousebuttonworld_listener_id = hb::InputManager::ListenerId<hb::MouseButtonWorld>();
 	mousebuttonworld_listener_id = hb::InputManager::instance()->listen([=](const hb::MouseButtonWorld& e)
 	{
-		makeWall(hb::Vector2d(e.x/32., e.y/32.), hb::Vector2d(1, 1));
+		makeWall(hb::Vector2d(e.x, e.y), hb::Vector2d(1, 1));
 	});
 
 	//define destructor function

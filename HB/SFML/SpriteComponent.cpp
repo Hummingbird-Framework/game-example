@@ -72,7 +72,7 @@ void SpriteComponent::postUpdate()
 		Vector2d pos = getCoords();
 		m_sprite.setTextureRect(sf::IntRect(pos.x, pos.y, m_animation.m_frame_size.x, m_animation.m_frame_size.y));
 		Vector3d p = getPosition() + getGameObject()->getPosition();
-		Camera camera = Renderer::getCamera();
+		Camera& camera = Renderer::getCamera();
 		Vector3d v = (camera.getAxisX() * p.x) + (camera.getAxisY() * p.y) + (camera.getAxisZ() * p.z);
 		m_sprite.setPosition(v.x, v.y);
 		double scale_x = getScale().x * getGameObject()->getScale().x;

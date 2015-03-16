@@ -1,6 +1,7 @@
 #ifndef HUMMINGBIRD_SFML
 #define HUMMINGBIRD_SFML
 #include "SFML/Camera.h"
+#include "SFML/ClickableComponent.h"
 #include "SFML/CollisionComponent.h"
 #include "SFML/InputManager.h"
 #include "SFML/ListenerComponent.h"

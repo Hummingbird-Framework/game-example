@@ -10,7 +10,7 @@ m_z(0, 0, 1),
 m_zn(-10000.),
 m_zf(10000.)
 {
-
+	calculateInverseMatrix();
 }
 
 
@@ -30,18 +30,21 @@ void Camera::setPosition(const Vector3d& pos)
 void Camera::setAxisX(const Vector3d& x)
 {
 	m_x = x;
+	calculateInverseMatrix();
 }
 
 
 void Camera::setAxisY(const Vector3d& y)
 {
 	m_y = y;
+	calculateInverseMatrix();
 }
 
 
 void Camera::setAxisZ(const Vector3d& z)
 {
 	m_z = z;
+	calculateInverseMatrix();
 }
 
 
@@ -81,6 +84,24 @@ const Vector3d& Camera::getAxisZ() const
 }
 
 
+const Vector3d& Camera::getInverseAxisX() const
+{
+	return m_x_inverse;
+}
+
+
+const Vector3d& Camera::getInverseAxisY() const
+{
+	return m_y_inverse;
+}
+
+
+const Vector3d& Camera::getInverseAxisZ() const
+{
+	return m_z_inverse;
+}
+
+
 double Camera::getZNear() const
 {
 	return m_zn;
@@ -90,4 +111,23 @@ double Camera::getZNear() const
 double Camera::getZFar() const
 {
 	return m_zf;
+}
+
+
+void Camera::calculateInverseMatrix()
+{
+	double determinant = + m_x.x * (m_y.y * m_z.z - m_z.y * m_y.z)
+						 - m_x.y * (m_y.x * m_z.z - m_y.z * m_z.x)
+						 + m_x.z * (m_y.x * m_z.y - m_y.y * m_z.x);
+	assert(determinant != 0.);
+	double invdet = 1/determinant;
+	m_x_inverse.x =  (m_y.y * m_z.z - m_z.y * m_y.z) * invdet;
+	m_x_inverse.y = -(m_x.y * m_z.z - m_x.z * m_z.y) * invdet;
+	m_x_inverse.z =  (m_x.y * m_y.z - m_x.z * m_y.y) * invdet;
+	m_y_inverse.x = -(m_y.x * m_z.z - m_y.z * m_z.x) * invdet;
+	m_y_inverse.y =  (m_x.x * m_z.z - m_x.z * m_z.x) * invdet;
+	m_y_inverse.z = -(m_x.x * m_y.z - m_y.x * m_x.z) * invdet;
+	m_z_inverse.x =  (m_y.x * m_z.y - m_z.x * m_y.y) * invdet;
+	m_z_inverse.y = -(m_x.x * m_z.y - m_z.x * m_x.y) * invdet;
+	m_z_inverse.z =  (m_x.x * m_y.y - m_y.x * m_x.y) * invdet;
 }

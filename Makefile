@@ -37,8 +37,10 @@ clean-$(BASE):
 clean-$(SFML):
 	@$(MAKE) -C $(SFML) clean;
 	
-clean: clean-$(BASE) clean-$(SFML)
+clean:
 	rm -rf exe *~ *.o *.a
+
+clean-all: clean-$(BASE) clean-$(SFML) clean
 
 run: all
 	./$(EXE)

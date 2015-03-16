@@ -89,32 +89,47 @@ int main(int argc, char const *argv[])
 	hb::Renderer::createWindow(hb::Vector2d(1280, 720), "Game");
 	hb::Renderer::getCamera().setPosition(hb::Vector3d());
 	hb::Game::addPlugin<hb::SFMLPlugin>();
-	hb::Game::addPlugin<FPSPlugin>();
+	//hb::Game::addPlugin<FPSPlugin>();
+	// Perpectiva caballera
+	//hb::Renderer::getCamera().setAxisX(hb::Vector3d(1, 0, 0));
+	//hb::Renderer::getCamera().setAxisY(hb::Vector3d(-1, 1, 0));
+	//hb::Renderer::getCamera().setAxisZ(hb::Vector3d(0, 0, 0));
+	// Perspectiva isometrica
+	hb::Renderer::getCamera().setAxisX(hb::Vector3d(32, 16, 16));
+	hb::Renderer::getCamera().setAxisY(hb::Vector3d(-32, 16, 16));
+	hb::Renderer::getCamera().setAxisZ(hb::Vector3d(0, 0, 1));
+	// Escala 1:32
+	//hb::Renderer::getCamera().setAxisX(hb::Vector3d(32, 0, 0));
+	//hb::Renderer::getCamera().setAxisY(hb::Vector3d(0, 32, 0));
+	//hb::Renderer::getCamera().setAxisZ(hb::Vector3d(0, 0, 32));
 
 	hb::Game::addScene(hb::Scene("main",
 	[=]()
 	{
-		// Perpectiva caballera
-		//hb::Renderer::getCamera().setAxisX(hb::Vector3d(1, 0, 0));
-		//hb::Renderer::getCamera().setAxisY(hb::Vector3d(-1, 1, 0));
-		//hb::Renderer::getCamera().setAxisZ(hb::Vector3d(0, 0, 0));
-		// Perspectiva isometrica
-		//hb::Renderer::getCamera().setAxisX(hb::Vector3d(1, 0.5, 0.5));
-		//hb::Renderer::getCamera().setAxisY(hb::Vector3d(-1, 0.5, 0.5));
-		//hb::Renderer::getCamera().setAxisZ(hb::Vector3d(0, 0, 0));
-		// Escala 1:32
-		hb::Renderer::getCamera().setAxisX(hb::Vector3d(32, 0, 0));
-		hb::Renderer::getCamera().setAxisY(hb::Vector3d(0, 32, 0));
-		hb::Renderer::getCamera().setAxisZ(hb::Vector3d(0, 0, 32));
 		makePlayer();
 		makeWall(hb::Vector2d(0, (hb::Renderer::getWindow().getSize().y-10)/32.), hb::Vector2d(hb::Renderer::getWindow().getSize().x/32., 0.2));
-	//		makeWall(hb::Vector2d(70, 140), hb::Vector2d(64, 64));
-
-	/*	int N = 20000;
-		for (int i = 0; i < N; ++i)
+		hb::Texture tex = hb::Texture::loadFromFile("");
+		tex.repeat(true);
+		auto collisions = new hb::CollisionComponent(hb::Vector2d(2, 2));
+		auto clickable = new hb::ClickableComponent(hb::Vector2d(2, 2));
+		clickable->setOnClick(
+		[]()
 		{
-			makeRandomObject();
-		}*/
+			std::cout << "hai1" << std::endl;
+			hb::Game::setScene("second");
+		});
+		new hb::GameObject
+		{
+			collisions, new hb::SpriteComponent(tex), clickable
+		};
+	}));
+	hb::Game::addScene(hb::Scene("second",
+	[=]()
+	{
+		makePlayer();
+		makeWall(hb::Vector2d(0, (hb::Renderer::getWindow().getSize().y-10)/32.), hb::Vector2d(hb::Renderer::getWindow().getSize().x/32., 0.2));
+		makeWall(hb::Vector2d(0, (hb::Renderer::getWindow().getSize().y)/32. - 1), hb::Vector2d(2, 2));
+		//makeWall(hb::Vector2d(70, 140), hb::Vector2d(64, 64));
 	}));
 	hb::Game::setScene("main");
 	hb::Game::run();

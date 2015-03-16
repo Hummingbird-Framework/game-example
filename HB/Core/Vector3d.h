@@ -38,6 +38,9 @@ namespace hb
 			}
 			return v;
 		}
+
+		Vector2d xy()
+		{return Vector2d(x, y);}
 	};
 	
 }
