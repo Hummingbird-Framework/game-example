@@ -1,8 +1,10 @@
 #ifndef HB_GAME_OBJECT_H
 #define HB_GAME_OBJECT_H
+#include <cstdlib>
 #include <cassert>
 #include <vector>
 #include <string>
+#include <map>
 #include <unordered_map>
 #include <typeindex>
 #include <initializer_list>

@@ -101,7 +101,7 @@ int main(int argc, char const *argv[])
 	hb::Renderer::getCamera().setAxisY(hb::Vector3d(0, 32, 0));
 	hb::Renderer::getCamera().setAxisZ(hb::Vector3d(0, 0, 32));
 
-	hb::Game::addScene(hb::Scene("main",
+	hb::Game::addScene(hb::Game::Scene("main",
 	[=]()
 	{
 		//for (int i = 0; i < 20000; ++i)
@@ -112,21 +112,24 @@ int main(int argc, char const *argv[])
 		makeWall(hb::Vector2d(0, (hb::Renderer::getWindow().getSize().y-10)/32.), hb::Vector2d(hb::Renderer::getWindow().getSize().x/32., 0.2));
 		hb::Texture tex = hb::Texture::loadFromFile("");
 		tex.repeat(true);
-		auto collisions = new hb::CollisionComponent(hb::Vector2d(2, 2));
-		auto clickable = new hb::ClickableComponent(hb::Vector2d(2, 2));
+		std::map<std::string, std::string> params;
+		params["Sprite.count"] = "1";
+		params["Sprite[0].path"] = "";
+		params["Sprite[0].frameSize"] = "(64,64)";
+		params["Collision.count"] = "1";
+		params["Collision[0].size"] = "(2,2)";
+		params["Clickable.count"] = "1";
+		params["Clickable[0].size"] = "(2,2)";
+		hb::GameObject* obj = hb::Game::Scene::makeGameObject(params);
+		auto clickable = obj->getComponent<hb::ClickableComponent>();
 		clickable->setOnClick(
 		[]()
 		{
 			hb::Game::setScene("second");
 		});
-		new hb::GameObject
-		{
-			collisions, new hb::SpriteComponent(tex), clickable
-		};
 
-		std::cout << "Textures loaded: " << hb::TextureManager::instance()->size() << std::endl;
 	}));
-	hb::Game::addScene(hb::Scene("second",
+	hb::Game::addScene(hb::Game::Scene("second",
 	[=]()
 	{
 		makePlayer();

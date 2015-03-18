@@ -4,9 +4,9 @@ using namespace hb;
 
 bool Game::s_game_running = false;
 bool Game::s_change_scene = false;
-std::map<std::string, Scene> Game::s_scenes;
-std::map<std::string, Scene>::iterator Game::s_current_scene = Game::s_scenes.end();
-std::map<std::string, Scene>::iterator Game::s_next_scene = Game::s_scenes.end();
+std::map<std::string, Game::Scene> Game::s_scenes;
+std::map<std::string, Game::Scene>::iterator Game::s_current_scene = Game::s_scenes.end();
+std::map<std::string, Game::Scene>::iterator Game::s_next_scene = Game::s_scenes.end();
 std::vector<Plugin*> Game::s_plugins;
 
 
@@ -94,4 +94,17 @@ void Game::running(bool running)
 bool Game::isRunning()
 {
 	return s_game_running;
+}
+
+
+std::map<std::string, Plugin::ComponentFactory> Game::getAllComponentFactories()
+{
+	std::map<std::string, Plugin::ComponentFactory> ret;
+	for (Plugin* p : s_plugins)
+	{
+		std::map<std::string, Plugin::ComponentFactory> list = p->getComponentFactory();
+		ret.insert(list.begin(), list.end());
+	}
+
+	return ret;
 }

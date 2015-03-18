@@ -1,10 +1,10 @@
 #ifndef HB_GAME_H
 #define HB_GAME_H
+#include <cstdlib>
 #include <cassert>
 #include <string>
 #include <vector>
 #include <map>
-#include "Scene.h"
 #include "GameObject.h"
 #include "Clock.h"
 #include "Plugin.h"
@@ -14,6 +14,26 @@ namespace hb
 	class Game
 	{
 	public:
+		class Scene
+		{
+		public:
+			Scene(const std::string& name, std::function<void(void)>&& init);
+			Scene(const Scene& other);
+			Scene(Scene&& other);
+			~Scene();
+
+			static GameObject* makeGameObject(std::map<std::string, std::string>& properties);
+
+			void init();
+			void exit();
+			const std::string& getName() const;
+			void setExit(std::function<void(void)>&& exit);
+
+		private:
+			std::function<void(void)> m_init, m_exit;
+			std::string m_name;
+		};
+
 		~Game();
 
 		static void addScene(Scene&& scene);
@@ -27,6 +47,7 @@ namespace hb
 			T* t = new T();
 			s_plugins.push_back(t);
 		}
+		static std::map<std::string, Plugin::ComponentFactory> getAllComponentFactories();
 
 
 	private:

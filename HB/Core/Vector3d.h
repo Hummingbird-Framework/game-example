@@ -16,6 +16,19 @@ namespace hb
 		Vector3d(const Vector3d& v): x(v.x), y(v.y), z(v.z){};
 		Vector3d(const Vector2d& v): x(v.x), y(v.y), z(0){};
 		Vector3d(const Vector2d& v, double z): x(v.x), y(v.y), z(z){};
+		Vector3d(const std::string& str): x(0), y(0), z(0)
+		{
+			std::regex re ("\\(\\s*([0-9]+(?:\\.[0-9]+)?)\\s*,\\s*([0-9]+(?:\\.[0-9]+)?)\\s*,\\s*([0-9]+(?:\\.[0-9]+)?)\\s*\\)");
+			std::smatch sm;
+			std::regex_match (str, sm, re);
+			if (not sm.empty())
+			{
+				x = strtod(sm.str(1).c_str(), NULL);
+				y = strtod(sm.str(2).c_str(), NULL);
+				z = strtod(sm.str(3).c_str(), NULL);
+			}
+		}
+
 		Vector3d rotatedXZ(double degrees) const;
 		Vector3d rotatedXY(double degrees) const;
 		Vector3d rotatedYZ(double degrees) const;

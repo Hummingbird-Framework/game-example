@@ -3,6 +3,10 @@
 #include "../Core/Plugin.h"
 #include "InputManager.h"
 #include "Renderer.h"
+#include "SpriteComponent.h"
+#include "SoundComponent.h"
+#include "CollisionComponent.h"
+#include "ClickableComponent.h"
 
 namespace hb
 {
@@ -11,6 +15,8 @@ namespace hb
 	public:
 		SFMLPlugin();
 		virtual ~SFMLPlugin() override;
+
+		virtual std::map<std::string, Plugin::ComponentFactory> getComponentFactory() const;
 
 		virtual void preUpdate() override;
 		virtual void postUpdate() override;

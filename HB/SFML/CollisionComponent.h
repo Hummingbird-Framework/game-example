@@ -21,6 +21,9 @@ namespace hb
 		CollisionComponent(const Vector2d& size = Vector2d());
 		virtual ~CollisionComponent() override;
 
+		static GameObject::Component* factory(std::map<std::string, std::string>& properties, int i);
+		static const std::string& getFootprint();
+
 		virtual void preUpdate() override;
 		virtual void postUpdate() override;
 		void setSize(const Vector2d& box);
@@ -32,6 +35,7 @@ namespace hb
 		bool empty() const;
 
 	private:
+		static std::string s_footprint;
 		static bool s_collisions_executed;
 		static std::set<CollisionComponent*> s_components;
 

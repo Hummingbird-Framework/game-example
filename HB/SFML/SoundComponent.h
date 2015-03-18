@@ -22,6 +22,10 @@ namespace hb
 		SoundComponent();
 		SoundComponent(const SoundBuffer& buffer);
 		virtual ~SoundComponent() override;
+
+		static GameObject::Component* factory(std::map<std::string, std::string>& properties, int i);
+		static const std::string& getFootprint();
+
 		void update() override;
 
 		void setBuffer(const SoundBuffer& buffer);
@@ -47,6 +51,7 @@ namespace hb
 		double getAttenuation() const;
 
 	private:
+		static std::string s_footprint;
 		sf::Sound m_sound;
 		SoundBuffer m_buffer;
 	};

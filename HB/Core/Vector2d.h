@@ -1,6 +1,9 @@
 #ifndef HB_VECTOR_2D_H
 #define HB_VECTOR_2D_H
 #include <cmath>
+#include <string>
+#include <cstdlib>
+#include <regex>
 
 namespace hb
 {
@@ -11,6 +14,17 @@ namespace hb
 		Vector2d(): x(0), y(0){};
 		Vector2d(double x, double y): x(x), y(y){};
 		Vector2d(const Vector2d& v): x(v.x), y(v.y){};
+		Vector2d(const std::string& str): x(0), y(0)
+		{
+			std::regex re ("\\(\\s*([0-9]+(?:\\.[0-9]+)?)\\s*,\\s*([0-9]+(?:\\.[0-9]+)?)\\s*\\)");
+			std::smatch sm;
+			std::regex_match (str, sm, re);
+			if (not sm.empty())
+			{
+				x = strtod(sm.str(1).c_str(), NULL);
+				y = strtod(sm.str(2).c_str(), NULL);
+			}
+		}
 
 		double module() const
 		{return sqrt(pow(x, 2) + pow(y, 2));}

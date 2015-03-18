@@ -11,7 +11,6 @@
 #include "Core/Plugin.h"
 #include "Core/Resource.h"
 #include "Core/ResourceManager.h"
-#include "Core/Scene.h"
 #include "Core/Time.h"
 #include "Core/Transform.h"
 #include "Core/Vector2d.h"

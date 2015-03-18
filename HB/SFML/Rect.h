@@ -1,5 +1,7 @@
 #ifndef HB_RECT_H
 #define HB_RECT_H
+#include <string>
+#include <regex>
 #include <SFML/Graphics.hpp>
 #include "../Core/Vector2d.h"
 
@@ -10,6 +12,7 @@ namespace hb
 	public:
 		Rect();
 		Rect(double rectLeft, double rectTop, double rectWidth, double rectHeight);
+		Rect(const std::string& str);
 		Rect(const Vector2d &position, const Vector2d &size);
 		~Rect();
 		

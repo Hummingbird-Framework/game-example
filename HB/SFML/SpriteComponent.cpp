@@ -1,6 +1,7 @@
 #include "SpriteComponent.h"
 using namespace hb;
 
+std::string SpriteComponent::s_footprint = "Sprite";
 
 SpriteComponent::SpriteComponent(const Sprite& sprite, const std::vector<int>& frame_order, const Time& frame_time):
 GameObject::Component(),
@@ -21,6 +22,45 @@ m_frame_order(frame_order)
 SpriteComponent::~SpriteComponent()
 {
 
+}
+
+
+GameObject::Component* SpriteComponent::factory(std::map<std::string, std::string>& properties, int i)
+{
+	std::string path = properties[s_footprint + "[" + std::to_string(i) + "].path"];
+	hb::Texture tex = hb::Texture::loadFromFile(path, hb::Rect(properties[s_footprint + "[" + std::to_string(i) + "].rect"]));
+	std::string frameSize = properties[s_footprint + "[" + std::to_string(i) + "].frameSize"];
+	std::string frameMargin = properties[s_footprint + "[" + std::to_string(i) + "].frameMargin"];
+	hb::Sprite sprite = hb::Sprite(tex, hb::Vector2d(frameSize), hb::Vector2d(frameMargin));
+
+	std::regex re ("(?:[0-9]+|\\s*,\\s*)+");
+	std::regex re2 ("[0-9]+");
+	std::string s = properties[s_footprint + "[" + std::to_string(i) + "].frameOrder"];
+	std::vector<int> v;
+	if (std::regex_match (s, re))
+	{
+		std::smatch sm;
+		while(std::regex_search (s,sm,re2))
+		{
+			v.push_back(atoi(sm.str(0).c_str()));
+			s = sm.suffix().str();
+		}
+	}
+	if (v.size() == 0)
+		v.push_back(0);
+
+	std::string frameTime = properties[s_footprint + "[" + std::to_string(i) + "].frameTime"];
+	Time t;
+	if (frameTime.length() != 0)
+		t = Time::miliseconds(atoi(frameTime.c_str()));
+
+	return new SpriteComponent(sprite, v, t);
+}
+
+
+const std::string& SpriteComponent::getFootprint()
+{
+	return s_footprint;
 }
 
 

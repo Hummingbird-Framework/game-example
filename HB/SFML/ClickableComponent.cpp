@@ -1,10 +1,27 @@
 #include "ClickableComponent.h"
 using namespace hb;
 
+std::string ClickableComponent::s_footprint = "Clickable";
+
 ClickableComponent::ClickableComponent():
 ClickableComponent(hb::Vector2d())
 {
 
+}
+
+
+GameObject::Component* ClickableComponent::factory(std::map<std::string, std::string>& properties, int i)
+{
+	ClickableComponent* c = new ClickableComponent();
+	c->setPosition(hb::Vector3d(properties[s_footprint + "[" + std::to_string(i) + "].position"]));
+	c->setSize(hb::Vector2d(properties[s_footprint + "[" + std::to_string(i) + "].size"]));
+	return c;
+}
+
+
+const std::string& ClickableComponent::getFootprint()
+{
+	return s_footprint;
 }
 
 
