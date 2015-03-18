@@ -4,8 +4,8 @@ hb::GameObject* makeBullet(const hb::Vector2d& direction)
 {
 	hb::Vector2d m_direction = direction.normalized();
 	hb::Texture tex = hb::Texture::loadFromFile("res/drawable/fireballs.png", hb::Rect());
-	hb::Sprite m_animation = hb::Sprite(tex, hb::Vector2d(16, 16), hb::Vector2d(0, 0), 4, 7, hb::Time::seconds(0.1));
-	auto m_sprite = new hb::SpriteComponent(m_animation);
+	hb::Sprite m_animation = hb::Sprite(tex, hb::Vector2d(16, 16), hb::Vector2d(0, 0));
+	auto m_sprite = new hb::SpriteComponent(m_animation, {4, 5, 6, 7}, hb::Time::seconds(0.1));
 	auto m_collision = new hb::CollisionComponent(hb::Vector2d(0.5, 0.5));
 	hb::SoundBuffer sound_buffer = hb::SoundBuffer::loadFromFile("res/sound/Fire-ball.wav");
 	hb::SoundComponent* sound = new hb::SoundComponent(sound_buffer);

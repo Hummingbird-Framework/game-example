@@ -1,5 +1,4 @@
 #include "ClickableComponent.h"
-#include <iostream>
 using namespace hb;
 
 ClickableComponent::ClickableComponent():
@@ -12,15 +11,12 @@ ClickableComponent(hb::Vector2d())
 ClickableComponent::ClickableComponent(const Vector2d& size):
 m_size(size)
 {
-	m_onClick = [](){std::cout << "hai2" << std::endl;};
-	InputManager::instance()->listen(
+	m_onClick = [](){};
+	m_listener_id = InputManager::instance()->listen(
 	[this](const hb::MouseButtonWorld& e)
 	{
 		hb::Vector3d p = getGameObject()->getPosition() + getPosition();
-		Camera& camera = Renderer::getCamera();
-		p = (camera.getAxisX() * p.x) + (camera.getAxisY() * p.y) + (camera.getAxisZ() * p.z);
-		hb::Vector2d size = ((camera.getAxisX() * m_size.x) + (camera.getAxisY() * m_size.y)).xy();
-		if (e.x > p.x and e.x < p.x + size.x and e.y > p.y and e.y < p.y + size.y)
+		if (e.x > p.x and e.x < p.x + m_size.x and e.y > p.y and e.y < p.y + m_size.y)
 			m_onClick();
 	});
 }

@@ -8,15 +8,13 @@ hb::GameObject* makeRandomObject()
 {
 	hb::Sprite sprite(
 		hb::Texture::loadFromFile("res/drawable/walking-tiles.png", hb::Rect(192, 0, 32*3, 32)),
-		hb::Vector2d(32, 32), hb::Vector2d(),
-		{0, 1, 2, 1},
-		hb::Time::seconds(0.33)
+		hb::Vector2d(32, 32), hb::Vector2d()
 	);
 	//hb::SoundBuffer sound_buf = hb::SoundBuffer::loadFromFile("res/sound/beep.ogg");
 	auto obj = new hb::GameObject
 	{
-		//new hb::CollisionComponent(hb::Vector2d(32, 32)),
-		new hb::SpriteComponent(sprite),
+		//new hb::CollisionComponent(hb::Vector2d(1, 1)),
+		new hb::SpriteComponent(sprite, {0, 1, 2, 1}, hb::Time::seconds(0.33)),
 		new hb::FunctionComponent(),
 		//new hb::SoundComponent(sound_buf)
 	};
@@ -34,8 +32,8 @@ hb::GameObject* makeRandomObject()
 
 	data->direction = hb::Vector2d((double)(rand() % 100)/100., (double)(rand() % 100)/100.);
 
-	obj->setPosition(hb::Vector2d(rand() % hb::Renderer::getWindow().getSize().x-32,
-								  rand() % hb::Renderer::getWindow().getSize().y-32));
+	obj->setPosition(hb::Vector2d(rand() % hb::Renderer::getWindow().getSize().x/32.-1,
+								  rand() % hb::Renderer::getWindow().getSize().y/32.-1));
 
 	fc->setUpdateFunction([=]()
 	{
@@ -48,12 +46,12 @@ hb::GameObject* makeRandomObject()
 			//	sound->play();
 		}*/
 
-		if (pos.x < 0 or pos.x + 32 > hb::Renderer::getWindow().getSize().x)
+		if (pos.x < 0 or pos.x + 1 > hb::Renderer::getWindow().getSize().x/32.)
 			direction.x *= -1;
-		if (pos.y < 0 or pos.y + 32 > hb::Renderer::getWindow().getSize().y)
+		if (pos.y < 0 or pos.y + 1 > hb::Renderer::getWindow().getSize().y/32.)
 			direction.y *= -1;
 
-		fc->getGameObject()->setPosition(pos + direction * 100. * hb::Time::deltaTime.asSeconds());
+		fc->getGameObject()->setPosition(pos + direction * 100./32. * hb::Time::deltaTime.asSeconds());
 	});
 
 	hb::InputManager::instance()->listen([=](const hb::KeyPressed& e)
@@ -91,21 +89,25 @@ int main(int argc, char const *argv[])
 	hb::Game::addPlugin<hb::SFMLPlugin>();
 	//hb::Game::addPlugin<FPSPlugin>();
 	// Perpectiva caballera
-	//hb::Renderer::getCamera().setAxisX(hb::Vector3d(1, 0, 0));
-	//hb::Renderer::getCamera().setAxisY(hb::Vector3d(-1, 1, 0));
-	//hb::Renderer::getCamera().setAxisZ(hb::Vector3d(0, 0, 0));
-	// Perspectiva isometrica
-	hb::Renderer::getCamera().setAxisX(hb::Vector3d(32, 16, 16));
-	hb::Renderer::getCamera().setAxisY(hb::Vector3d(-32, 16, 16));
-	hb::Renderer::getCamera().setAxisZ(hb::Vector3d(0, 0, 1));
-	// Escala 1:32
 	//hb::Renderer::getCamera().setAxisX(hb::Vector3d(32, 0, 0));
-	//hb::Renderer::getCamera().setAxisY(hb::Vector3d(0, 32, 0));
+	//hb::Renderer::getCamera().setAxisY(hb::Vector3d(-32, 32, 0));
 	//hb::Renderer::getCamera().setAxisZ(hb::Vector3d(0, 0, 32));
+	// Perspectiva isometrica
+	//hb::Renderer::getCamera().setAxisX(hb::Vector3d(32, 16, 16));
+	//hb::Renderer::getCamera().setAxisY(hb::Vector3d(-32, 16, 16));
+	//hb::Renderer::getCamera().setAxisZ(hb::Vector3d(0, 0, 1));
+	// Escala 1:32
+	hb::Renderer::getCamera().setAxisX(hb::Vector3d(32, 0, 0));
+	hb::Renderer::getCamera().setAxisY(hb::Vector3d(0, 32, 0));
+	hb::Renderer::getCamera().setAxisZ(hb::Vector3d(0, 0, 32));
 
 	hb::Game::addScene(hb::Scene("main",
 	[=]()
 	{
+		//for (int i = 0; i < 20000; ++i)
+		//{
+		//	makeRandomObject();
+		//}
 		makePlayer();
 		makeWall(hb::Vector2d(0, (hb::Renderer::getWindow().getSize().y-10)/32.), hb::Vector2d(hb::Renderer::getWindow().getSize().x/32., 0.2));
 		hb::Texture tex = hb::Texture::loadFromFile("");
@@ -115,13 +117,14 @@ int main(int argc, char const *argv[])
 		clickable->setOnClick(
 		[]()
 		{
-			std::cout << "hai1" << std::endl;
 			hb::Game::setScene("second");
 		});
 		new hb::GameObject
 		{
 			collisions, new hb::SpriteComponent(tex), clickable
 		};
+
+		std::cout << "Textures loaded: " << hb::TextureManager::instance()->size() << std::endl;
 	}));
 	hb::Game::addScene(hb::Scene("second",
 	[=]()

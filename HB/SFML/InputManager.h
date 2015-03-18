@@ -30,7 +30,7 @@ namespace hb
 	struct MouseButtonWorld
 	{
 		Mouse::Button button;
-		int x, y;
+		double x, y;
 		explicit MouseButtonWorld(const Event::MouseButtonEvent& ev):
 		button(ev.button),
 		x(ev.x),

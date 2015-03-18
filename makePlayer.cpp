@@ -27,8 +27,6 @@ hb::GameObject* makePlayer()
 		hb::SpriteComponent* player_sprite; //player->getComponent<hb::SpriteComponent>());
 		hb::CollisionComponent* m_collision; //player->getComponent<hb::CollisionComponent>());
 		hb::Vector3d last_position; //new hb::Vector3d(player->getPosition()));
-		hb::Sprite sprite_left;
-		hb::Sprite sprite_right;
 		bool is_grounded = false;
 	};
 	Data* data = new Data;
@@ -40,15 +38,12 @@ hb::GameObject* makePlayer()
 	data->last_position  = hb::Vector3d(player->getPosition());
 
 	hb::Texture tex = hb::Texture::loadFromFile("res/drawable/walking-tiles.png", hb::Rect(96, 128, 96, 128));
-	hb::Sprite sprite_left = hb::Sprite(tex, hb::Vector2d(32, 32), hb::Vector2d(), {3, 4, 5, 4}, hb::Time::seconds(0.1));
-	sprite_left.setCenter(hb::Vector2d(16, 16));
-	data->sprite_left = sprite_left;
-	tex = hb::Texture::loadFromFile("res/drawable/walking-tiles.png", hb::Rect(96, 128, 96, 128));
-	hb::Sprite sprite_right = hb::Sprite(tex, hb::Vector2d(32, 32), hb::Vector2d(), {6, 7, 8, 7}, hb::Time::seconds(0.1));
-	sprite_right.setCenter(hb::Vector2d(16, 16));
-	data->sprite_right = sprite_right;
+	hb::Sprite sprite = hb::Sprite(tex, hb::Vector2d(32, 32), hb::Vector2d());
+	//sprite.setCenter(hb::Vector2d(16, 16));
 
-	data->player_sprite->setSprite(data->sprite_right);
+	data->player_sprite->setSprite(sprite);
+	data->player_sprite->setFrameOrder({6, 7, 8, 7});
+	data->player_sprite->setFrameTime(hb::Time::seconds(0.1));
 
 	// define update function
 	fc->setUpdateFunction([=] ()
@@ -124,13 +119,13 @@ hb::GameObject* makePlayer()
 		{
 			data->direction.x = -value;
 			data->last_direction = data->direction;
-			data->player_sprite->setSprite(data->sprite_left);
+			data->player_sprite->setFrameOrder({3, 4, 5, 4});
 		}
 		else if (code == hb::Keyboard::Key::D and data->direction.x <= 0)
 		{
 			data->direction.x = value;
 			data->last_direction = data->direction;
-			data->player_sprite->setSprite(data->sprite_right);
+			data->player_sprite->setFrameOrder({6, 7, 8, 7});
 		}
 		else if (code == hb::Keyboard::Key::Space)
 		{
@@ -154,6 +149,8 @@ hb::GameObject* makePlayer()
 	mousebuttonworld_listener_id = hb::InputManager::instance()->listen([=](const hb::MouseButtonWorld& e)
 	{
 		makeWall(hb::Vector2d(e.x, e.y), hb::Vector2d(1, 1));
+		std::cout << "wall: " << e.x << ", " << e.y << std::endl;
+		std::cout << "player: " << player->getPosition().x << ", " << player->getPosition().y << std::endl;
 	});
 
 	//define destructor function
