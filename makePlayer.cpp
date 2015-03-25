@@ -1,13 +1,15 @@
 #include "makeObjects.h"
 #include <iostream>
 
-hb::GameObject* makePlayer()
+void makePlayer(const Tmx::Map* map, int obj_grp, int obj_id)
 {
+	const Tmx::Object* obj = map->GetObjectGroup(obj_grp)->GetObject(obj_id);
+	int z_index = map->GetObjectGroup(obj_grp)->GetZOrder();
 	// Define the player GameObject
 	auto player = new hb::GameObject
 	{
 		new hb::SpriteComponent(),
-		new hb::CollisionComponent(hb::Vector2d(1, 1)),
+		new hb::CollisionComponent(hb::Vector2d(0.8, 0.9)),
 		new hb::FunctionComponent()
 	};
 
@@ -18,7 +20,9 @@ hb::GameObject* makePlayer()
 	auto fc = player->getComponent<hb::FunctionComponent>();
 
 	// run initialization code (define variables and event callbacks)
-	player->setPosition(hb::Vector3d(150/32., 150/32., 0));
+	hb::Vector3d v = obj->GetX() * hb::Renderer::getCamera().getInverseAxisX() + obj->GetY() * hb::Renderer::getCamera().getInverseAxisY() + z_index * hb::Renderer::getCamera().getInverseAxisZ();
+	v.y -= 1;
+	player->setPosition(v);
 	struct Data
 	{
 		hb::Vector2d direction; //new hb::Vector2d());
@@ -42,8 +46,11 @@ hb::GameObject* makePlayer()
 	//sprite.setCenter(hb::Vector2d(16, 16));
 
 	data->player_sprite->setSprite(sprite);
+	data->player_sprite->setScale(hb::Vector3d(0.5, 0.5, 0.5));
 	data->player_sprite->setFrameOrder({6, 7, 8, 7});
 	data->player_sprite->setFrameTime(hb::Time::seconds(0.1));
+
+	data->m_collision->setPosition(hb::Vector2d(0.1, 0.1));
 
 	// define update function
 	fc->setUpdateFunction([=] ()
@@ -61,7 +68,7 @@ hb::GameObject* makePlayer()
 		while(!m_collision->empty())
 		{
 			hb::CollisionComponent::Collision c = m_collision->nextCollision();
-			if (c.object->getName() == "Wall")
+			if (c.object->getName() == "Wall" or c.object->getName() == "Bridge")
 			{
 				hb::Vector3d p = player->getPosition();
 				if (c.intersection.width < c.intersection.height)
@@ -98,7 +105,7 @@ hb::GameObject* makePlayer()
 		hb::Vector3d dir = hb::Vector3d(data->direction.x * hb::Time::deltaTime.asSeconds(), data->direction.y * hb::Time::deltaTime.asSeconds(), 0);
 		player->setPosition(p + dir);
 
-		hb::Renderer::getCamera().setPosition(player->getPosition());
+		//hb::Renderer::getCamera().setPosition(player->getPosition());
 	});
 
 	// Define input listeners
@@ -113,7 +120,7 @@ hb::GameObject* makePlayer()
 		if (code == hb::Keyboard::Key::W and data->direction.y >= 0)
 		{
 			if (data->is_grounded)
-				data->direction.y = -5;
+				data->direction.y = -7;
 		}
 		else if (code == hb::Keyboard::Key::A and data->direction.x >= 0)
 		{
@@ -129,11 +136,12 @@ hb::GameObject* makePlayer()
 		}
 		else if (code == hb::Keyboard::Key::Space)
 		{
-			auto bullet = makeBullet(hb::Vector2d(data->last_direction.x, 0));
+			/*auto bullet = makeBullet(hb::Vector2d(data->last_direction.x, 0));
 			if (data->last_direction.x < 0)
 				bullet->setPosition(player->getPosition() + hb::Vector3d(0,0.25,0));
 			else
 				bullet->setPosition(player->getPosition() + hb::Vector3d(0.5,0.25,0));
+			*/
 		}
 	});
 	keyreleased_listener_id = hb::InputManager::instance()->listen(
@@ -145,13 +153,6 @@ hb::GameObject* makePlayer()
 		else if (code == hb::Keyboard::Key::D and data->direction.x > 0)
 			data->direction.x = 0;
 	});
-	hb::InputManager::ListenerId<hb::MouseButtonWorld> mousebuttonworld_listener_id = hb::InputManager::ListenerId<hb::MouseButtonWorld>();
-	mousebuttonworld_listener_id = hb::InputManager::instance()->listen([=](const hb::MouseButtonWorld& e)
-	{
-		makeWall(hb::Vector2d(e.x, e.y), hb::Vector2d(1, 1));
-		std::cout << "wall: " << e.x << ", " << e.y << std::endl;
-		std::cout << "player: " << player->getPosition().x << ", " << player->getPosition().y << std::endl;
-	});
 
 	//define destructor function
 	fc->setDestroyFunction([=] ()
@@ -159,8 +160,5 @@ hb::GameObject* makePlayer()
 		delete data;
 		hb::InputManager::instance()->ignore(keypressed_listener_id);
 		hb::InputManager::instance()->ignore(keyreleased_listener_id);
-		hb::InputManager::instance()->ignore(mousebuttonworld_listener_id);
 	});
-
-	return player;
 }

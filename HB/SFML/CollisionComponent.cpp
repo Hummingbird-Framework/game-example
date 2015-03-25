@@ -38,9 +38,12 @@ const std::string& CollisionComponent::getFootprint()
 void CollisionComponent::executeCollisions()
 {
 	for (std::set<CollisionComponent*>::iterator i = s_components.begin(); i != s_components.end(); ++i)
+	{
+		if (not (*i)->getGameObject()->isActive()) continue;
 		for (std::set<CollisionComponent*>::iterator j = i; j != s_components.end(); ++j)
 		{
 			if (i == j) continue;
+			if (not (*j)->getGameObject()->isActive()) continue;
 			Rect intersection;
 			Vector3d p_i = (*i)->getGameObject()->getPosition() + (*i)->getPosition();
 			Vector3d p_j = (*j)->getGameObject()->getPosition() + (*j)->getPosition();
@@ -52,6 +55,7 @@ void CollisionComponent::executeCollisions()
 				(*j)->m_collisions.push(Collision{intersection, (*i)->getGameObject()});
 			}
 		}
+	}
 }
 
 

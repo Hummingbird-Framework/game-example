@@ -22,20 +22,20 @@ namespace hb
 			Scene(Scene&& other);
 			~Scene();
 
-			static GameObject* makeGameObject(std::map<std::string, std::string>& properties);
 
 			void init();
 			void exit();
 			const std::string& getName() const;
 			void setExit(std::function<void(void)>&& exit);
 
-		private:
+		protected:
 			std::function<void(void)> m_init, m_exit;
 			std::string m_name;
 		};
 
 		~Game();
 
+		static GameObject* makeGameObject(std::map<std::string, std::string>& properties);
 		static void addScene(Scene&& scene);
 		static void setScene(const std::string& name);
 		static void run();

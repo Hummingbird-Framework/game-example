@@ -25,6 +25,8 @@ void InputManager::update()
 		{
 			hb::MouseButtonWorld mbw(event.mouseButton);
 			hb::InputManager::instance()->message(mbw);
+			hb::MouseButtonWindow mbwin(event.mouseButton);
+			hb::InputManager::instance()->message(mbwin);
 		}
 		else if (event.type == Event::KeyPressed)
 		{
@@ -63,9 +65,9 @@ void InputManager::update()
 		}
 		else if (event.type == Event::Resized)
 		{
-			auto view = Renderer::getWindow().getView();
-			view.setSize(sf::Vector2f(event.size.width, event.size.height));
-			Renderer::getWindow().setView(view);
+			//auto view = Renderer::getWindow().getView();
+			//view.setSize(sf::Vector2f(event.size.width, event.size.height));
+			//Renderer::getWindow().setView(view);
 		}
 	}
 }

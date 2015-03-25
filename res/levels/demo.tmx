@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="10" height="7" tilewidth="16" tileheight="16" nextobjectid="39">
+ <tileset firstgid="1" name="Seasonal platformer tiles" tilewidth="16" tileheight="16">
+  <image source="../drawable/Seasonal platformer tiles.png" width="464" height="432"/>
+  <tile id="291">
+   <properties>
+    <property name="animation" value="291 349"/>
+    <property name="time" value="1000"/>
+   </properties>
+  </tile>
+  <tile id="292">
+   <properties>
+    <property name="animation" value="292 350"/>
+    <property name="time" value="1000"/>
+   </properties>
+  </tile>
+  <tile id="293">
+   <properties>
+    <property name="animation" value="293 351"/>
+   </properties>
+  </tile>
+  <tile id="294">
+   <properties>
+    <property name="animation" value="294 352"/>
+   </properties>
+  </tile>
+  <tile id="295">
+   <properties>
+    <property name="animation" value="295 353"/>
+   </properties>
+  </tile>
+  <tile id="296">
+   <properties>
+    <property name="animation" value="296 354"/>
+   </properties>
+  </tile>
+  <tile id="297">
+   <properties>
+    <property name="animation" value="297 355"/>
+   </properties>
+  </tile>
+  <tile id="298">
+   <properties>
+    <property name="animation" value="298 356"/>
+   </properties>
+  </tile>
+  <tile id="299">
+   <properties>
+    <property name="animation" value="299 357"/>
+   </properties>
+  </tile>
+  <tile id="300">
+   <properties>
+    <property name="animation" value="300 358"/>
+   </properties>
+  </tile>
+  <tile id="320">
+   <properties>
+    <property name="animation" value="320 378"/>
+   </properties>
+  </tile>
+  <tile id="321">
+   <properties>
+    <property name="animation" value="321 379"/>
+   </properties>
+  </tile>
+  <tile id="326">
+   <properties>
+    <property name="animation" value="326 384"/>
+   </properties>
+  </tile>
+  <tile id="327">
+   <properties>
+    <property name="animation" value="327 385"/>
+   </properties>
+  </tile>
+  <tile id="328">
+   <properties>
+    <property name="animation" value="328 386"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="784" name="walking-tiles" tilewidth="16" tileheight="16">
+  <image source="../drawable/walking-tiles.png" width="384" height="256"/>
+ </tileset>
+ <layer name="Mapa" width="10" height="7">
+  <data encoding="base64" compression="zlib">
+   eJxlzsdtQlEUBND3S0BURwYXAQugCqKNuyAXQc4t2CDZ0AAHCaQvsTib0dXMTYUQ0mTIkiNPgSIlPihT4cDxqUqNeixr0KRFmw5dPvmix3fs/kSfAUNGjJkwZcacBUtWrNmwZceeH345c3n++ej+458rt9juSyIKIRm953fiTy/n
+  </data>
+ </layer>
+ <layer name="Rio" width="10" height="7">
+  <data encoding="base64" compression="zlib">
+   eJzNzUkRgDAQAMGNF84AIoAQDv+CaAk8map+T8S/a1JES0fPwEhmYmZhZWOncFA5ubh50vfvC06XBGE=
+  </data>
+ </layer>
+ <layer name="Adornos_atras" width="10" height="7">
+  <data encoding="base64" compression="zlib">
+   eJxjYCAMTJmIUDRIwC4g3o3EB7H3kGEOAOqWAyQ=
+  </data>
+ </layer>
+ <objectgroup name="Objects">
+  <object id="9" type="Switch" gid="130" x="144" y="96">
+   <properties>
+    <property name="target" value="Bridge"/>
+    <property name="z" value="-1"/>
+   </properties>
+  </object>
+  <object id="12" name="Player" type="Player" gid="159" x="0" y="96"/>
+  <object id="32" name="Bridge" type="Bridge" gid="216" x="80" y="32"/>
+  <object id="37" name="Bridge" type="Bridge" gid="216" x="96" y="32"/>
+  <object id="38" name="Bridge" type="Bridge" gid="216" x="112" y="32"/>
+ </objectgroup>
+ <objectgroup name="Walls">
+  <object id="1" type="Wall" x="0" y="96" width="160" height="16"/>
+  <object id="2" type="Wall" x="64" y="80" width="32" height="16"/>
+  <object id="3" type="Wall" x="-16" y="0" width="16" height="96"/>
+  <object id="4" type="Wall" x="32" y="16" width="48" height="16"/>
+  <object id="5" type="Wall" x="128" y="16" width="32" height="16"/>
+  <object id="6" type="Wall" x="160" y="0" width="16" height="96"/>
+  <object id="7" type="Wall" x="0" y="-16" width="160" height="16"/>
+  <object id="8" type="Wall" x="0" y="48" width="48" height="16"/>
+ </objectgroup>
+ <layer name="Adornos_delante" width="10" height="7">
+  <data encoding="base64" compression="zlib">
+   eJxjYBhaYBcQ76GDPQCWGAF3
+  </data>
+ </layer>
+</map>

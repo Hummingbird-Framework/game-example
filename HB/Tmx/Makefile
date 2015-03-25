@@ -1,8 +1,8 @@
 CC        := g++
 
-CFLAGS    := -std=c++11 -Wall
+CFLAGS    := -std=c++11 -Wall -ltinyxml2 -lz -ltmxparser
 
-STATIC_LIB_NAME := Hummingbird-Base
+STATIC_LIB_NAME := Hummingbird-Tmx
 
 SOURCES   := $(shell find ./ -name '*.cpp')
 INCLUDES  := $(shell find ./ -name '*.h')
