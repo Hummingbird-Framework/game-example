@@ -103,7 +103,16 @@ namespace hb
 		{}
 	};
 
-	class InputManager : public hb::EventManager<MouseButtonWindow, MouseButtonWorld, KeyPressed, KeyReleased, JoyButtonPressed, JoyButtonReleased, JoyAxis>
+	struct WindowResized
+	{
+		unsigned int width, height;
+		explicit WindowResized(const Event::SizeEvent& ev):
+		width(ev.width),
+		height(ev.height)
+		{}
+	};
+
+	class InputManager : public hb::EventManager<MouseButtonWindow, MouseButtonWorld, KeyPressed, KeyReleased, JoyButtonPressed, JoyButtonReleased, JoyAxis, WindowResized>
 	{
 	public:
 		static InputManager* instance();

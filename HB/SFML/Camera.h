@@ -27,6 +27,8 @@ namespace hb
 		const Vector3d& getInverseAxisZ() const;
 		double getZNear() const;
 		double getZFar() const;
+		Vector3d ObjecspaceToDrawspace(const Vector3d& v);
+		Vector3d DrawspaceToObjectspace(const Vector3d& v);
 
 	private:
 		void calculateInverseMatrix();

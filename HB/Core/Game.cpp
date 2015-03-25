@@ -52,7 +52,7 @@ void Game::addScene(Scene&& scene)
 void Game::setScene(const std::string& name)
 {
 	auto it = s_scenes.find(name);
-	assert(it != s_scenes.end());
+	assert(("No scene with name " + name + " found.", it != s_scenes.end()));
 	s_change_scene = true;
 	s_next_scene = it;
 }

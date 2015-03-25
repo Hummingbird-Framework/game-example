@@ -19,6 +19,7 @@ namespace hb
 			GameObject* object;
 		};
 		CollisionComponent(const Vector2d& size = Vector2d());
+		CollisionComponent(double width, double height);
 		virtual ~CollisionComponent() override;
 
 		static GameObject::Component* factory(std::map<std::string, std::string>& properties, int i);
@@ -42,7 +43,6 @@ namespace hb
 		Vector2d m_size;
 		std::queue<Collision> m_collisions;
 		std::set<CollisionComponent*>::iterator m_me;
-		sf::ConvexShape back;
 	};
 }
 #endif

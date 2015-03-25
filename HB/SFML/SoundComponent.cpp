@@ -32,7 +32,7 @@ GameObject::Component* SoundComponent::factory(std::map<std::string, std::string
 
 	std::string playingOffset = properties[s_footprint + "[" + std::to_string(i) + "].playingOffset"];
 	if (playingOffset.length() != 0)
-		c->setPlayingOffset(Time::miliseconds(atoi(playingOffset.c_str())));
+		c->setPlayingOffset(Time::milliseconds(atoi(playingOffset.c_str())));
 
 	std::string pitch = properties[s_footprint + "[" + std::to_string(i) + "].pitch"];
 	if (pitch.length() != 0)

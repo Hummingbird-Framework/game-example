@@ -9,11 +9,11 @@ namespace hb
 		Time();
 		~Time();
 		double asSeconds() const;
-		int asMiliseconds() const;
+		int asMilliseconds() const;
 		long long asMicroseconds() const;
 
 		static Time seconds(double seconds);
-		static Time miliseconds(int miliseconds);
+		static Time milliseconds(int milliseconds);
 		static Time microseconds(long long microseconds);
 		static Time deltaTime;
 		

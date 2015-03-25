@@ -20,7 +20,7 @@ double Time::asSeconds() const
 }
 
 
-int Time::asMiliseconds() const
+int Time::asMilliseconds() const
 {
 	return m_microseconds/1000;
 }
@@ -40,10 +40,10 @@ Time Time::seconds(double seconds)
 }
 
 
-Time Time::miliseconds(int miliseconds)
+Time Time::milliseconds(int milliseconds)
 {
 	Time t;
-	t.m_microseconds = miliseconds * 1000;
+	t.m_microseconds = milliseconds * 1000;
 	return t;
 }
 

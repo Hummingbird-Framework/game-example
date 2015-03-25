@@ -52,7 +52,7 @@ GameObject::Component* SpriteComponent::factory(std::map<std::string, std::strin
 	std::string frameTime = properties[s_footprint + "[" + std::to_string(i) + "].frameTime"];
 	Time t;
 	if (frameTime.length() != 0)
-		t = Time::miliseconds(atoi(frameTime.c_str()));
+		t = Time::milliseconds(atoi(frameTime.c_str()));
 
 	return new SpriteComponent(sprite, v, t);
 }
@@ -70,7 +70,7 @@ void SpriteComponent::setSprite(const Sprite& sprite)
 	m_current_frame = 0;
 	m_sprite.setTexture(m_animation.m_texture.get());
 	m_sprite.setOrigin(sprite.m_center.x, sprite.m_center.y);
-	if (m_frame_time.asMiliseconds() == 0)
+	if (m_frame_time.asMilliseconds() == 0)
 		stop();
 }
 

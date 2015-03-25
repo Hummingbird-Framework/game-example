@@ -131,3 +131,15 @@ void Camera::calculateInverseMatrix()
 	m_z_inverse.y = -(m_x.x * m_z.y - m_z.x * m_x.y) * invdet;
 	m_z_inverse.z =  (m_x.x * m_y.y - m_y.x * m_x.y) * invdet;
 }
+
+
+Vector3d Camera::ObjecspaceToDrawspace(const Vector3d& v)
+{
+	return (getAxisX() * v.x) + (getAxisY() * v.y) + (getAxisZ() * v.z);
+}
+
+
+Vector3d Camera::DrawspaceToObjectspace(const Vector3d& v)
+{
+	return (getInverseAxisX() * v.x) + (getInverseAxisY() * v.y) + (getInverseAxisZ() * v.z);
+}

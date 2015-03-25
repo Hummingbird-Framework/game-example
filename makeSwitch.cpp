@@ -48,18 +48,18 @@ void makeSwitch(const Tmx::Map* map, int obj_grp, int obj_id)
 
 	fc->setUpdateFunction([=]()
 	{
+		bool t = false;
 		while (not collisions->empty())
 		{
 			auto c = collisions->nextCollision();
-			if (c.object->getName() == "Player")
-			{
-				data->player_touching = true;
-			}
+			t |= (c.object->getName() == "Player");
 		}
+		data->player_touching = t;
 	});
 
 	fc->setDestroyFunction([=]()
 	{
+		delete data;
 		hb::InputManager::instance()->ignore(listener);
 	});
 }

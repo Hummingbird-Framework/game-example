@@ -44,8 +44,10 @@ int main(int argc, char const *argv[])
 	hb::TmxRegisterFactory("Player", makePlayer);
 	hb::TmxRegisterFactory("Switch", makeSwitch);
 	hb::TmxRegisterFactory("Bridge", makeBridge);
+	hb::TmxRegisterFactory("Door", makeDoor);
 
-	hb::Game::addScene(hb::TmxScene("res/levels/demo.tmx"));
+	hb::Game::addScene(hb::TmxScene("demo", "res/levels/demo.tmx"));
+	hb::Game::addScene(hb::TmxScene("demo2", "res/levels/demo2.tmx"));
 
 	
 	hb::Game::setScene("demo");

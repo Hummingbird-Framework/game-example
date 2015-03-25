@@ -4,7 +4,6 @@
 void makePlayer(const Tmx::Map* map, int obj_grp, int obj_id)
 {
 	const Tmx::Object* obj = map->GetObjectGroup(obj_grp)->GetObject(obj_id);
-	int z_index = map->GetObjectGroup(obj_grp)->GetZOrder();
 	// Define the player GameObject
 	auto player = new hb::GameObject
 	{
@@ -20,7 +19,7 @@ void makePlayer(const Tmx::Map* map, int obj_grp, int obj_id)
 	auto fc = player->getComponent<hb::FunctionComponent>();
 
 	// run initialization code (define variables and event callbacks)
-	hb::Vector3d v = obj->GetX() * hb::Renderer::getCamera().getInverseAxisX() + obj->GetY() * hb::Renderer::getCamera().getInverseAxisY() + z_index * hb::Renderer::getCamera().getInverseAxisZ();
+	hb::Vector3d v = hb::Renderer::getCamera().DrawspaceToObjectspace(hb::Vector3d(obj->GetX(), obj->GetY(), map->GetObjectGroup(obj_grp)->GetZOrder()));
 	v.y -= 1;
 	player->setPosition(v);
 	struct Data
@@ -32,6 +31,7 @@ void makePlayer(const Tmx::Map* map, int obj_grp, int obj_id)
 		hb::CollisionComponent* m_collision; //player->getComponent<hb::CollisionComponent>());
 		hb::Vector3d last_position; //new hb::Vector3d(player->getPosition()));
 		bool is_grounded = false;
+		std::set<std::string> obstacles;
 	};
 	Data* data = new Data;
 
@@ -40,6 +40,14 @@ void makePlayer(const Tmx::Map* map, int obj_grp, int obj_id)
 	data->player_sprite  = player->getComponent<hb::SpriteComponent>();
 	data->m_collision    = player->getComponent<hb::CollisionComponent>();
 	data->last_position  = hb::Vector3d(player->getPosition());
+
+	std::stringstream ss;
+	ss << obj->GetProperties().GetStringProperty("obstacles");
+	std::string tmp;
+	while (ss >> tmp)
+	{
+		data->obstacles.insert(tmp);
+	}
 
 	hb::Texture tex = hb::Texture::loadFromFile("res/drawable/walking-tiles.png", hb::Rect(96, 128, 96, 128));
 	hb::Sprite sprite = hb::Sprite(tex, hb::Vector2d(32, 32), hb::Vector2d());
@@ -68,20 +76,20 @@ void makePlayer(const Tmx::Map* map, int obj_grp, int obj_id)
 		while(!m_collision->empty())
 		{
 			hb::CollisionComponent::Collision c = m_collision->nextCollision();
-			if (c.object->getName() == "Wall" or c.object->getName() == "Bridge")
+			if (data->obstacles.find(c.object->getName()) != data->obstacles.end())
 			{
 				hb::Vector3d p = player->getPosition();
-				if (c.intersection.width < c.intersection.height)
+				if (c.intersection.width <= c.intersection.height)
 				{
 					p.x = data->last_position.x;
 				}
 				else
 				{
-					if (c.intersection.top > player->getPosition().y + 0.5)
+					if (c.intersection.top >= player->getPosition().y + 0.5)
 					{
 						still_grounded = true;
 					}
-					else if (c.intersection.top < player->getPosition().y + 0.5)
+					else if (c.intersection.top <= player->getPosition().y + 0.5)
 					{
 						data->direction.y = 0;
 					}

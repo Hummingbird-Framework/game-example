@@ -65,9 +65,8 @@ void InputManager::update()
 		}
 		else if (event.type == Event::Resized)
 		{
-			//auto view = Renderer::getWindow().getView();
-			//view.setSize(sf::Vector2f(event.size.width, event.size.height));
-			//Renderer::getWindow().setView(view);
+			WindowResized wr = WindowResized(event.size);
+			InputManager::instance()->message(wr);
 		}
 	}
 }

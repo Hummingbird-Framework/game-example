@@ -11,7 +11,7 @@ namespace hb
 	class TmxScene : public Game::Scene
 	{
 	public:
-		TmxScene(const std::string& file_name);
+		TmxScene(const std::string& scene_name, const std::string& file_name);
 		~TmxScene();
 
 	private:

@@ -7,10 +7,16 @@ bool CollisionComponent::s_collisions_executed = false;
 std::set<CollisionComponent*> CollisionComponent::s_components = std::set<CollisionComponent*>();
 
 CollisionComponent::CollisionComponent(const Vector2d& size):
-m_size(size),
-back(4)
+m_size(size)
 {
 	m_me = s_components.insert(this).first;
+}
+
+
+CollisionComponent::CollisionComponent(double width, double height):
+CollisionComponent(hb::Vector2d(width, height))
+{
+
 }
 
 
