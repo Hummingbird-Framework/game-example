@@ -2,8 +2,9 @@
 using namespace hb;
 
 
-TmxScene::TmxScene(const std::string& scene_name, const std::string& file_name):
-Game::Scene(scene_name, [](){})
+TmxScene::TmxScene(const std::string& scene_name, const std::string& file_name, std::function<void(const Tmx::Map*)>&& post_init):
+Game::Scene(scene_name, [](){}),
+m_post_init(std::move(post_init))
 {
 	m_init = [this, file_name]()
 	{
@@ -13,8 +14,6 @@ Game::Scene(scene_name, [](){})
 		{
 			printf("error code: %d\n", map->GetErrorCode());
 			printf("error text: %s\n", map->GetErrorText().c_str());
-
-			system("PAUSE");
 
 			::exit(map->GetErrorCode());
 		}
@@ -87,6 +86,7 @@ Game::Scene(scene_name, [](){})
 			}
 		}
 		
+		m_post_init(map);
 
 		delete map;
 	};

@@ -9,6 +9,10 @@
 
 namespace hb
 {
+	/**
+	 * \addtogroup tmx
+	 * @{
+	 */
 	typedef void(*GameObjectFactory)(const Tmx::Map*, int, int);
 	typedef std::function<void(const Tmx::Map*, int, int)> lambdaFactory;
 	class TmxObjectTypeFactory
@@ -33,5 +37,6 @@ namespace hb
 	{
 		TmxObjectTypeFactory::registerFactory(type, std::move(factory));
 	}
+	//! @}
 }
 #endif

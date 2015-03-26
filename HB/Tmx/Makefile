@@ -12,7 +12,7 @@ OBJ       := $(addprefix ./,$(SOURCES:./%.cpp=%.o))
 all: $(OBJ)
 
 %.o: %.cpp
-	$(CC) -c -o $@ $< $(CFLAGS) -03
+	$(CC) -c -o $@ $< $(CFLAGS) -O3
 	ar rvs $(STATIC_LIB_NAME).a $@
 
 .PHONY: clean
