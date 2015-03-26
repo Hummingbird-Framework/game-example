@@ -4,6 +4,10 @@
 
 namespace hb
 {
+	/*!
+	  \class DataComponent
+	  \ingroup core-components
+	*/
 	template <typename T>
 	class DataComponent : public GameObject::Component
 	{

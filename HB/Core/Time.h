@@ -3,6 +3,10 @@
 
 namespace hb
 {
+	/*!
+	  \class Time
+	  \ingroup core
+	*/
 	class Time
 	{
 	public:

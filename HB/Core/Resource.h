@@ -4,6 +4,10 @@
 
 namespace hb
 {
+	/*!
+	  \class Resource
+	  \ingroup core
+	*/
 	template <typename ResourceType, typename ResourceId, typename ResourceManager>
 	class Resource
 	{

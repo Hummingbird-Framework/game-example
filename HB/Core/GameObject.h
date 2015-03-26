@@ -12,6 +12,10 @@
 
 namespace hb
 {
+	/*!
+	  \class GameObject
+	  \ingroup core
+	*/
 	class GameObject : public Transform
 	{
 	public:

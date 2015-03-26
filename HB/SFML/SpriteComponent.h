@@ -12,6 +12,10 @@
 
 namespace hb
 {
+	/**
+	 * \class SpriteComponent
+	 * \ingroup SFML-components
+	 */
 	class SpriteComponent : public GameObject::Component, public Transform
 	{
 	public:

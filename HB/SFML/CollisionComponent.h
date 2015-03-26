@@ -10,6 +10,10 @@
 
 namespace hb
 {
+	/**
+	 * \class CollisionComponent
+	 * \ingroup SFML-components
+	 */
 	class CollisionComponent : public GameObject::Component, public Transform
 	{
 	public:

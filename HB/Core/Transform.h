@@ -4,6 +4,10 @@
 
 namespace hb
 {
+	/*!
+	  \class Transform
+	  \ingroup core
+	*/
 	class Transform
 	{
 	public:

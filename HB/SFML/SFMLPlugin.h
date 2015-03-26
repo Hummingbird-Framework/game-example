@@ -10,6 +10,10 @@
 
 namespace hb
 {
+	/**
+	 * \class SFMLPlugin
+	 * \ingroup SFML
+	 */
 	class SFMLPlugin : public Plugin
 	{
 	public:

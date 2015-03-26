@@ -5,6 +5,10 @@
 
 namespace hb
 {
+	/*!
+	  \class ResourceManager
+	  \ingroup core
+	*/
 	template <typename ManagerType, typename Resource, typename ResourceId, typename Hash = std::hash<ResourceId>>
 	class ResourceManager
 	{

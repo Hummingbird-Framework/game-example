@@ -7,6 +7,10 @@
 
 namespace hb
 {
+	/**
+	 * \class Rect
+	 * \ingroup SFML
+	 */
 	class Rect : public sf::Rect<double>
 	{
 	public:

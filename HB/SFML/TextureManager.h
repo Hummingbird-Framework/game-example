@@ -14,6 +14,10 @@ namespace hb
 		typedef std::pair<std::string, pair2_int> tex_id;
 	}
 
+	/**
+	 * \class TextureManager
+	 * \ingroup SFML
+	 */
 	class TextureManager : public ResourceManager<TextureManager, sf::Texture, detail::tex_id>
 	{
 	public:

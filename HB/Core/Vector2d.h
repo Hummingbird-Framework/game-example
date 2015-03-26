@@ -57,3 +57,10 @@ hb::Vector2d& operator /=(hb::Vector2d& left, double right);
 bool operator ==(const hb::Vector2d& left, const hb::Vector2d& right);
 bool operator !=(const hb::Vector2d& left, const hb::Vector2d& right);
 #endif
+
+/**
+ * \class hb::Vector2d
+ * \ingroup core
+ *
+ * A 2d vector of doubles
+ */

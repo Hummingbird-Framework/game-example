@@ -9,6 +9,9 @@
 
 namespace hb
 {
+	/**
+	 * \class Texture
+	 * \ingroup SFML
 	class Texture : public Resource<sf::Texture, detail::tex_id, TextureManager>
 	{
 	public:

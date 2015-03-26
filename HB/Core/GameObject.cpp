@@ -72,7 +72,7 @@ m_marked_to_destroy(false)
 }
 
 
-GameObject::GameObject(const std::initializer_list<GameObject::Component*>& components):
+GameObject::GameObject(const std::initializer_list<Component*>& components):
 GameObject()
 {
 	for (Component* c : components)

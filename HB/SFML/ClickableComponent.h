@@ -6,6 +6,10 @@
 
 namespace hb
 {
+	/**
+	 * \class ClickableComponent
+	 * \ingroup SFML-components
+	 */
 	class ClickableComponent : public GameObject::Component, public Transform
 	{
 	public:

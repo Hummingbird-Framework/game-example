@@ -9,6 +9,10 @@
 
 namespace hb
 {
+	/**
+	 * \class SoundComponent
+	 * \ingroup SFML-components
+	 */
 	class SoundComponent : public GameObject::Component, public Transform
 	{
 	public:

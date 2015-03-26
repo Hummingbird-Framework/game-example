@@ -6,6 +6,10 @@
 
 namespace hb
 {
+	/**
+	 * \class Camera
+	 * \ingroup SFML
+	 */
 	class Camera
 	{
 	public:

@@ -6,6 +6,10 @@
 
 namespace hb
 {
+	/*!
+	  \class Plugin
+	  \ingroup core
+	*/
 	class Plugin
 	{
 	public:

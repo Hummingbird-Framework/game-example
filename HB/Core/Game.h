@@ -11,6 +11,10 @@
 
 namespace hb
 {
+	/*!
+	  \class Game
+	  \ingroup core
+	*/
 	class Game
 	{
 	public:

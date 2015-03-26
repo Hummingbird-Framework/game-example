@@ -10,7 +10,10 @@
 
 namespace hb
 {
-
+	/**
+	 * \addtogroup SFML
+	 * @{
+	 */
 	typedef sf::Keyboard Keyboard;
 	typedef sf::Joystick Joystick;
 	typedef sf::Mouse Mouse;
@@ -125,5 +128,6 @@ namespace hb
 		std::map<Keyboard::Key, bool> m_pressed_keys;
 		std::map<std::pair<int, int>, bool> m_pressed_buttons;
 	};
+	//! @}
 }
 #endif

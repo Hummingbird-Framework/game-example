@@ -5,7 +5,6 @@
 
 namespace hb
 {
-	//! A class for measuring time intervals
 	class Clock
 	{
 	public:
@@ -27,3 +26,10 @@ namespace hb
 	};
 }
 #endif
+
+/**
+ * \class hb::Clock
+ * \ingroup core
+ *
+ * A class for measuring time intervals
+ */

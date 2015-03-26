@@ -6,6 +6,10 @@
 
 namespace hb
 {
+	/**
+	 * \class ListenerComponent
+	 * \ingroup SFML-components
+	 */
 	class ListenerComponent : public GameObject::Component
 	{
 	public:

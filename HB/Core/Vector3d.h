@@ -7,6 +7,10 @@
 
 namespace hb
 {
+	/*!
+	  \class Vector3d
+	  \ingroup core
+	*/
 	class Vector3d
 	{
 	public:

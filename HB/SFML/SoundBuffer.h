@@ -6,6 +6,10 @@
 
 namespace hb
 {
+	/**
+	 * \class SoundBuffer
+	 * \ingroup SFML
+	 */
 	class SoundBuffer : public Resource<sf::SoundBuffer, std::string, SoundManager>
 	{
 	public:

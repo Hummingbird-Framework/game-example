@@ -11,6 +11,10 @@
 
 namespace hb
 {
+	/**
+	 * \addtogroup SFML
+	 * @{
+	 */
 	typedef sf::RenderWindow Window;
 
 	class Renderer
@@ -39,5 +43,7 @@ namespace hb
 		static Camera m_camera;
 		static std::priority_queue<std::pair<Vector3d, sf::Drawable*>, std::vector<std::pair<Vector3d, sf::Drawable*>>, Comparison> m_drawables;
 	};
+
+	//! @}
 }
 #endif

@@ -8,6 +8,9 @@
 
 namespace hb
 {
+	/**
+	 * \class Sprite
+	 * \ingroup SFML
 	class Sprite
 	{
 	public:

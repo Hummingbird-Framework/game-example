@@ -15,3 +15,13 @@
 #include "SFML/Texture.h"
 #include "SFML/TextureManager.h"
 #endif
+
+/**
+ * \defgroup SFML Hummingbird-SFML
+ * \brief SFML drawing, input and sound
+ */
+/**
+ * \defgroup SFML-components Components
+ * \brief sprite, sound...
+ * \ingroup SFML
+ */

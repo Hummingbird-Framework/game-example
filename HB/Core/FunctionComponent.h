@@ -6,6 +6,10 @@
 
 namespace hb
 {
+	/*!
+	  \class FunctionComponent
+	  \ingroup core-components
+	*/
 	class FunctionComponent : public GameObject::Component
 	{
 	public:

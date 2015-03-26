@@ -33,3 +33,10 @@ namespace hb
 }
 
 #endif
+
+/**
+ * \struct hb::Color
+ * \ingroup core
+ * 
+ * Struct representing a color RGBA of floats [0, 1]
+ */

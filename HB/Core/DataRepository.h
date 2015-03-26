@@ -5,6 +5,10 @@
 
 namespace hb
 {
+	/*!
+	  \class DataRepository
+	  \ingroup core
+	*/
 	class DataRepository
 	{
 	public:

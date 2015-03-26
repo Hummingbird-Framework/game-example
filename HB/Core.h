@@ -16,3 +16,13 @@
 #include "Core/Vector2d.h"
 #include "Core/Vector3d.h"
 #endif
+
+/**
+ * \defgroup core Hummingbird Core
+ * \brief Core classes of the Hummingbird Framework.
+ */
+/**
+ * \defgroup core-components Components
+ * \brief Function and Data component
+ * \ingroup core
+ */
