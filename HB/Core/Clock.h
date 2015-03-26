@@ -5,12 +5,21 @@
 
 namespace hb
 {
+	//! A class for measuring time intervals
 	class Clock
 	{
 	public:
+		//! Class constructor
+		/*!
+		  Initializes a new instance of Clock wich starts measuring 
+		  the time since it is created.
+		*/
 		Clock();
+		//! Class destructor
 		~Clock();
+		//! Returns the Time elapsed since creation or last reset
 		Time getElapsedTime() const;
+		//! Returns the Time elapsed since creation or last reset and resets the counter
 		Time reset();
 		
 	private:

@@ -3,6 +3,7 @@
 
 void makePlayer(const Tmx::Map* map, int obj_grp, int obj_id)
 {
+	// Get Tmx object representing the new Player GameObject
 	const Tmx::Object* obj = map->GetObjectGroup(obj_grp)->GetObject(obj_id);
 	// Define the player GameObject
 	auto player = new hb::GameObject
@@ -22,6 +23,8 @@ void makePlayer(const Tmx::Map* map, int obj_grp, int obj_id)
 	hb::Vector3d v = hb::Renderer::getCamera().DrawspaceToObjectspace(hb::Vector3d(obj->GetX(), obj->GetY(), map->GetObjectGroup(obj_grp)->GetZOrder()));
 	v.y -= 1;
 	player->setPosition(v);
+
+	// Define GameObject status data and instantiate it
 	struct Data
 	{
 		hb::Vector2d direction; //new hb::Vector2d());
