@@ -18,7 +18,7 @@ namespace hb
 		void setZNear(double zn);
 		void setZFar(double zf);
 
-		const Vector3d& getPosition() const;
+		Vector3d getPosition() const;
 		const Vector3d& getAxisX() const;
 		const Vector3d& getAxisY() const;
 		const Vector3d& getAxisZ() const;

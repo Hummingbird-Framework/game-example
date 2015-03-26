@@ -11,7 +11,7 @@ void makeDoor(const Tmx::Map* map, int obj_grp, int obj_id)
 	hb::Texture tex = hb::Texture::loadFromFile("res/levels/" + tileset->GetImage()->GetSource());
 	hb::Sprite sprite(tex, hb::Vector2d(tileset->GetTileWidth(), tileset->GetTileHeight()));
 
-	hb::CollisionComponent* collisions = new hb::CollisionComponent(1, 1);
+	hb::CollisionComponent* collisions = new hb::CollisionComponent(hb::Vector2d(1, 1));
 	hb::FunctionComponent* fc = new hb::FunctionComponent;
 
 	std::string target = object->GetProperties().GetStringProperty("target");
@@ -30,7 +30,6 @@ void makeDoor(const Tmx::Map* map, int obj_grp, int obj_id)
 		{
 			auto c = collisions->nextCollision();
 			t |= (c.object->getName() == "Player");
-			std::cout << "tocando" << std::endl;
 		}
 		data->touching_player = t;
 	});

@@ -49,7 +49,6 @@ int main(int argc, char const *argv[])
 	hb::Game::addScene(hb::TmxScene("demo", "res/levels/demo.tmx"));
 	hb::Game::addScene(hb::TmxScene("demo2", "res/levels/demo2.tmx"));
 
-	
 	hb::Game::setScene("demo");
 	hb::Game::run();
 }

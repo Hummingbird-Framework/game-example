@@ -3,92 +3,60 @@
  <tileset firstgid="1" name="Seasonal platformer tiles" tilewidth="16" tileheight="16">
   <image source="../drawable/Seasonal platformer tiles.png" width="464" height="432"/>
   <tile id="291">
-   <properties>
-    <property name="animation" value="291 349"/>
-    <property name="time" value="1000"/>
-   </properties>
    <animation>
     <frame tileid="291" duration="1000"/>
     <frame tileid="349" duration="1000"/>
    </animation>
   </tile>
   <tile id="292">
-   <properties>
-    <property name="animation" value="292 350"/>
-    <property name="time" value="1000"/>
-   </properties>
    <animation>
     <frame tileid="292" duration="1000"/>
     <frame tileid="350" duration="1000"/>
    </animation>
   </tile>
   <tile id="293">
-   <properties>
-    <property name="animation" value="293 351"/>
-   </properties>
    <animation>
     <frame tileid="293" duration="1000"/>
     <frame tileid="351" duration="1000"/>
    </animation>
   </tile>
   <tile id="294">
-   <properties>
-    <property name="animation" value="294 352"/>
-   </properties>
    <animation>
     <frame tileid="294" duration="1000"/>
     <frame tileid="352" duration="1000"/>
    </animation>
   </tile>
   <tile id="295">
-   <properties>
-    <property name="animation" value="295 353"/>
-   </properties>
    <animation>
     <frame tileid="295" duration="1000"/>
     <frame tileid="353" duration="1000"/>
    </animation>
   </tile>
   <tile id="296">
-   <properties>
-    <property name="animation" value="296 354"/>
-   </properties>
    <animation>
     <frame tileid="296" duration="1000"/>
     <frame tileid="354" duration="1000"/>
    </animation>
   </tile>
   <tile id="297">
-   <properties>
-    <property name="animation" value="297 355"/>
-   </properties>
    <animation>
     <frame tileid="297" duration="1000"/>
     <frame tileid="355" duration="1000"/>
    </animation>
   </tile>
   <tile id="298">
-   <properties>
-    <property name="animation" value="298 356"/>
-   </properties>
    <animation>
     <frame tileid="298" duration="1000"/>
     <frame tileid="356" duration="1000"/>
    </animation>
   </tile>
   <tile id="299">
-   <properties>
-    <property name="animation" value="299 357"/>
-   </properties>
    <animation>
     <frame tileid="299" duration="1000"/>
     <frame tileid="357" duration="1000"/>
    </animation>
   </tile>
   <tile id="300">
-   <properties>
-    <property name="animation" value="300 358"/>
-   </properties>
    <animation>
     <frame tileid="300" duration="1000"/>
     <frame tileid="358" duration="1000"/>
@@ -104,36 +72,24 @@
    </animation>
   </tile>
   <tile id="321">
-   <properties>
-    <property name="animation" value="321 379"/>
-   </properties>
    <animation>
     <frame tileid="321" duration="1000"/>
     <frame tileid="379" duration="1000"/>
    </animation>
   </tile>
   <tile id="326">
-   <properties>
-    <property name="animation" value="326 384"/>
-   </properties>
    <animation>
     <frame tileid="326" duration="1000"/>
     <frame tileid="384" duration="1000"/>
    </animation>
   </tile>
   <tile id="327">
-   <properties>
-    <property name="animation" value="327 385"/>
-   </properties>
    <animation>
     <frame tileid="327" duration="1000"/>
     <frame tileid="385" duration="1000"/>
    </animation>
   </tile>
   <tile id="328">
-   <properties>
-    <property name="animation" value="328 386"/>
-   </properties>
    <animation>
     <frame tileid="328" duration="1000"/>
     <frame tileid="386" duration="1000"/>

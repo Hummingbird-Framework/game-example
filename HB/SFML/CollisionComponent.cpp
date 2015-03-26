@@ -9,7 +9,9 @@ std::set<CollisionComponent*> CollisionComponent::s_components = std::set<Collis
 CollisionComponent::CollisionComponent(const Vector2d& size):
 m_size(size)
 {
-	m_me = s_components.insert(this).first;
+	auto r = s_components.insert(this);
+	assert(r.second);
+	m_me = r.first;
 }
 
 

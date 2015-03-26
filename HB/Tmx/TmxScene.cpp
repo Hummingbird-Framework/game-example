@@ -3,13 +3,12 @@ using namespace hb;
 
 
 TmxScene::TmxScene(const std::string& scene_name, const std::string& file_name):
-Game::Scene(scene_name, [](){}),
-m_filename(file_name)
+Game::Scene(scene_name, [](){})
 {
-	m_init = [this]()
+	m_init = [this, file_name]()
 	{
 		Tmx::Map* map = new Tmx::Map();
-		map->ParseFile(m_filename);
+		map->ParseFile(file_name);
 		if (map->HasError())
 		{
 			printf("error code: %d\n", map->GetErrorCode());
@@ -19,11 +18,12 @@ m_filename(file_name)
 
 			::exit(map->GetErrorCode());
 		}
-		int last_slash = m_filename.find_last_of("/");
-		std::string path = m_filename.substr(0, last_slash +1);
+
+		int last_slash = file_name.find_last_of("/");
+		std::string path = file_name.substr(0, last_slash +1);
 
 		Renderer::getWindow().setSize(sf::Vector2u(map->GetWidth() * map->GetTileWidth(), map->GetHeight() * map->GetTileHeight()));
-		Renderer::getCamera().setPosition(Vector2d(map->GetWidth()/4., map->GetHeight()/4.));
+		Renderer::getCamera().setPosition(Vector2d(map->GetWidth()/2., map->GetHeight()/2.));
 		Renderer::getWindow().setView(sf::View(sf::FloatRect(0, 0, map->GetWidth() * map->GetTileWidth(), map->GetHeight() * map->GetTileHeight())));
 
 		if (map->GetOrientation() == Tmx::TMX_MO_ORTHOGONAL)
@@ -80,6 +80,7 @@ m_filename(file_name)
 		for (int i = 0; i < map->GetNumObjectGroups(); ++i)
 		{
 			const Tmx::ObjectGroup* obj_grp = map->GetObjectGroup(i);
+			if (not obj_grp->IsVisible()) continue;
 			for (int j = 0; j < obj_grp->GetNumObjects(); ++j)
 			{
 				TmxObjectTypeFactory::makeObject(map, i, j);

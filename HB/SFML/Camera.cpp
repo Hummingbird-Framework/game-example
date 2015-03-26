@@ -22,8 +22,7 @@ Camera::~Camera()
 
 void Camera::setPosition(const Vector3d& pos)
 {
-	Vector3d v = (m_x * pos.x) + (m_y * pos.y) + (m_z * pos.z);
-	m_position = v;
+	m_position = pos;
 }
 
 
@@ -60,9 +59,9 @@ void Camera::setZFar(double zf)
 }
 
 
-const Vector3d& Camera::getPosition() const
+Vector3d Camera::getPosition() const
 {
-	return m_position;
+	return (m_x * m_position.x) + (m_y * m_position.y) + (m_z * m_position.z);
 }
 
 
