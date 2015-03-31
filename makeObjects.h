@@ -4,8 +4,8 @@
 #include "SwitchComponent.h"
 
 // Define Object factories
-void makePlayer(const Tmx::Map* map, int obj_grp, int obj_id);
-void makeWall(const Tmx::Map* map, int obj_grp, int obj_id);
-void makeSwitch(const Tmx::Map* map, int obj_grp, int obj_id);
-void makeBridge(const Tmx::Map* map, int obj_grp, int obj_id);
-void makeDoor(const Tmx::Map* map, int obj_grp, int obj_id);
+void makePlayer(hb::GameObject* go, const Tmx::Map* map, int obj_grp, int obj_id);
+void makeWall(hb::GameObject* go, const Tmx::Map* map, int obj_grp, int obj_id);
+void makeSwitch(hb::GameObject* go, const Tmx::Map* map, int obj_grp, int obj_id);
+void makeBridge(hb::GameObject* go, const Tmx::Map* map, int obj_grp, int obj_id);
+void makeDoor(hb::GameObject* go, const Tmx::Map* map, int obj_grp, int obj_id);

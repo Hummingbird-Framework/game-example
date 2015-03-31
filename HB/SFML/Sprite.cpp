@@ -6,7 +6,11 @@ m_texture(texture),
 m_frame_size(frame_size),
 m_frame_margin(frame_margin)
 {
-
+	if (m_frame_size.x == -1)
+		m_frame_size.x = texture.size().x;
+	if (m_frame_size.y == -1)
+		m_frame_size.y = texture.size().y;
+	
 }
 
 

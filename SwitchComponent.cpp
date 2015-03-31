@@ -1,8 +1,8 @@
 #include "SwitchComponent.h"
 
-SwitchComponent::SwitchComponent(const std::string& target_name):
+SwitchComponent::SwitchComponent(const std::vector<int>& targets):
 m_action([](hb::GameObject*){}),
-m_target_name(target_name),
+m_targets(targets),
 m_on(false)
 {
 
@@ -30,9 +30,9 @@ bool SwitchComponent::isOn() const
 void SwitchComponent::doSwitch()
 {
 	m_on = not m_on;
-	auto targets = hb::GameObject::getGameObjectsByName(m_target_name);
-	for(hb::GameObject* go : targets)
+	for (int id : m_targets)
 	{
+		auto go = hb::GameObject::getGameObjectById(id);
 		m_action(go);
 	}
 }

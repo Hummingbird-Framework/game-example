@@ -5,14 +5,14 @@
 class SwitchComponent : public hb::GameObject::Component
 {
 public:
-	SwitchComponent(const std::string& target_name);
+	SwitchComponent(const std::vector<int>& targets);
 	~SwitchComponent();
 	void setAction(std::function<void(hb::GameObject*)>&& action);
 	bool isOn() const;
 	void doSwitch();
 private:
 	std::function<void(hb::GameObject*)> m_action;
-	std::string m_target_name;
+	std::vector<int> m_targets;
 	bool m_on;
 };
 #endif

@@ -29,6 +29,7 @@ void TmxObjectTypeFactory::registerFactory(const std::string& type, GameObjectFa
 
 void TmxObjectTypeFactory::makeObject(const Tmx::Map* map, int obj_grp, int obj)
 {
+	HB_CHECK_TMXPARSER_VERSION();
 	const Tmx::Object* object = map->GetObjectGroup(obj_grp)->GetObject(obj);
 	if (object->GetType() == "")
 		return;
@@ -36,8 +37,14 @@ void TmxObjectTypeFactory::makeObject(const Tmx::Map* map, int obj_grp, int obj)
 	auto it = s_factory_table.find(object->GetType());
 	if (it == s_factory_table.end())
 	{
-		printf("TmxObjectTypeFactory: Type %s not registered, skipping object.\n", object->GetType().c_str());
+		hb_log_d("TmxObjectTypeFactory: Type " << object->GetType() << " not registered, skipping object.\n");
 		return;
 	}
-	it->second(map, obj_grp, obj);
+	GameObject* go = new GameObject(object->GetId());
+	go->setName(object->GetType());
+	hb::Vector3d v = hb::Renderer::getCamera().DrawspaceToObjectspace(hb::Vector3d(object->GetX(), object->GetY(), map->GetObjectGroup(obj_grp)->GetZOrder()));
+	if (object->GetPolyline() == 0 and object->GetPolygon() == 0 and object->GetEllipse() == 0)
+		v.y -= 1;
+	go->setPosition(v);
+	it->second(go, map, obj_grp, obj);
 }

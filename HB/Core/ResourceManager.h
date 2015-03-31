@@ -1,7 +1,7 @@
 #ifndef HB_RESOURCE_MANAGER_H
 #define HB_RESOURCE_MANAGER_H
 #include <unordered_map>
-#include <cassert>
+#include "Log.h"
 
 namespace hb
 {
@@ -46,7 +46,7 @@ namespace hb
 				ti.data = resource;
 				m_info_table.insert(std::pair<int, ResourceInfo>(ret, ti));
 			}
-			assert(m_id_table.size() == m_info_table.size());
+			hb_assert(m_id_table.size() == m_info_table.size(), "Resource management broke bad");
 			return ret;
 		}
 		// Release a Resource resource with identifier id
@@ -61,7 +61,7 @@ namespace hb
 				m_id_table.erase(ti.it);
 				m_info_table.erase(id);
 			}
-			assert(m_id_table.size() == m_info_table.size());
+			hb_assert(m_id_table.size() == m_info_table.size(), "Resource management broke bad");
 		}
 		// Release all Resource resources with identifier id
 		void releaseAll(int id)
@@ -72,27 +72,27 @@ namespace hb
 			ResourceInfo& ti = i->second;
 			m_id_table.erase(ti.it);
 			m_info_table.erase(id);
-			assert(m_id_table.size() == m_info_table.size());
+			hb_assert(m_id_table.size() == m_info_table.size(), "Resource management broke bad");
 		}
 		// Get Resource with identifier id
 		const Resource& get(int id) const
 		{
 			auto it = m_info_table.find(id);
-			assert(it != m_info_table.end());
+			hb_assert(it != m_info_table.end(), "Resource with id " << id << "does not exist.");
 			return it->second.data;
 		}
 		// Get Resource with identifier id
 		Resource& get(int id)
 		{
 			auto it = m_info_table.find(id);
-			assert(it != m_info_table.end());
+			hb_assert(it != m_info_table.end(), "Resource with id " << id << "does not exist.");
 			return it->second.data;
 		}
 		// Get ResourceId of resource with identifier id 
 		const ResourceId& getId(int id) const
 		{
 			auto it = m_info_table.find(id);
-			assert(it != m_info_table.end());
+			hb_assert(it != m_info_table.end(), "Resource with id " << id << "does not exist.");
 			return it->second.it->first;
 		}
 		// Returns wether the Resource resource with identifier id is loaded

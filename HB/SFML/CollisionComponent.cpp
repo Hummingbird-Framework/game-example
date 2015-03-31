@@ -10,7 +10,7 @@ CollisionComponent::CollisionComponent(const Vector2d& size):
 m_size(size)
 {
 	auto r = s_components.insert(this);
-	assert(r.second);
+	hb_assert(r.second, "Could create CollisionComponent");
 	m_me = r.first;
 }
 

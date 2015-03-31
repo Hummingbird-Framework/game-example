@@ -16,7 +16,7 @@ namespace hb
 	{
 	public:
 		friend class SpriteComponent;
-		Sprite(const Texture& texture = Texture::t404(), const Vector2d& frame_size = Vector2d(64, 64), const Vector2d& frame_margin = Vector2d(0, 0));
+		Sprite(const Texture& texture = Texture::t404(), const Vector2d& frame_size = Vector2d(-1, -1), const Vector2d& frame_margin = Vector2d(0, 0));
 		Sprite(const Sprite& other);
 		Sprite& operator=(const Sprite& other);
 		~Sprite();

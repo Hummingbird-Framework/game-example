@@ -59,9 +59,9 @@ void Camera::setZFar(double zf)
 }
 
 
-Vector3d Camera::getPosition() const
+const Vector3d& Camera::getPosition() const
 {
-	return (m_x * m_position.x) + (m_y * m_position.y) + (m_z * m_position.z);
+	return m_position;
 }
 
 
@@ -118,7 +118,7 @@ void Camera::calculateInverseMatrix()
 	double determinant = + m_x.x * (m_y.y * m_z.z - m_z.y * m_y.z)
 						 - m_x.y * (m_y.x * m_z.z - m_y.z * m_z.x)
 						 + m_x.z * (m_y.x * m_z.y - m_y.y * m_z.x);
-	assert(determinant != 0.);
+	hb_assert(determinant != 0., "The vectors defining the Drawspace are not linearly independent.");
 	double invdet = 1/determinant;
 	m_x_inverse.x =  (m_y.y * m_z.z - m_z.y * m_y.z) * invdet;
 	m_x_inverse.y = -(m_x.y * m_z.z - m_x.z * m_z.y) * invdet;
@@ -132,7 +132,7 @@ void Camera::calculateInverseMatrix()
 }
 
 
-Vector3d Camera::ObjecspaceToDrawspace(const Vector3d& v)
+Vector3d Camera::ObjectspaceToDrawspace(const Vector3d& v)
 {
 	return (getAxisX() * v.x) + (getAxisY() * v.y) + (getAxisZ() * v.z);
 }

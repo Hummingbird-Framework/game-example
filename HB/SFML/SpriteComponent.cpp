@@ -14,7 +14,7 @@ m_looping(true),
 m_sprite(),
 m_frame_order(frame_order)
 {
-	assert(frame_order.size() > 0);
+	hb_assert(frame_order.size() > 0, "You must define at least one frame for the frame order");
 	setSprite(sprite);
 }
 
@@ -187,7 +187,7 @@ Sprite& SpriteComponent::getSprite()
 
 void SpriteComponent::setFrameOrder(const std::vector<int>& frame_order)
 {
-	assert(frame_order.size() > 0);
+	hb_assert(frame_order.size() > 0, "You must define at least one frame for the frame order");
 	m_frame_order = frame_order;
 }
 

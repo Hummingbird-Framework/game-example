@@ -1,8 +1,8 @@
 #ifndef HB_CAMERA_H
 #define HB_CAMERA_H
 #include <utility>
-#include <cassert>
 #include "../Core/Transform.h"
+#include "../Core/Log.h"
 
 namespace hb
 {
@@ -22,7 +22,7 @@ namespace hb
 		void setZNear(double zn);
 		void setZFar(double zf);
 
-		Vector3d getPosition() const;
+		const Vector3d& getPosition() const;
 		const Vector3d& getAxisX() const;
 		const Vector3d& getAxisY() const;
 		const Vector3d& getAxisZ() const;
@@ -31,7 +31,7 @@ namespace hb
 		const Vector3d& getInverseAxisZ() const;
 		double getZNear() const;
 		double getZFar() const;
-		Vector3d ObjecspaceToDrawspace(const Vector3d& v);
+		Vector3d ObjectspaceToDrawspace(const Vector3d& v);
 		Vector3d DrawspaceToObjectspace(const Vector3d& v);
 
 	private:

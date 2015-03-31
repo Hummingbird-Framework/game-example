@@ -52,7 +52,7 @@ void Game::addScene(Scene&& scene)
 void Game::setScene(const std::string& name)
 {
 	auto it = s_scenes.find(name);
-	assert(it != s_scenes.end());
+	hb_assert(it != s_scenes.end(), "Scene with name " << name << "does not exist.");
 	s_change_scene = true;
 	s_next_scene = it;
 }
@@ -71,7 +71,7 @@ void Game::changeScene()
 
 void Game::run()
 {
-	assert(s_change_scene);
+	hb_assert(s_change_scene, "Initial Game scene not defined.");
 	s_game_running = true;
 
 	for (Plugin* p : s_plugins)

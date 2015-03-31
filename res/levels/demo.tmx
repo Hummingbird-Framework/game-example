@@ -98,10 +98,41 @@
  </tileset>
  <tileset firstgid="784" name="walking-tiles" tilewidth="16" tileheight="16">
   <image source="../drawable/walking-tiles.png" width="384" height="256"/>
+  <tile id="192">
+   <animation>
+    <frame tileid="192" duration="500"/>
+    <frame tileid="194" duration="500"/>
+    <frame tileid="196" duration="500"/>
+   </animation>
+  </tile>
+  <tile id="193">
+   <animation>
+    <frame tileid="193" duration="500"/>
+    <frame tileid="195" duration="500"/>
+    <frame tileid="197" duration="500"/>
+   </animation>
+  </tile>
+  <tile id="216">
+   <animation>
+    <frame tileid="216" duration="500"/>
+    <frame tileid="218" duration="500"/>
+    <frame tileid="220" duration="500"/>
+   </animation>
+  </tile>
+  <tile id="217">
+   <animation>
+    <frame tileid="217" duration="500"/>
+    <frame tileid="219" duration="500"/>
+    <frame tileid="221" duration="500"/>
+   </animation>
+  </tile>
  </tileset>
+ <imagelayer name="Fondo" x="-16" y="-48">
+  <image source="../drawable/Seasonal platformer tiles.png"/>
+ </imagelayer>
  <layer name="Mapa" width="10" height="7">
   <data encoding="base64" compression="zlib">
-   eJxlzsdtQlEUBND3S0BURwYXAQugCqKNuyAXQc4t2CDZ0AAHCaQvsTib0dXMTYUQ0mTIkiNPgSIlPihT4cDxqUqNeixr0KRFmw5dPvmix3fs/kSfAUNGjJkwZcacBUtWrNmwZceeH345c3n++ej+458rt9juSyIKIRm953fiTy/n
+   eJxjYCANXAfiG1CMDLCJ4QMw9TdJtJ9YcB2H2TfQsCAjA4MwI6Y4ACkcD1c=
   </data>
  </layer>
  <layer name="Rio" width="10" height="7">
@@ -111,13 +142,13 @@
  </layer>
  <layer name="Adornos_atras" width="10" height="7">
   <data encoding="base64" compression="zlib">
-   eJxjYBjcQIWRNPW7gHg3Eh/E3kOGvQDHgwMS
+   eJxjYBgc4AIzA8NFZsLqXgDVvMSjbhcQ70big9h7yHAPAFyGBms=
   </data>
  </layer>
  <objectgroup name="Objects">
   <object id="9" type="Switch" gid="130" x="144" y="96">
    <properties>
-    <property name="target" value="Bridge"/>
+    <property name="target" value="32 37 38"/>
     <property name="z" value="-1"/>
    </properties>
   </object>

@@ -1,7 +1,7 @@
 #include "makeObjects.h"
 #include <iostream>
 
-void makeDoor(const Tmx::Map* map, int obj_grp, int obj_id)
+void makeDoor(hb::GameObject* go, const Tmx::Map* map, int obj_grp, int obj_id)
 {
 	// Get Tmx object representing the new Door GameObject
 	const Tmx::Object* object = map->GetObjectGroup(obj_grp)->GetObject(obj_id);
@@ -62,13 +62,9 @@ void makeDoor(const Tmx::Map* map, int obj_grp, int obj_id)
 	});
 	
 	// Create new GameObject with components previously defined
-	auto obj = new hb::GameObject
-	{
+	go->addComponents({
 		new hb::SpriteComponent(sprite, {gid - tileset->GetFirstGid()}),
 		collisions,
 		fc
-	};
-	// Set GameObject position and name
-	obj->setPosition(position);
-	obj->setName("Door");
+	});
 }

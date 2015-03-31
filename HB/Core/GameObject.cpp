@@ -6,13 +6,19 @@ int GameObject::s_game_object_identifier = 0;
 std::unordered_map<int, GameObject*> GameObject::s_game_objects_by_id = std::unordered_map<int, GameObject*>();
 std::unordered_map<std::string, std::vector<GameObject*>> GameObject::s_game_objects_by_name = std::unordered_map<std::string, std::vector<GameObject*>>();
 
+void GameObject::setNextGameObjectId(int id)
+{
+	s_game_object_identifier = id;
+}
+
+
 GameObject* GameObject::getGameObjectById(int id)
 {
 	GameObject* go = nullptr;
 	auto s = s_game_objects_by_id.find(id);
 	if (s != s_game_objects_by_id.end())
 		go = s->second;
-	assert(go != nullptr);
+	hb_assert(go != nullptr, "GameObject with id " << id << "does not exist.");
 	return go;
 }
 
@@ -67,6 +73,10 @@ Transform(),
 m_active(true),
 m_marked_to_destroy(false)
 {
+	// Find next available id
+	while (s_game_objects_by_id.find(s_game_object_identifier) != s_game_objects_by_id.end())
+		++s_game_object_identifier;
+
 	m_identifier = s_game_object_identifier++;
 	s_game_objects_by_id.insert(std::pair<int, GameObject*>(m_identifier, this));
 }
@@ -77,6 +87,17 @@ GameObject()
 {
 	for (Component* c : components)
 		addComponent(c);
+}
+
+
+GameObject::GameObject(int id):
+Transform(),
+m_active(true),
+m_marked_to_destroy(false)
+{
+	hb_assert(s_game_objects_by_id.find(id) == s_game_objects_by_id.end(), "GameObject with id " << id << "already exists.");
+	m_identifier = id;
+	s_game_objects_by_id.insert(std::pair<int, GameObject*>(m_identifier, this));
 }
 
 
@@ -126,14 +147,8 @@ void GameObject::setName(const std::string& name)
 	auto s = s_game_objects_by_name.find(m_name);
 	if (s != s_game_objects_by_name.end())
 	{
-		for (std::vector<GameObject*>::iterator i = s->second.begin(); i != s->second.end(); ++i)
-		{
-			if (*i == this)
-			{
-				s->second.erase(i);
-				i = s->second.end();
-			}
-		}
+		std::vector<GameObject*>& vec = s->second;
+		vec.erase(std::remove(vec.begin(), vec.end(), this), vec.end());
 		if (s->second.size() == 0)
 		{
 			s_game_objects_by_name.erase(m_name);
@@ -200,8 +215,15 @@ void GameObject::destroy()
 
 void GameObject::addComponent(Component* component)
 {
-	assert(component != nullptr);
+	hb_assert(component != nullptr, "Trying to add a null component pointer to a GameObject.");
 	m_components.push_back(component);
 	component->setGameObject(this);
 	component->init();
+}
+
+
+void GameObject::addComponents(const std::vector<Component*>& components)
+{
+	for (Component* c : components)
+		addComponent(c);
 }

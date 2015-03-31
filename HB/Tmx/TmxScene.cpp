@@ -6,24 +6,22 @@ TmxScene::TmxScene(const std::string& scene_name, const std::string& file_name, 
 Game::Scene(scene_name, [](){}),
 m_post_init(std::move(post_init))
 {
+	HB_CHECK_TMXPARSER_VERSION();
 	m_init = [this, file_name]()
 	{
 		Tmx::Map* map = new Tmx::Map();
 		map->ParseFile(file_name);
 		if (map->HasError())
 		{
-			printf("error code: %d\n", map->GetErrorCode());
-			printf("error text: %s\n", map->GetErrorText().c_str());
+			hb_log("error code: " << map->GetErrorCode() << std::endl);
+			hb_log("error text: " << map->GetErrorText().c_str() << std::endl);
 
-			::exit(map->GetErrorCode());
+			std::exit(map->GetErrorCode());
 		}
 
 		int last_slash = file_name.find_last_of("/");
 		std::string path = file_name.substr(0, last_slash +1);
 
-		Renderer::getWindow().setSize(sf::Vector2u(map->GetWidth() * map->GetTileWidth(), map->GetHeight() * map->GetTileHeight()));
-		Renderer::getCamera().setPosition(Vector2d(map->GetWidth()/2., map->GetHeight()/2.));
-		Renderer::getWindow().setView(sf::View(sf::FloatRect(0, 0, map->GetWidth() * map->GetTileWidth(), map->GetHeight() * map->GetTileHeight())));
 
 		if (map->GetOrientation() == Tmx::TMX_MO_ORTHOGONAL)
 		{
@@ -38,10 +36,33 @@ m_post_init(std::move(post_init))
 			Renderer::getCamera().setAxisZ(Vector3d(0, 0, 1));
 		}
 
+		GameObject::setNextGameObjectId(map->GetNextObjectId());
+
+		// Make Image layers
+		for (int i = 0; i < map->GetNumImageLayers(); ++i)
+		{
+			const Tmx::ImageLayer* layer = map->GetImageLayer(i);
+			if (not layer->IsVisible()) continue;
+
+			GameObject *image_layer_go = new GameObject();
+			image_layer_go->setName(layer->GetName());
+			image_layer_go->setPosition(Vector3d(layer->GetX()/map->GetTileWidth(), layer->GetY()/map->GetTileHeight(), layer->GetZOrder()));
+
+			Texture tex = Texture::loadFromFile(path + layer->GetImage()->GetSource(), Rect(0, 0, layer->GetImage()->GetWidth(), layer->GetImage()->GetHeight()));
+			Sprite sprite = Sprite(tex);
+			auto sprite_comp = new SpriteComponent(sprite);
+			image_layer_go->addComponent(sprite_comp);
+		}
+
+		// Make tile layers
 		for (int i = 0; i < map->GetNumTileLayers(); ++i)
 		{
 			const Tmx::TileLayer* layer = map->GetTileLayer(i);
 			if (not layer->IsVisible()) continue;
+
+			GameObject *tile_layer_go = new GameObject();
+			tile_layer_go->setName(layer->GetName());
+			tile_layer_go->setPosition(Vector3d(0, 0, layer->GetZOrder()));
 			for (int y = 0; y < layer->GetHeight(); ++y)
 			{
 				for (int x = 0; x < layer->GetWidth(); ++x)
@@ -67,15 +88,14 @@ m_post_init(std::move(post_init))
 					}
 					Texture tex = Texture::loadFromFile(path + tileset->GetImage()->GetSource(), Rect(0, 0, tileset->GetImage()->GetWidth(), tileset->GetImage()->GetHeight()));
 					Sprite sprite = Sprite(tex, Vector2d(tileset->GetTileWidth(), tileset->GetTileHeight()), Vector2d(tileset->GetMargin(), tileset->GetMargin()));
-					GameObject* tile_obj = new GameObject(
-						{
-							new SpriteComponent(sprite, anim, t_anim)
-						});
-					tile_obj->setPosition(Vector3d(x, y, layer->GetZOrder()));
+					auto sprite_comp = new SpriteComponent(sprite, anim, t_anim);
+					sprite_comp->setPosition(Vector3d(x, y, 0));
+					tile_layer_go->addComponent(sprite_comp);
 				}
 			}
 		}
 
+		// Make GameObjects
 		for (int i = 0; i < map->GetNumObjectGroups(); ++i)
 		{
 			const Tmx::ObjectGroup* obj_grp = map->GetObjectGroup(i);
@@ -90,7 +110,6 @@ m_post_init(std::move(post_init))
 
 		delete map;
 	};
-
 }
 
 

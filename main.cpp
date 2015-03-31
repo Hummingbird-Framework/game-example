@@ -25,7 +25,7 @@ int main(int argc, char const *argv[])
 	hb::Game::running(false);
 
 	// Create Game window
-	hb::Renderer::createWindow(hb::Vector2d(1280, 720), "Game");
+	hb::Renderer::createWindow(hb::Vector2d(1000, 700), "Game");
 	// Set camera position
 	hb::Renderer::getCamera().setPosition(hb::Vector3d());
 	// Register SFML Plugin in Game (allows to update input and draw when necessary)
@@ -45,8 +45,14 @@ int main(int argc, char const *argv[])
 	hb::TmxRegisterFactory("Door", makeDoor);
 
 	// Add Scenes loaded from Tmx file to game
-	hb::Game::addScene(hb::TmxScene("demo", "res/levels/demo.tmx"));
-	hb::Game::addScene(hb::TmxScene("demo2", "res/levels/demo2.tmx"));
+	std::function<void(const Tmx::Map*)> cam = [](const Tmx::Map* map)
+	{
+		hb::Renderer::getWindow().setSize(sf::Vector2u(map->GetWidth() * map->GetTileWidth(), map->GetHeight() * map->GetTileHeight()));
+		hb::Renderer::getCamera().setPosition(hb::Vector2d(map->GetWidth()/2., map->GetHeight()/2.));
+		hb::Renderer::getWindow().setView(sf::View(sf::FloatRect(0, 0, map->GetWidth() * map->GetTileWidth(), map->GetHeight() * map->GetTileHeight())));
+	};
+	hb::Game::addScene(hb::TmxScene("demo", "res/levels/demo.tmx", std::function<void(const Tmx::Map*)>(cam)));
+	hb::Game::addScene(hb::TmxScene("demo2", "res/levels/demo2.tmx", std::function<void(const Tmx::Map*)>(cam)));
 
 	// Start Game
 	hb::Game::setScene("demo");

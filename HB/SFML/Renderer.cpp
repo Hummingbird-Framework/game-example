@@ -54,7 +54,8 @@ void Renderer::draw()
 {
 	m_window->clear();
 	sf::View view = getWindow().getView();
-	view.setCenter(m_camera.getPosition().x, m_camera.getPosition().y);
+	hb::Vector3d cam_pos = m_camera.ObjectspaceToDrawspace(m_camera.getPosition());
+	view.setCenter(cam_pos.x, cam_pos.y);
 	getWindow().setView(view);
 	while (not m_drawables.empty())
 	{

@@ -1,7 +1,7 @@
 #include "makeObjects.h"
 #include <iostream>
 
-void makeSwitch(const Tmx::Map* map, int obj_grp, int obj_id)
+void makeSwitch(hb::GameObject* go, const Tmx::Map* map, int obj_grp, int obj_id)
 {
 	// Define GameObject status data and instantiate it
 	struct Data
@@ -12,7 +12,6 @@ void makeSwitch(const Tmx::Map* map, int obj_grp, int obj_id)
 	// Get Tmx object representing the new Switch GameObject
 	const Tmx::Object* obj = map->GetObjectGroup(obj_grp)->GetObject(obj_id);
 	// Get z position from s-index of ObjectGroup
-	int z_index = map->GetObjectGroup(obj_grp)->GetZOrder();
 	auto collisions = new hb::CollisionComponent(hb::Vector2d(1, 1));
 	// Make sprite from tile
 	int gid = obj->GetGid();
@@ -23,26 +22,28 @@ void makeSwitch(const Tmx::Map* map, int obj_grp, int obj_id)
 	// Define Function component
 	hb::FunctionComponent* fc = new hb::FunctionComponent();
 	// Define Switch component
-	SwitchComponent* sc = new SwitchComponent(obj->GetProperties().GetStringProperty("target"));
+	std::string tmp;
+	std::stringstream ss;
+	ss << obj->GetProperties().GetStringProperty("target");
+	std::vector<int> targets;
+	int target_id;
+	while(ss >> target_id)
+	{
+		targets.push_back(target_id);
+	}
+	SwitchComponent* sc = new SwitchComponent(targets);
 	sc->setAction([=](hb::GameObject* target)
 	{
-		if (sc->isOn())
-		{
-			target->setActive(true);
-		}
+		target->setActive(sc->isOn());
 	});
 	// Create new GameObject
-	auto go = new hb::GameObject
-	{
+	go->addComponents({
 		collisions,
 		new hb::SpriteComponent(sprite, {gid - tileset->GetFirstGid()}),
 		fc,
 		sc
-	};
-	// Set name and position
-	go->setName(obj->GetType());
-	hb::Vector3d v = obj->GetX() * hb::Renderer::getCamera().getInverseAxisX() + obj->GetY() * hb::Renderer::getCamera().getInverseAxisY() + z_index * hb::Renderer::getCamera().getInverseAxisZ();
-	v.y -= 1;
+	});
+	hb::Vector3d v = go->getPosition();
 	v.z += obj->GetProperties().GetIntProperty("z");
 	go->setPosition(v);
 

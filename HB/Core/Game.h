@@ -1,13 +1,13 @@
 #ifndef HB_GAME_H
 #define HB_GAME_H
 #include <cstdlib>
-#include <cassert>
 #include <string>
 #include <vector>
 #include <map>
 #include "GameObject.h"
 #include "Clock.h"
 #include "Plugin.h"
+#include "Log.h"
 
 namespace hb
 {

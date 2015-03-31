@@ -1,29 +1,21 @@
 #include "makeObjects.h"
 #include <iostream>
 
-void makePlayer(const Tmx::Map* map, int obj_grp, int obj_id)
+void makePlayer(hb::GameObject* player, const Tmx::Map* map, int obj_grp, int obj_id)
 {
 	// Get Tmx object representing the new Player GameObject
 	const Tmx::Object* obj = map->GetObjectGroup(obj_grp)->GetObject(obj_id);
 	// Define the player GameObject
-	auto player = new hb::GameObject
-	{
+	player->addComponents({
 		new hb::SpriteComponent(),
 		new hb::CollisionComponent(hb::Vector2d(0.8, 0.9)),
 		new hb::FunctionComponent()
-	};
-
-	// Set name
-	player->setName("Player");
+	});
 
 	// get the FunctionComponent we added in the definition
 	auto fc = player->getComponent<hb::FunctionComponent>();
 
 	// run initialization code (define variables and event callbacks)
-	hb::Vector3d v = hb::Renderer::getCamera().DrawspaceToObjectspace(hb::Vector3d(obj->GetX(), obj->GetY(), map->GetObjectGroup(obj_grp)->GetZOrder()));
-	v.y -= 1;
-	player->setPosition(v);
-
 	// Define GameObject status data and instantiate it
 	struct Data
 	{

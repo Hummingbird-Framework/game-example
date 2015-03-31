@@ -1,7 +1,6 @@
 #ifndef HB_GAME_OBJECT_H
 #define HB_GAME_OBJECT_H
 #include <cstdlib>
-#include <cassert>
 #include <vector>
 #include <string>
 #include <map>
@@ -9,6 +8,7 @@
 #include <typeindex>
 #include <initializer_list>
 #include "Transform.h"
+#include "Log.h"
 
 namespace hb
 {
@@ -40,12 +40,14 @@ namespace hb
 			GameObject* m_game_object;
 		};
 
+		static void setNextGameObjectId(int id);
 		static GameObject* getGameObjectById(int id);
 		static const std::vector<GameObject*>& getGameObjectsByName(const std::string& name);
 		static void destroyAll();
 		static void updateAll();
 
 		GameObject();
+		GameObject(int id);
 		GameObject(const std::initializer_list<Component*>& components);
 		~GameObject();
 		int getIdentifier() const;
@@ -58,6 +60,7 @@ namespace hb
 		void postUpdate();
 		void destroy();
 		void addComponent(Component* component);
+		void addComponents(const std::vector<Component*>& components);
 		template <typename ComponentType>
 		ComponentType* getComponent() const
 		{

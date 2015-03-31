@@ -17,8 +17,6 @@ ResourceManager<TextureManager, sf::Texture, detail::tex_id>()
 					int p = 0;
 					if (i%2 == 1) p = 16;
 					i404.setPixel(p + l + 16 * j, k + 16 * i, c2);
-					assert(p + l + 16 * j < 64);
-					assert(k + 16 * i < 64);
 				}
 
 	sf::Texture t404;

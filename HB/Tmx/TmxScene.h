@@ -5,6 +5,7 @@
 #include "TmxObjectTypeFactory.h"
 #include "../Core/Game.h"
 #include "../SFML.h"
+#include "TmxVersion.h"
 
 namespace hb
 {
