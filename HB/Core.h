@@ -1,3 +1,12 @@
+/**
+ * \mainpage Hummingbird Framework
+ * \section intro_sec Introduction
+ * 
+ * C++ game development framework with integration with Tiled.
+ * 
+ * You can find an example game here: https://github.com/Hummingbird-Framework/game-example
+ */
+
 #ifndef HUMMINGBIRD_BASE
 #define HUMMINGBIRD_BASE
 #include "Core/Clock.h"
