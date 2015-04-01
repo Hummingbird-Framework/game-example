@@ -38,6 +38,8 @@ namespace hb
 		bool isPlaying() const;
 		void play();
 		void stop();
+		void setColor(const Color& color);
+		const Color& getColor() const;
 
 	protected:
 		Vector2d getCoords();
@@ -49,6 +51,7 @@ namespace hb
 		sf::Sprite m_sprite;
 		Sprite m_animation;
 		std::vector<int> m_frame_order;
+		Color m_color;
 	};
 }
 #endif

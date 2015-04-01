@@ -11,7 +11,8 @@ m_visible(true),
 m_playing(true),
 m_looping(true),
 m_sprite(),
-m_frame_order(frame_order)
+m_frame_order(frame_order),
+m_color(1.f, 1.f, 1.f, 1.f)
 {
 	hb_assert(frame_order.size() > 0, "You must define at least one frame for the frame order");
 	setSprite(sprite);
@@ -167,4 +168,17 @@ void SpriteComponent::setFrameTime(const Time& frame_time)
 const Time& SpriteComponent::getFrameTime() const
 {
 	return m_frame_time;
+}
+
+
+void SpriteComponent::setColor(const Color& color)
+{
+	m_color = color;
+	m_sprite.setColor(sf::Color(color.r*255, color.g*255, color.b*255, color.a*255));
+}
+
+
+const Color& SpriteComponent::getColor() const
+{
+	return m_color;
 }
