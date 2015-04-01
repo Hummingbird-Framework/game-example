@@ -1,7 +1,6 @@
 #ifndef HB_RECT_H
 #define HB_RECT_H
 #include <string>
-#include <regex>
 #include <SFML/Graphics.hpp>
 #include "../Core/Vector2d.h"
 

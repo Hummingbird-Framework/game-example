@@ -2,7 +2,6 @@
 #define HB_SPRITE_COMPONENT_H
 #include <SFML/Graphics.hpp>
 #include <string>
-#include <regex>
 #include "Renderer.h"
 #include "../Core/GameObject.h"
 #include "../Core/Transform.h"
@@ -21,7 +20,6 @@ namespace hb
 	public:
 		SpriteComponent(const Sprite& sprite = Sprite(), const std::vector<int>& frame_order = std::vector<int>(1, 0), const Time& frame_time = Time::seconds(0));
 		virtual ~SpriteComponent() override;
-
 
 		virtual void postUpdate() override;
 

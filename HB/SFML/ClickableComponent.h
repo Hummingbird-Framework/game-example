@@ -16,7 +16,6 @@ namespace hb
 		ClickableComponent();
 		ClickableComponent(const Vector2d& size);
 		~ClickableComponent();
-
 		void setOnClick(std::function<void(void)>&& onClick);
 		void setSize(const Vector2d& size);
 		const Vector2d& getSize() const;

@@ -15,21 +15,5 @@ sf::Rect<double>(sf::Vector2<double>(position.x, position.y), sf::Vector2<double
 {}
 
 
-Rect::Rect(const std::string& str):
-sf::Rect<double>()
-{
-	std::regex re ("\\(\\s*([0-9]+(?:\\.[0-9]+)?)\\s*,\\s*([0-9]+(?:\\.[0-9]+)?)\\s*,\\s*([0-9]+(?:\\.[0-9]+)?)\\s*,\\s*([0-9]+(?:\\.[0-9]+)?)\\s*\\)");
-	std::smatch sm;
-	std::regex_match (str, sm, re);
-	if (not sm.empty())
-	{
-		left   = strtod(sm.str(1).c_str(), NULL);
-		top    = strtod(sm.str(2).c_str(), NULL);
-		width  = strtod(sm.str(3).c_str(), NULL);
-		height = strtod(sm.str(4).c_str(), NULL);
-	}
-}
-
-
 Rect::~Rect()
 {};
