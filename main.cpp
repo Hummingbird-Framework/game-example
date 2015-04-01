@@ -20,10 +20,6 @@ public:
 
 int main(int argc, char const *argv[])
 {
-	hb::Vector2d a,b,c;
-	c = a-b;
-	hb::Game::running(false);
-
 	// Create Game window
 	hb::Renderer::createWindow(hb::Vector2d(1000, 700), "Game");
 	// Set camera position

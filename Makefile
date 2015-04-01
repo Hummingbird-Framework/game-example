@@ -10,7 +10,7 @@ MODULES     := $(BASE) $(SFML) $(TMX)
 
 SOURCES     := $(shell find ./ -maxdepth 1 -name '*.cpp')
 INCLUDES    := $(shell find ./ -maxdepth 1 -name '*.h')
-STATIC_LIBS = $(shell find ./ -name '*.a')
+STATIC_LIBS = ./HB/SFML/Hummingbird-SFML-2.1.a ./HB/Tmx/Hummingbird-Tmx.a ./HB/Core/Hummingbird-Base.a
 
 OBJ         := $(addprefix ./,$(SOURCES:./%.cpp=%.o))
 
