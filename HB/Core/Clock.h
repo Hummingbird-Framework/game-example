@@ -8,17 +8,42 @@ namespace hb
 	class Clock
 	{
 	public:
-		//! Class constructor
 		/*!
+		  \brief Class constructor.
+
 		  Initializes a new instance of Clock wich starts measuring 
-		  the time since it is created.
+		  the time as it is created.
 		*/
 		Clock();
-		//! Class destructor
+		/*!
+		  \brief Class destructor.
+
+		  Destroys the instance of Clock.
+		*/
 		~Clock();
-		//! Returns the Time elapsed since creation or last reset
+		/*!
+		  \brief Returns the Time elapsed since creation or last reset.
+
+		  \return Time since instance creation or last reset().
+		*/
 		Time getElapsedTime() const;
-		//! Returns the Time elapsed since creation or last reset and resets the counter
+		/*!
+		  \brief Restarts the Time counter.
+		  
+		  This function also returns the time elapsed up to its reset.
+		  This is usefull for getting precise delta times without having 
+		  time overhead for having to call two methods:
+		  \code
+		  hb::Clock clk;
+		  while(game_is_running)
+		  {
+		      hb::Time deltaTime = clk.reset();
+		      ... // Game code
+		  }
+		  \endcode
+
+		  \return Time since instance creation or last reset().
+		*/
 		Time reset();
 		
 	private:
@@ -30,6 +55,5 @@ namespace hb
 /**
  * \class hb::Clock
  * \ingroup core
- *
- * A class for measuring time intervals
+ * \brief A class for measuring Time intervals.
  */

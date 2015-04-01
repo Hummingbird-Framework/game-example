@@ -115,7 +115,7 @@ GameObject::~GameObject()
 		bool done = false;
 		for (std::vector<GameObject*>::iterator i = s->second.begin(); i != s->second.end() and not done; ++i)
 		{
-			if ((*i)->getIdentifier() == getIdentifier())
+			if ((*i)->getId() == getId())
 			{
 				done = true;
 				s->second.erase(i);
@@ -129,7 +129,7 @@ GameObject::~GameObject()
 }
 
 
-int GameObject::getIdentifier() const
+int GameObject::getId() const
 {
 	return m_identifier;
 }

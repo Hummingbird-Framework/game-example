@@ -23,28 +23,9 @@ Game::~Game()
 }
 
 
-GameObject* Game::makeGameObject(std::map<std::string, std::string>& properties)
-{
-	std::map<std::string, Plugin::ComponentFactory> list = Game::getAllComponentFactories();
-	GameObject* go = new GameObject;
-	for (auto it : list)
-	{
-		if (properties.find(it.first + ".count") != properties.end())
-		{
-			int count = atoi(properties[it.first + ".count"].c_str());
-			for (int i = 0; i < count; ++i)
-			{
-				GameObject::Component* c = it.second(properties, i);
-				go->addComponent(c);
-			}
-		}
-	}
-	return go;
-}
-
-
 void Game::addScene(Scene&& scene)
 {
+	hb_assert(s_scenes.find(scene.getName()) == s_scenes.end(), "Scene with name `" << scene.getName() << "` already added.");
 	s_scenes.insert(std::pair<std::string, Scene>(scene.getName(), scene));
 }
 
@@ -114,17 +95,4 @@ void Game::running(bool running)
 bool Game::isRunning()
 {
 	return s_game_running;
-}
-
-
-std::map<std::string, Plugin::ComponentFactory> Game::getAllComponentFactories()
-{
-	std::map<std::string, Plugin::ComponentFactory> ret;
-	for (Plugin* p : s_plugins)
-	{
-		std::map<std::string, Plugin::ComponentFactory> list = p->getComponentFactory();
-		ret.insert(list.begin(), list.end());
-	}
-
-	return ret;
 }

@@ -7,37 +7,72 @@ namespace hb
 	/*!
 	  \class Resource
 	  \ingroup core
+	  \brief Class representing a loaded resource.
+	  \tparam ResourceType Type of the resource loaded.
+	  \tparam ResourceId Type that uniquely identifies a ResourceType
+	  \tparam ResourceManager Manager of the Resource. It must inherit from ResourceManager.
 	*/
 	template <typename ResourceType, typename ResourceId, typename ResourceManager>
 	class Resource
 	{
 	public:
+		/*!
+		  \brief Class constructor.
+		  \param resource ResourceType instance to manage.
+		  \param id Unique id of the resource.
+
+		  Adds the resource to its ResourceManager.
+		*/
 		Resource(const ResourceType& resource, const ResourceId& id)
 		{
 			m_id = ResourceManager::instance()->addResource(id, resource);
 		}
+		/*!
+		  \brief Copy constructor.
+		  \param other Original instance.
+		*/
 		Resource(const Resource& other)
 		{
 			m_id = ResourceManager::instance()->addResource(other.id(), other.get());
 		}
+		/*!
+		  \brief Copy assignment.
+		  \param other Original instance.
+		*/
 		Resource& operator=(const Resource& other)
 		{
 			m_id = ResourceManager::instance()->addResource(other.id(), other.get());
 			return *this;
 		}
+		/*!
+		  \brief Class destructor.
+
+		  Removes the resource from its ResourceManager.
+		*/
 		~Resource()
 		{
 			ResourceManager::instance()->release(m_id);
 		}
 
+		/*!
+		  \brief Get the resource.
+		  \return Constant reference to the resource.
+		*/
 		const ResourceType& get() const
 		{
 			return ResourceManager::instance()->get(m_id);
 		}
+		/*!
+		  \brief Get the resource.
+		  \return Reference to the resource.
+		*/
 		ResourceType& get()
 		{
 			return ResourceManager::instance()->get(m_id);
 		}
+		/*!
+		  \brief Get the resource id.
+		*/
 		const ResourceId& id() const
 		{
 			return ResourceManager::instance()->getId(m_id);

@@ -22,8 +22,6 @@ namespace hb
 		SpriteComponent(const Sprite& sprite = Sprite(), const std::vector<int>& frame_order = std::vector<int>(1, 0), const Time& frame_time = Time::seconds(0));
 		virtual ~SpriteComponent() override;
 
-		static GameObject::Component* factory(std::map<std::string, std::string>& properties, int i);
-		static const std::string& getFootprint();
 
 		virtual void postUpdate() override;
 
@@ -44,8 +42,6 @@ namespace hb
 		void stop();
 
 	protected:
-		static std::string s_footprint;
-
 		Vector2d getCoords();
 
 		Time m_time_left, m_frame_time;

@@ -61,10 +61,23 @@ namespace hb
 		};
 	}
 
+	/*!
+	  \class EventManager
+	  \brief Generic event manager class.
+	  \ingroup core
+
+	  This class allows to define callbacks for a set of predefined events.
+	*/
 	template <typename... Events>
 	class EventManager : detail::EventManager<Events>...
 	{
 	public:
+		/*!
+		  \struct ListenerId
+		  \brief Identifier of a registered callback.
+
+		  This is used for disabling a callback.
+		*/
 		template <typename Event>
 		struct ListenerId
 		{
@@ -72,6 +85,11 @@ namespace hb
 			int id;
 		};
 
+		/*!
+		  \brief Connects a callback to an event.
+		  \param listener Callback function for the event.
+		  \return Identifier used for disabling this callback in the future.
+		*/
 		template <typename Listener>
 		ListenerId<typename detail::traits<Listener>::type> listen(Listener&& listener)
 		{
@@ -82,6 +100,12 @@ namespace hb
 			return ret;
 		}
 
+		/*!
+		  \brief Inform the EventManager that an event happened
+		  \param event Event being registered
+
+		  This method gets the event and calls all enabled callbacks listening to it.
+		*/
 		template <typename Event>
 		void message(const Event& event)
 		{
@@ -89,6 +113,10 @@ namespace hb
 			em.message(event);
 		}
 
+		/*!
+		  \brief Disable the callback identified by id
+		  \param id Id returned by listen() when the callback was registered
+		*/
 		template <typename Event>
 		void ignore(const ListenerId<Event>& id)
 		{

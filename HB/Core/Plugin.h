@@ -9,19 +9,35 @@ namespace hb
 	/*!
 	  \class Plugin
 	  \ingroup core
+	  \brief Base class for implementing custom Plugin%s.
 	*/
 	class Plugin
 	{
 	public:
+		/*!
+		  \brief Class constructor.
+		*/
 		Plugin(){};
+		/*!
+		  \brief Class destructor.
+		*/
 		virtual ~Plugin(){};
 
-		typedef GameObject::Component* (*ComponentFactory)(std::map<std::string, std::string>&, int);
-		virtual std::map<std::string, ComponentFactory> getComponentFactory() const
-		{return std::map<std::string, ComponentFactory>();};
+		/*!
+		  \brief Function executed just before entering the gameloop.
+		*/
 		virtual void gameStart(){};
+		/*!
+		  \brief Function executed before updating the GameObject%s.
+		*/
 		virtual void preUpdate(){};
+		/*!
+		  \brief Function executed after updating the GameObject%s.
+		*/
 		virtual void postUpdate(){};
+		/*!
+		  \brief Function executed after exiting the gameloop.
+		*/
 		virtual void gameEnd(){};
 		
 	};

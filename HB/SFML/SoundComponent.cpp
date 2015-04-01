@@ -1,7 +1,6 @@
 #include "SoundComponent.h"
 using namespace hb;
 
-std::string SoundComponent::s_footprint = "Sound";
 
 SoundComponent::SoundComponent():
 GameObject::Component(),
@@ -20,68 +19,6 @@ GameObject::Component()
 SoundComponent::~SoundComponent()
 {
 
-}
-
-
-GameObject::Component* SoundComponent::factory(std::map<std::string, std::string>& properties, int i)
-{
-	std::string path = properties[s_footprint + "[" + std::to_string(i) + "].path"];
-	hb::SoundBuffer sound_buffer = hb::SoundBuffer::loadFromFile(path);
-
-	SoundComponent* c = new SoundComponent(sound_buffer);
-
-	std::string playingOffset = properties[s_footprint + "[" + std::to_string(i) + "].playingOffset"];
-	if (playingOffset.length() != 0)
-		c->setPlayingOffset(Time::milliseconds(atoi(playingOffset.c_str())));
-
-	std::string pitch = properties[s_footprint + "[" + std::to_string(i) + "].pitch"];
-	if (pitch.length() != 0)
-		c->setPitch(strtod(pitch.c_str(), NULL));
-
-	std::string volume = properties[s_footprint + "[" + std::to_string(i) + "].volume"];
-	if (volume.length() != 0)
-		c->setVolume(strtod(volume.c_str(), NULL));
-
-	std::string relativeToListener = properties[s_footprint + "[" + std::to_string(i) + "].relativeToListener"];
-	if (relativeToListener.length() != 0)
-		c->setRelativeToListener(relativeToListener == "true");
-
-	std::string minDistance = properties[s_footprint + "[" + std::to_string(i) + "].minDistance"];
-	if (minDistance.length() != 0)
-		c->setMinDistance(strtod(minDistance.c_str(), NULL));
-
-	std::string attenuation = properties[s_footprint + "[" + std::to_string(i) + "].attenuation"];
-	if (attenuation.length() != 0)
-		c->setAttenuation(strtod(attenuation.c_str(), NULL));
-
-	std::string loop = properties[s_footprint + "[" + std::to_string(i) + "].loop"];
-	if (loop.length() != 0)
-		c->loop(loop == "true");
-
-	std::string status = properties[s_footprint + "[" + std::to_string(i) + "].status"];
-	if (status.length() != 0)
-	{
-		if (status == "Stopped")
-		{
-			c->stop();
-		}
-		if (status == "Paused")
-		{
-			c->pause();
-		}
-		if (status == "Playing")
-		{
-			c->play();
-		}
-	}
-
-	return c;
-}
-
-
-const std::string& SoundComponent::getFootprint()
-{
-	return s_footprint;
 }
 
 

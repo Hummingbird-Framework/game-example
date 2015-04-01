@@ -2,7 +2,6 @@
 #include "Renderer.h"
 using namespace hb;
 
-std::string CollisionComponent::s_footprint = "Collision";
 bool CollisionComponent::s_collisions_executed = false;
 std::set<CollisionComponent*> CollisionComponent::s_components = std::set<CollisionComponent*>();
 
@@ -25,21 +24,6 @@ CollisionComponent(hb::Vector2d(width, height))
 CollisionComponent::~CollisionComponent()
 {
 	s_components.erase(m_me);
-}
-
-
-GameObject::Component* CollisionComponent::factory(std::map<std::string, std::string>& properties, int i)
-{
-	CollisionComponent* c = new CollisionComponent();
-	c->setPosition(hb::Vector3d(properties[s_footprint + "[" + std::to_string(i) + "].position"]));
-	c->setSize(hb::Vector2d(properties[s_footprint + "[" + std::to_string(i) + "].size"]));
-	return c;
-}
-
-
-const std::string& CollisionComponent::getFootprint()
-{
-	return s_footprint;
 }
 
 

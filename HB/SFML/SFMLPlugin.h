@@ -20,8 +20,6 @@ namespace hb
 		SFMLPlugin();
 		virtual ~SFMLPlugin() override;
 
-		virtual std::map<std::string, Plugin::ComponentFactory> getComponentFactory() const;
-
 		virtual void preUpdate() override;
 		virtual void postUpdate() override;
 		
