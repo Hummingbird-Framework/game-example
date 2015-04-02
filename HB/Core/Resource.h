@@ -28,6 +28,19 @@ namespace hb
 			m_id = ResourceManager::instance()->addResource(id, resource);
 		}
 		/*!
+		  \brief Class constructor. Used for getting an already loaded resource.
+		  \param id Unique id of the resource.
+
+		  Loads a resource from the ResourceManager. If the resource with Unique id 
+		  _id_ hasn't been loaded yet, it will register ResourceType instance using the 
+		  default constructor.
+		*/
+		Resource(const ResourceId& id)
+		{
+			if (not ResourceManager::instance()->isLoaded(id, m_id))
+				m_id = ResourceManager::instance()->addResource(id, ResourceType());
+		}
+		/*!
 		  \brief Copy constructor.
 		  \param other Original instance.
 		*/

@@ -14,6 +14,7 @@ namespace hb
 	{
 	public:
 		SoundBuffer(const sf::SoundBuffer& buffer, const std::string& id);
+		SoundBuffer(const std::string& id);
 		SoundBuffer():SoundBuffer(sf::SoundBuffer(), ""){}
 		~SoundBuffer();
 		static SoundBuffer loadFromFile(const std::string& path);

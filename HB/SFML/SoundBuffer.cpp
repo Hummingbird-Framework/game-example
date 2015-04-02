@@ -9,6 +9,13 @@ Resource<sf::SoundBuffer, std::string, SoundManager>(buffer, id)
 }
 
 
+SoundBuffer::SoundBuffer(const std::string& id):
+Resource<sf::SoundBuffer, std::string, SoundManager>(id)
+{
+
+}
+
+
 SoundBuffer::~SoundBuffer()
 {
 

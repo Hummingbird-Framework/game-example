@@ -83,6 +83,11 @@ namespace hb
 		  \brief Add a Scene to the Game.
 		  \param scene Scene being added to the Game.
 		*/
+		static void addScene(Scene& scene);
+		/*!
+		  \brief Add a Scene to the Game.
+		  \param scene Scene being added to the Game.
+		*/
 		static void addScene(Scene&& scene);
 		/*!
 		  \brief Set Scene with name _name_ as the current Scene.

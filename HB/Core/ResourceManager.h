@@ -157,6 +157,20 @@ namespace hb
 			return (m_id_table.find(resource_id) != m_id_table.end());
 		}
 		/*!
+		  \brief Returns wether the resource with ResourceId _resource_id_ is loaded 
+		  and if it is loaded, puts the ResourceManager id in _id_.
+		  \param resource_id Unique id of the resource.
+		  \return Is resource with ResourceId _resource_id_ loaded.
+		*/
+		bool isLoaded(const ResourceId& resource_id, int& id) const
+		{
+			auto it = m_id_table.find(resource_id);
+			bool ret = (it != m_id_table.end());
+			if (ret)
+				id = it->second;
+			return ret;
+		}
+		/*!
 		  \brief Returns number of active requests for resource id.
 		  \param id Identifier of the resource in the ResourceManager.
 		  \return Usage count of the resource.

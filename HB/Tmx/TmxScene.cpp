@@ -113,6 +113,13 @@ m_post_init(std::move(post_init))
 }
 
 
+TmxScene::TmxScene(const std::string& scene_name, const std::string& file_name, std::function<void(const Tmx::Map*)>& post_init):
+TmxScene(scene_name, file_name, std::function<void(const Tmx::Map*)>(post_init))
+{
+
+}
+
+
 TmxScene::~TmxScene()
 {
 

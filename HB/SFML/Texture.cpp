@@ -8,6 +8,13 @@ Resource<sf::Texture, detail::tex_id, TextureManager>(texture, id)
 }
 
 
+Texture::Texture(const detail::tex_id& id):
+Resource<sf::Texture, detail::tex_id, TextureManager>(id)
+{
+
+}
+
+
 Texture::~Texture()
 {
 
@@ -17,22 +24,26 @@ Texture::~Texture()
 Texture Texture::t404()
 {
 	TextureManager* TM = TextureManager::instance();
-	return Texture(TM->get(TM->getT404()), TM->getId(TM->getT404()));
+	return Texture(TM->getId(TM->getT404()));
 }
 
 
 Texture Texture::loadFromFile(const std::string& path, const Rect& area)
 {
-	sf::Texture tex;
 	TextureManager* TM = TextureManager::instance();
 	sf::IntRect area_sf = sf::IntRect(area);
-	if (!TM->isLoaded(path, area_sf))
+	if (TM->isLoaded(path, area_sf))
+		return Texture(TextureManager::makeTexId(path, area_sf));
+	else
+	{
+		sf::Texture tex;
 		if (!tex.loadFromFile(path, area_sf))
 		{
 			return t404();
 		}
+		return Texture(tex, TextureManager::makeTexId(path, area_sf));
+	}
 
-	return Texture(tex, TextureManager::makeTexId(path, area_sf));
 }
 
 

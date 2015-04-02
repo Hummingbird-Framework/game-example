@@ -23,6 +23,13 @@ Game::~Game()
 }
 
 
+void Game::addScene(Scene& scene)
+{
+	hb_assert(s_scenes.find(scene.getName()) == s_scenes.end(), "Scene with name `" << scene.getName() << "` already added.");
+	s_scenes.insert(std::pair<std::string, Scene>(scene.getName(), scene));
+}
+
+
 void Game::addScene(Scene&& scene)
 {
 	hb_assert(s_scenes.find(scene.getName()) == s_scenes.end(), "Scene with name `" << scene.getName() << "` already added.");

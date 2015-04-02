@@ -17,6 +17,7 @@ namespace hb
 	{
 	public:
 		Texture(const sf::Texture& texture, const detail::tex_id& id);
+		Texture(const detail::tex_id& id);
 		~Texture();
 		static Texture t404();
 		static Texture loadFromFile(const std::string& path, const Rect& area = Rect());

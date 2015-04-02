@@ -23,8 +23,7 @@ namespace hb
 	public:
 		TextureManager();
 		static detail::tex_id makeTexId(const std::string& path, const sf::IntRect& area);
-		/* Load a Texture resource from file and return its id.
-		   Returns -1 if error while loading texture. */
+		using ResourceManager<TextureManager, sf::Texture, detail::tex_id>::isLoaded;
 		bool isLoaded(const std::string& path, const sf::IntRect& area = sf::IntRect()) const;
 		void release(int id) override;
 		int getT404() const;

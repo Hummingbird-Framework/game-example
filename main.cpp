@@ -1,5 +1,4 @@
 #include <iostream>
-#include <cstdlib>
 #include "HB/Core.h"
 #include "HB/SFML.h"
 #include "makeObjects.h"
@@ -40,7 +39,7 @@ int main(int argc, char const *argv[])
 	hb::TmxRegisterFactory("Bridge", makeBridge);
 	hb::TmxRegisterFactory("Door", makeDoor);
 
-	hb::Game::addScene(hb::Game::Scene("hb_intro", []()
+	auto hb_scene = hb::Game::Scene("hb_intro", []()
 	{
 		hb::Texture tex = hb::Texture::loadFromFile("res/drawable/HB-logo2.png");
 		hb::Sprite spr(tex);
@@ -95,7 +94,8 @@ int main(int argc, char const *argv[])
 		hb::Renderer::getWindow().setSize(sf::Vector2u(sprite->getSize().x, sprite->getSize().y));
 		hb::Renderer::getCamera().setPosition(hb::Renderer::getCamera().DrawspaceToObjectspace(hb::Vector3d(sprite->getSize().x/2., sprite->getSize().y/2., 0)));
 		hb::Renderer::getWindow().setView(sf::View(sf::FloatRect(0, 0, sprite->getSize().x, sprite->getSize().y)));
-	}));
+	});
+	hb::Game::addScene(hb_scene);
 
 	// Add Scenes loaded from Tmx file to game
 	std::function<void(const Tmx::Map*)> cam = [](const Tmx::Map* map)
@@ -104,10 +104,12 @@ int main(int argc, char const *argv[])
 		hb::Renderer::getCamera().setPosition(hb::Vector2d(map->GetWidth()/2., map->GetHeight()/2.));
 		hb::Renderer::getWindow().setView(sf::View(sf::FloatRect(0, 0, map->GetWidth() * map->GetTileWidth(), map->GetHeight() * map->GetTileHeight())));
 	};
-	hb::Game::addScene(hb::TmxScene("demo", "res/levels/demo.tmx", std::function<void(const Tmx::Map*)>(cam)));
-	hb::Game::addScene(hb::TmxScene("demo2", "res/levels/demo2.tmx", std::function<void(const Tmx::Map*)>(cam)));
+	hb::Game::addScene(hb::TmxScene("demo", "res/levels/demo.tmx", cam));
+	hb::Game::addScene(hb::TmxScene("demo2", "res/levels/demo2.tmx", cam));
 
 	// Start Game
 	hb::Game::setScene("hb_intro");
 	hb::Game::run();
+
+	return 0;
 }
