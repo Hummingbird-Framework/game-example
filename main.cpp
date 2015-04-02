@@ -65,6 +65,8 @@ int main(int argc, char const *argv[])
 					data->time_to_view -= hb::Time::deltaTime;
 					hb::Color c = sprite->getColor();
 					c.a = 1.f - data->time_to_view.asSeconds()/2.;
+					if (c.a > 1.f)
+						c.a = 1.f;
 					sprite->setColor(c);
 				}
 				else
