@@ -5,6 +5,7 @@ using namespace hb;
 int GameObject::s_game_object_identifier = 0;
 std::unordered_map<int, GameObject*> GameObject::s_game_objects_by_id = std::unordered_map<int, GameObject*>();
 std::unordered_map<std::string, std::vector<GameObject*>> GameObject::s_game_objects_by_name = std::unordered_map<std::string, std::vector<GameObject*>>();
+DataRepository GameObject::s_data_repository;
 
 void GameObject::setNextGameObjectId(int id)
 {
@@ -105,8 +106,7 @@ m_message_manager()
 
 GameObject::~GameObject()
 {
-	DataRepository data_repo;
-	m_message_manager.message("destroy", data_repo);
+	m_message_manager.message("destroy", s_data_repository);
 	for (Component* component : m_components)
 		delete component;
 	m_components.clear();
@@ -179,8 +179,7 @@ void GameObject::preUpdate()
 		if (component->isActive())
 			component->preUpdate();
 
-	DataRepository data_repo;
-	m_message_manager.message("pre-update", data_repo);
+	m_message_manager.message("pre-update", s_data_repository);
 }
 
 
@@ -190,8 +189,7 @@ void GameObject::update()
 		if (component->isActive())
 			component->update();
 
-	DataRepository data_repo;
-	m_message_manager.message("update", data_repo);
+	m_message_manager.message("update", s_data_repository);
 }
 
 
@@ -201,8 +199,7 @@ void GameObject::postUpdate()
 		if (component->isActive())
 			component->postUpdate();
 
-	DataRepository data_repo;
-	m_message_manager.message("post-update", data_repo);
+	m_message_manager.message("post-update", s_data_repository);
 }
 
 

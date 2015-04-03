@@ -57,21 +57,13 @@ Vector3d& operator -=(Vector3d& left, const Vector3d& right)
 
 Vector3d operator +(const Vector3d& left, const Vector3d& right)
 {
-	Vector3d ret;
-	ret.x = left.x + right.x;
-	ret.y = left.y + right.y;
-	ret.z = left.z + right.z;
-	return ret;
+	return Vector3d(left.x + right.x, left.y + right.y, left.z + right.z);
 }
 
 
 Vector3d operator -(const Vector3d& left, const Vector3d& right)
 {
-	Vector3d ret;
-	ret.x = left.x - right.x;
-	ret.y = left.y - right.y;
-	ret.z = left.z - right.z;
-	return ret;
+	return Vector3d(left.x - right.x, left.y - right.y, left.z - right.z);
 }
 
 

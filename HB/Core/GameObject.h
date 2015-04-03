@@ -261,6 +261,7 @@ namespace hb
 		static int s_game_object_identifier;
 		static std::unordered_map<int, GameObject*> s_game_objects_by_id;
 		static std::unordered_map<std::string, std::vector<GameObject*>> s_game_objects_by_name;
+		static DataRepository s_data_repository;
 
 		bool m_active, m_marked_to_destroy;
 		int m_identifier;
