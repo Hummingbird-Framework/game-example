@@ -30,8 +30,33 @@ void makeDoor(hb::GameObject* go, const Tmx::Map* map, int obj_grp, int obj_id)
 	};
 	Data* data = new Data;
 
+	// Define input listener for activating Door
+	auto listener = hb::InputManager::instance()->listen([=](hb::KeyPressed& ev)
+	{
+		if (ev.code == hb::Keyboard::Key::Space and data->touching_player)
+		{
+			hb::Game::setScene(target);
+		}
+	});
+	
+	// Create new GameObject with components previously defined
+	go->addComponents({
+		new hb::SpriteComponent(sprite, {gid - tileset->GetFirstGid()}),
+		collisions,
+		fc
+	});
+
+	// Function called when object is about to be destroyed
+	fc->addListener("destroy", [=](hb::DataRepository&)
+	{
+		// Release memory used by data
+		delete data;
+		// No longer listen to event
+		hb::InputManager::instance()->ignore(listener);
+	});
+
 	// Define Door update function
-	fc->setUpdateFunction([=]()
+	fc->addListener("update", [=](hb::DataRepository&)
 	{
 		// detect if touching player
 		bool t = false;
@@ -41,30 +66,5 @@ void makeDoor(hb::GameObject* go, const Tmx::Map* map, int obj_grp, int obj_id)
 			t |= (c.object->getName() == "Player");
 		}
 		data->touching_player = t;
-	});
-
-	// Define input listener for activating Door
-	auto listener = hb::InputManager::instance()->listen([=](const hb::KeyPressed& ev)
-	{
-		if (ev.code == hb::Keyboard::Key::Space and data->touching_player)
-		{
-			hb::Game::setScene(target);
-		}
-	});
-
-	// Function called when object is about to be destroyed
-	fc->setDestroyFunction([=]()
-	{
-		// Release memory used by data
-		delete data;
-		// No longer listen to event
-		hb::InputManager::instance()->ignore(listener);
-	});
-	
-	// Create new GameObject with components previously defined
-	go->addComponents({
-		new hb::SpriteComponent(sprite, {gid - tileset->GetFirstGid()}),
-		collisions,
-		fc
 	});
 }

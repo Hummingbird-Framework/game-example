@@ -71,7 +71,8 @@ void GameObject::updateAll()
 GameObject::GameObject():
 Transform(),
 m_active(true),
-m_marked_to_destroy(false)
+m_marked_to_destroy(false),
+m_message_manager()
 {
 	// Find next available id
 	while (s_game_objects_by_id.find(s_game_object_identifier) != s_game_objects_by_id.end())
@@ -93,7 +94,8 @@ GameObject()
 GameObject::GameObject(int id):
 Transform(),
 m_active(true),
-m_marked_to_destroy(false)
+m_marked_to_destroy(false),
+m_message_manager()
 {
 	hb_assert(s_game_objects_by_id.find(id) == s_game_objects_by_id.end(), "GameObject with id " << id << "already exists.");
 	m_identifier = id;
@@ -103,6 +105,8 @@ m_marked_to_destroy(false)
 
 GameObject::~GameObject()
 {
+	DataRepository data_repo;
+	m_message_manager.message("destroy", data_repo);
 	for (Component* component : m_components)
 		delete component;
 	m_components.clear();
@@ -189,21 +193,33 @@ bool GameObject::isActive() const
 void GameObject::preUpdate()
 {
 	for (Component* component : m_components)
-		component->preUpdate();
+		if (component->isActive())
+			component->preUpdate();
+
+	DataRepository data_repo;
+	m_message_manager.message("pre-update", data_repo);
 }
 
 
 void GameObject::update()
 {
 	for (Component* component : m_components)
-		component->update();
+		if (component->isActive())
+			component->update();
+
+	DataRepository data_repo;
+	m_message_manager.message("update", data_repo);
 }
 
 
 void GameObject::postUpdate()
 {
 	for (Component* component : m_components)
-		component->postUpdate();
+		if (component->isActive())
+			component->postUpdate();
+
+	DataRepository data_repo;
+	m_message_manager.message("post-update", data_repo);
 }
 
 
@@ -226,4 +242,10 @@ void GameObject::addComponents(const std::vector<Component*>& components)
 {
 	for (Component* c : components)
 		addComponent(c);
+}
+
+
+GameObjectMessageManager& GameObject::getMessageManager()
+{
+	return m_message_manager;
 }

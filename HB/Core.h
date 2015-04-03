@@ -13,7 +13,7 @@
 #include "Core/Color.h"
 #include "Core/DataComponent.h"
 #include "Core/DataRepository.h"
-#include "Core/EventManager.h"
+#include "Core/MessageManager.h"
 #include "Core/FunctionComponent.h"
 #include "Core/Game.h"
 #include "Core/GameObject.h"

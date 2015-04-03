@@ -56,7 +56,7 @@ void makePlayer(hb::GameObject* player, const Tmx::Map* map, int obj_grp, int ob
 	data->m_collision->setPosition(hb::Vector2d(0.1, 0.1));
 
 	// define update function
-	fc->setUpdateFunction([=] ()
+	fc->addListener("update", [=](hb::DataRepository&)
 	{
 		if (data->direction.y > 10.)
 			data->direction.y = 10.;
@@ -115,7 +115,7 @@ void makePlayer(hb::GameObject* player, const Tmx::Map* map, int obj_grp, int ob
 	hb::InputManager::ListenerId<hb::KeyPressed> keypressed_listener_id = hb::InputManager::ListenerId<hb::KeyPressed>();
 	hb::InputManager::ListenerId<hb::KeyReleased> keyreleased_listener_id = hb::InputManager::ListenerId<hb::KeyReleased>();
 	keypressed_listener_id = hb::InputManager::instance()->listen(
-	[=](const hb::KeyPressed& event)
+	[=](hb::KeyPressed& event)
 	{
 		int value = 200./32.;
 
@@ -148,7 +148,7 @@ void makePlayer(hb::GameObject* player, const Tmx::Map* map, int obj_grp, int ob
 		}
 	});
 	keyreleased_listener_id = hb::InputManager::instance()->listen(
-	[=](const hb::KeyReleased& event)
+	[=](hb::KeyReleased& event)
 	{
 		hb::Keyboard::Key code = event.code;
 		if (code == hb::Keyboard::Key::A and data->direction.x < 0)
@@ -158,7 +158,7 @@ void makePlayer(hb::GameObject* player, const Tmx::Map* map, int obj_grp, int ob
 	});
 
 	//define destructor function
-	fc->setDestroyFunction([=] ()
+	fc->addListener("destroy", [=](const hb::DataRepository&)
 	{
 		delete data;
 		hb::InputManager::instance()->ignore(keypressed_listener_id);

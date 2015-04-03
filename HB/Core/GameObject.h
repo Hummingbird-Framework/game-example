@@ -1,17 +1,23 @@
 #ifndef HB_GAME_OBJECT_H
 #define HB_GAME_OBJECT_H
 #include <algorithm>
-#include <vector>
-#include <string>
-#include <map>
-#include <unordered_map>
-#include <typeindex>
 #include <initializer_list>
-#include "Transform.h"
+#include <map>
+#include <string>
+#include <typeindex>
+#include <unordered_map>
+#include <vector>
+#include "DataRepository.h"
 #include "Log.h"
+#include "MessageManager.h"
+#include "Transform.h"
 
 namespace hb
 {
+	/*!
+	  \brief Definition of the MessageManager used by GameObject
+	*/
+	typedef MessageManager<DataRepository> GameObjectMessageManager;
 	/*!
 	  \class GameObject
 	  \ingroup core
@@ -29,14 +35,17 @@ namespace hb
 
 	  The Update of a GameObject consists in three steps: __pre-update__, __update__ and __post-update__. 
 	  These are used for respectively running its Component%s __pre-update__, __update__ and __post-update__ 
-	  functions.
+	  functions. The GameObject will also send a message to its MessageManager with the name of the event 
+	  ("pre-update", "update" and "post-update") with an empty DataRepository as the parameter.
 
 	  To __destroy__ a GameObject you __must__ call destroy(), not its destructor. The GameObject then, will 
-	  be marked to be destroyed and after the next update step it'll be deleted.
+	  be marked to be destroyed and after the next update step it'll be deleted. Just before being deleted, 
+	  the GameObject will send a message to its MessageManager with the name "destroy" and an empty DataRepository 
+	  as the parameter.
 
 	  A GameObject can be __active__ or __inactive__. If a GameObject is __inactive__ it exists, 
 	  has a unique id and may be grouped by name; all its Component%s also exist and have been 
-	  instantiated. But it __won't__ be updated.
+	  instantiated. But it __won't__ be updated. Same applies to Components.
 	*/
 	class GameObject : public Transform
 	{
@@ -54,10 +63,10 @@ namespace hb
 
 			  At this point getGameObject() is pointing to nothing.
 			*/
-			Component()
-			{
-				m_game_object = nullptr;
-			}
+			Component():
+			m_active(true),
+			m_game_object(nullptr)
+			{}
 			/*!
 			  \brief Default destructor.
 			*/
@@ -86,10 +95,24 @@ namespace hb
 			  if it has already been added to a GameObject; nullptr otherwise.
 			*/
 			GameObject* getGameObject() const {return m_game_object;}
+			/*!
+			  \brief Set if Component is active.
+			  \param active Is Component active.
+			*/
+			void setActive(bool active)
+			{m_active = active;}
+			/*!
+			  \brief Get if Component is active.
+			  \return Is Component active.
+			*/
+			bool isActive() const
+			{return m_active;}
 
 		private:
 			void setGameObject(GameObject* game_object)
 			{m_game_object = game_object;}
+
+			bool m_active;
 			GameObject* m_game_object;
 		};
 
@@ -210,7 +233,10 @@ namespace hb
 			}
 			return r;
 		}
-
+		/*!
+		  \brief Get the MessageManager of the GameObject
+		*/
+		GameObjectMessageManager& getMessageManager();
 		/*!
 		  \name Advanced usage
 
@@ -240,6 +266,7 @@ namespace hb
 		int m_identifier;
 		std::string m_name;
 		std::vector<Component*> m_components;
+		GameObjectMessageManager m_message_manager;
 	};
 }
 #endif

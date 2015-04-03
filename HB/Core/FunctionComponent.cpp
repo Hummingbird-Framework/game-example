@@ -3,56 +3,19 @@ using namespace hb;
 
 FunctionComponent::FunctionComponent()
 {
-	m_pre_update = [&] () {};
-	m_update = [&] () {};
-	m_post_update = [&] () {};
-	m_destroy = [&] () {};
+
 }
 
 
 FunctionComponent::~FunctionComponent()
 {
-	m_destroy();
+	for(auto x : m_vector_of_listener_id)
+		getGameObject()->getMessageManager().ignore(x);
 }
 
 
-void FunctionComponent::setPreUpdateFunction(std::function<void(void)> pre_update)
+void FunctionComponent::addListener(const std::string& name, std::function<void(DataRepository&)>&& listener)
 {
-	m_pre_update = pre_update;
-}
-
-
-void FunctionComponent::setUpdateFunction(std::function<void(void)> update)
-{
-	m_update = update;
-}
-
-
-void FunctionComponent::setPostUpdateFunction(std::function<void(void)> post_update)
-{
-	m_post_update = post_update;
-}
-
-
-void FunctionComponent::setDestroyFunction(std::function<void(void)> destroy)
-{
-	m_destroy = destroy;
-}
-
-
-void FunctionComponent::preUpdate()
-{
-	m_pre_update();
-}
-
-
-void FunctionComponent::update()
-{
-	m_update();
-}
-
-
-void FunctionComponent::postUpdate()
-{
-	m_post_update();
+	hb_assert(getGameObject() != nullptr, "Added listener to FunctionComponent before it being added to a GameObject.");
+	getGameObject()->getMessageManager().listen(name, std::move(listener));
 }

@@ -87,7 +87,10 @@ void Game::run()
 	s_current_scene->second.exit();
 
 	for (Plugin* p : s_plugins)
+	{
 		p->gameEnd();
+		delete p;
+	}
 
 	hb::GameObject::destroyAll();
 }

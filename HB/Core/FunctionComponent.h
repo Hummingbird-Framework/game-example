@@ -29,50 +29,14 @@ namespace hb
 		  The function set for destroy is called here.
 		*/
 		virtual ~FunctionComponent() override;
-		/*!
-		  \brief Set the function that will be executed on the pre-update step.
-		  \param pre_update Function to be executed.
-		*/
-		void setPreUpdateFunction(std::function<void(void)> pre_update);
-		/*!
-		  \brief Set the function that will be executed on the update step.
-		  \param update Function to be executed.
-		*/
-		void setUpdateFunction(std::function<void(void)> update);
-		/*!
-		  \brief Set the function that will be executed on the post-update step.
-		  \param post_update Function to be executed.
-		*/
-		void setPostUpdateFunction(std::function<void(void)> post_update);
-		/*!
-		  \brief Set the function that will be executed when the GameObject is destroyed.
-		  \param destroy Function to be executed.
-		*/
-		void setDestroyFunction(std::function<void(void)> destroy);
-		/*!
-		  \brief Method called on the pre-update step.
 
-		  Inside it calls the pre-update function defined.
-		*/
-		virtual void preUpdate() override;
 		/*!
-		  \brief Method called on the update step.
-
-		  Inside it calls the update function defined.
+		  \brief Add listener to GameObject MessageManager.
 		*/
-		virtual void update() override;
-		/*!
-		  \brief Method called on the post-update step.
-
-		  Inside it calls the post-update function defined.
-		*/
-		virtual void postUpdate() override;
+		void addListener(const std::string& name, std::function<void(DataRepository&)>&& listener);
 
 	private:
-		std::function<void(void)> m_pre_update;
-		std::function<void(void)> m_update;
-		std::function<void(void)> m_post_update;
-		std::function<void(void)> m_destroy;
+		std::vector<GameObjectMessageManager::ListenerId<DataRepository>> m_vector_of_listener_id;
 	};
 }
 #endif

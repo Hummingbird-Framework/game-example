@@ -4,7 +4,7 @@
 #include <map>
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
-#include "../Core/EventManager.h"
+#include "../Core/MessageManager.h"
 #include "../Core/Game.h"
 #include "Renderer.h"
 
@@ -115,7 +115,7 @@ namespace hb
 		{}
 	};
 
-	class InputManager : public hb::EventManager<MouseButtonWindow, MouseButtonWorld, KeyPressed, KeyReleased, JoyButtonPressed, JoyButtonReleased, JoyAxis, WindowResized>
+	class InputManager : public hb::MessageManager<MouseButtonWindow, MouseButtonWorld, KeyPressed, KeyReleased, JoyButtonPressed, JoyButtonReleased, JoyAxis, WindowResized>
 	{
 	public:
 		static InputManager* instance();

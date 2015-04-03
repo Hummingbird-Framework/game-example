@@ -55,7 +55,12 @@ int main(int argc, char const *argv[])
 		Data* data = new Data();
 		data->time_to_view = hb::Time::seconds(2);
 		data->time_wait = hb::Time::seconds(1);
-		fc->setUpdateFunction([=]()
+		new hb::GameObject(
+		{
+			sprite,
+			fc
+		});
+		fc->addListener("update", [=](hb::DataRepository&)
 		{
 			if (data->time_to_view > hb::Time())
 			{
@@ -85,10 +90,10 @@ int main(int argc, char const *argv[])
 					data->time_to_view = hb::Time::seconds(2);
 			}
 		});
-		new hb::GameObject(
+
+		fc->addListener("destroy", [=](hb::DataRepository&)
 		{
-			sprite,
-			fc
+			delete data;
 		});
 
 		hb::Renderer::getWindow().setSize(sf::Vector2u(sprite->getSize().x, sprite->getSize().y));

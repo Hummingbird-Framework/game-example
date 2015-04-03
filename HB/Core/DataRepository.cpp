@@ -2,9 +2,9 @@
 using namespace hb;
 
 
-DataRepository::DataRepository()
+DataRepository::DataRepository():
+m_data()
 {
-	m_data = std::unordered_map<std::string, Data>();
 }
 
 

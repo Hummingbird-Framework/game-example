@@ -48,7 +48,7 @@ void makeSwitch(hb::GameObject* go, const Tmx::Map* map, int obj_grp, int obj_id
 	go->setPosition(v);
 
 	// Input listener to activate switch
-	auto listener = hb::InputManager::instance()->listen([=](const hb::KeyPressed& e)
+	auto listener = hb::InputManager::instance()->listen([=](hb::KeyPressed& e)
 	{
 		if (e.code == hb::Keyboard::Key::Space and data->player_touching)
 		{
@@ -57,7 +57,7 @@ void makeSwitch(hb::GameObject* go, const Tmx::Map* map, int obj_grp, int obj_id
 	});
 
 	// GameObject update function
-	fc->setUpdateFunction([=]()
+	fc->addListener("update", [=](hb::DataRepository&)
 	{
 		bool t = false;
 		while (not collisions->empty())
@@ -69,7 +69,7 @@ void makeSwitch(hb::GameObject* go, const Tmx::Map* map, int obj_grp, int obj_id
 	});
 
 	// GameObject destroy function
-	fc->setDestroyFunction([=]()
+	fc->addListener("destroy", [=](hb::DataRepository&)
 	{
 		delete data;
 		hb::InputManager::instance()->ignore(listener);

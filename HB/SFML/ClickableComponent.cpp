@@ -14,7 +14,7 @@ m_size(size)
 {
 	m_onClick = [](){};
 	m_listener_id = InputManager::instance()->listen(
-	[this](const hb::MouseButtonWorld& e)
+	[this](hb::MouseButtonWorld& e)
 	{
 		hb::Vector3d p = getGameObject()->getPosition() + getPosition();
 		if (e.x > p.x and e.x < p.x + m_size.x and e.y > p.y and e.y < p.y + m_size.y)
