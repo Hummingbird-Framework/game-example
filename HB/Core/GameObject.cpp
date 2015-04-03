@@ -111,25 +111,8 @@ GameObject::~GameObject()
 		delete component;
 	m_components.clear();
 
+	setName("");
 	s_game_objects_by_id.erase(m_identifier);
-
-	auto s = s_game_objects_by_name.find(m_name);
-	if (s != s_game_objects_by_name.end())
-	{
-		bool done = false;
-		for (std::vector<GameObject*>::iterator i = s->second.begin(); i != s->second.end() and not done; ++i)
-		{
-			if ((*i)->getId() == getId())
-			{
-				done = true;
-				s->second.erase(i);
-			}
-		}
-		if (done and s->second.size() == 0)
-		{
-			s_game_objects_by_name.erase(m_name);
-		}
-	}
 }
 
 
