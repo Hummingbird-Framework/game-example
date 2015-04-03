@@ -3,7 +3,7 @@
 #include <algorithm>
 #include <functional>
 #include <string>
-#include <unordered_map>
+#include <map>
 #include <vector>
 
 namespace hb
@@ -15,7 +15,7 @@ namespace hb
 		{
 		public:
 			typedef std::function<void(Type&)> Listener;
-			typedef typename std::unordered_multimap<std::string, Listener> function_map;
+			typedef typename std::multimap<std::string, Listener> function_map;
 			typedef typename function_map::iterator map_iterator;
 
 			map_iterator listen(Listener&& listener)
@@ -97,7 +97,7 @@ namespace hb
 		struct ListenerId
 		{
 			typedef Type type;
-			typename std::unordered_multimap<std::string, std::function<void(Type&)>>::iterator it;
+			typename std::multimap<std::string, std::function<void(Type&)>>::iterator it;
 		};
 
 		/*!
