@@ -43,8 +43,6 @@ void TmxObjectTypeFactory::makeObject(const Tmx::Map* map, int obj_grp, int obj)
 	GameObject* go = new GameObject(object->GetId());
 	go->setName(object->GetType());
 	hb::Vector3d v = hb::Renderer::getCamera().DrawspaceToObjectspace(hb::Vector3d(object->GetX(), object->GetY(), map->GetObjectGroup(obj_grp)->GetZOrder()));
-	if (object->GetPolyline() == 0 and object->GetPolygon() == 0 and object->GetEllipse() == 0)
-		v.y -= 1;
 	go->setPosition(v);
 	it->second(go, map, obj_grp, obj);
 }

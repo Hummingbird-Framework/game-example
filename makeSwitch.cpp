@@ -45,6 +45,7 @@ void makeSwitch(hb::GameObject* go, const Tmx::Map* map, int obj_grp, int obj_id
 	});
 	hb::Vector3d v = go->getPosition();
 	v.z += obj->GetProperties().GetIntProperty("z");
+	v.y -= 1;
 	go->setPosition(v);
 
 	// Input listener to activate switch

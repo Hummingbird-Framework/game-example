@@ -108,6 +108,18 @@ namespace hb
 			bool isActive() const
 			{return m_active;}
 
+		protected:
+			void addListenerToGameObject(const std::string& name, std::function<void(DataRepository&)>&& listener)
+			{
+				hb_assert(m_game_object != nullptr, "Accessing Component's GameObject before being assigned.");
+				getGameObject()->m_message_manager.listen(name, std::move(listener));
+			}
+			void ignoreToGameObject(const GameObjectMessageManager::ListenerId<DataRepository>& listener_id)
+			{
+				hb_assert(m_game_object != nullptr, "Accessing Component's GameObject before being assigned.");
+				getGameObject()->m_message_manager.ignore(listener_id);
+			}
+
 		private:
 			void setGameObject(GameObject* game_object)
 			{m_game_object = game_object;}
@@ -234,9 +246,9 @@ namespace hb
 			return r;
 		}
 		/*!
-		  \brief Get the MessageManager of the GameObject
+		  \brief Send message to this GameObject%'s Component%s
 		*/
-		GameObjectMessageManager& getMessageManager();
+		void sendMessage(const std::string& name, DataRepository& data);
 		/*!
 		  \name Advanced usage
 

@@ -1,23 +1,21 @@
 #ifndef HB_MATERIAL_2D_H
 #define HB_MATERIAL_2D_H
-#include <string>
-#include "../Core/Resource.h"
-#include "Material2dManager.h"
-
 
 namespace hb
 {
-	class Material2d : public Resource<Material2dDef, std::string, Material2dManager>
+	struct Material2d
 	{
-	public:
-		Material2d(const Material2dDef& material, const std::string& name);
-		Material2d(const std::string& name);
+		double friction;
+		double bounciness;
+		double density;
 
-		double getFriction() const;
-		double getBounciness() const;
-
-		void setFriction(double friction);
-		void setBounciness(double bounciness);
+		Material2d(): friction(0.), bounciness(0.), density(0.){}
+		Material2d(double friction, double bounciness, double density):
+		friction(friction),
+		bounciness(bounciness),
+		density(density)
+		{};
 	};
+
 }
 #endif

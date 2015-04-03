@@ -1,5 +1,6 @@
 #include "HB/Core.h"
 #include "HB/SFML.h"
+#include "HB/Box2D.h"
 #include "HB/Tmx.h"
 #include "SwitchComponent.h"
 

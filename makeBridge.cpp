@@ -15,6 +15,9 @@ void makeBridge(hb::GameObject* go, const Tmx::Map* map, int obj_grp, int obj_id
 		new hb::SpriteComponent(sprite, {gid - tileset->GetFirstGid()}),
 		new hb::CollisionComponent(hb::Vector2d(0.8, 0.9))
 	});
+	hb::Vector3d v = go->getPosition();
+	v.y -= 1;
+	go->setPosition(v);
 	// Disable GameObject 
 	go->setActive(false);
 }

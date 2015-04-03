@@ -18,6 +18,7 @@
 #include "Core/Game.h"
 #include "Core/GameObject.h"
 #include "Core/Log.h"
+#include "Core/Math.h"
 #include "Core/Plugin.h"
 #include "Core/Resource.h"
 #include "Core/ResourceManager.h"

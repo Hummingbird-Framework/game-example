@@ -23,6 +23,7 @@ ResourceManager<TextureManager, sf::Texture, detail::tex_id>()
 	t404.create(64, 64);
 	t404.update(i404);
 	this->t404 = this->addResource(makeTexId("t404", sf::IntRect()), t404);
+	get(this->t404).setRepeated(true);
 }
 
 

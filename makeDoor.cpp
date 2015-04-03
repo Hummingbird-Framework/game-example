@@ -6,9 +6,10 @@ void makeDoor(hb::GameObject* go, const Tmx::Map* map, int obj_grp, int obj_id)
 	// Get Tmx object representing the new Door GameObject
 	const Tmx::Object* object = map->GetObjectGroup(obj_grp)->GetObject(obj_id);
 	// Get it's position in object space
-	hb::Vector3d position = hb::Renderer::getCamera().DrawspaceToObjectspace(hb::Vector3d(object->GetX(), object->GetY(), map->GetObjectGroup(obj_grp)->GetZOrder()));
+	hb::Vector3d position = go->getPosition();
 	// Fixe Tiled position bug for Tile objects
 	--position.y;
+	go->setPosition(position);
 	// Make sprite from object tile
 	int gid = object->GetGid();
 	const Tmx::Tileset* tileset = map->FindTileset(gid);

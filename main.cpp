@@ -1,8 +1,10 @@
 #include <iostream>
 #include "HB/Core.h"
 #include "HB/SFML.h"
+#include "HB/Box2D.h"
 #include "makeObjects.h"
 #include "HB/Tmx/TmxScene.h"
+#include "B2dDebugDraw.h"
 
 // Small plugin for printing the FPS on console
 class FPSPlugin : public hb::Plugin
@@ -17,6 +19,30 @@ public:
 	}
 };
 
+// Small plugin for printing the FPS on console
+class B2dDebugPlugin : public hb::Plugin
+{
+public:
+	B2dDebugPlugin():m_debug_draw(){}
+	~B2dDebugPlugin(){}
+	
+	void gameStart() override
+	{
+		hb::Physics2d::getB2World()->SetDebugDraw(&m_debug_draw);
+		m_debug_draw.SetFlags( b2Draw::e_shapeBit );
+	}
+
+	void postUpdate() override
+	{
+		m_debug_draw.shapes.clear();
+		hb::Physics2d::getB2World()->DrawDebugData();
+	}
+private:
+	B2dDebugDraw m_debug_draw;
+};
+
+
+
 int main(int argc, char const *argv[])
 {
 	// Create Game window
@@ -25,7 +51,8 @@ int main(int argc, char const *argv[])
 	hb::Renderer::getCamera().setPosition(hb::Vector3d());
 	// Register SFML Plugin in Game (allows to update input and draw when necessary)
 	hb::Game::addPlugin<hb::SFMLPlugin>();
-	//hb::Game::addPlugin<FPSPlugin>();
+	hb::Game::addPlugin<hb::Box2DPlugin>();
+	//hb::Game::addPlugin<B2dDebugPlugin>();
 	// Set Draw space director vectors
 	// Scale 1:32 (Object space -> Draw space)
 	hb::Renderer::getCamera().setAxisX(hb::Vector3d(32, 0, 0));
@@ -38,6 +65,8 @@ int main(int argc, char const *argv[])
 	hb::TmxRegisterFactory("Switch", makeSwitch);
 	hb::TmxRegisterFactory("Bridge", makeBridge);
 	hb::TmxRegisterFactory("Door", makeDoor);
+
+	hb::Physics2d::getB2World()->SetGravity(b2Vec2(0, 10));
 
 	auto hb_scene = hb::Game::Scene("hb_intro", []()
 	{
@@ -113,7 +142,7 @@ int main(int argc, char const *argv[])
 	hb::Game::addScene(hb::TmxScene("demo2", "res/levels/demo2.tmx", cam));
 
 	// Start Game
-	hb::Game::setScene("hb_intro");
+	hb::Game::setScene("demo");
 	hb::Game::run();
 
 	return 0;

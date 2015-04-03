@@ -225,7 +225,7 @@ void GameObject::addComponents(const std::vector<Component*>& components)
 }
 
 
-GameObjectMessageManager& GameObject::getMessageManager()
+void GameObject::sendMessage(const std::string& name, DataRepository& data)
 {
-	return m_message_manager;
+	m_message_manager.message(name, data);
 }

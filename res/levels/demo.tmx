@@ -152,7 +152,7 @@
     <property name="z" value="-1"/>
    </properties>
   </object>
-  <object id="12" name="Player" type="Player" gid="159" x="0" y="96">
+  <object id="12" name="Player" type="Player" gid="159" x="23.75" y="99.75">
    <properties>
     <property name="obstacles" value="Wall Bridge"/>
    </properties>

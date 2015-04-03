@@ -2,8 +2,7 @@
 #define HB_VECTOR_3D_H
 #include <cmath>
 #include "Vector2d.h"
-
-#define PI 3.14159265
+#include "Math.h"
 
 namespace hb
 {
