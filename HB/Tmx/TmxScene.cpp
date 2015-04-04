@@ -22,6 +22,15 @@ m_post_init(std::move(post_init))
 		int last_slash = file_name.find_last_of("/");
 		std::string path = file_name.substr(0, last_slash +1);
 
+		std::string c = map->GetBackgroundColor();
+		if (c.size() != 0)
+		{
+			int r = std::stoul(c.substr(1,2), nullptr, 16);
+			int g = std::stoul(c.substr(3,2), nullptr, 16);
+			int b = std::stoul(c.substr(5,2), nullptr, 16);
+			Color color(r, g, b);
+			Renderer::setClearColor(color);
+		}
 
 		if (map->GetOrientation() == Tmx::TMX_MO_ORTHOGONAL)
 		{
@@ -31,8 +40,8 @@ m_post_init(std::move(post_init))
 		}
 		else if (map->GetOrientation() == Tmx::TMX_MO_ISOMETRIC)
 		{
-			Renderer::getCamera().setAxisX(Vector3d(map->GetTileWidth(), map->GetTileHeight()/2., map->GetTileHeight()/2.));
-			Renderer::getCamera().setAxisY(Vector3d(-map->GetTileWidth(), map->GetTileHeight()/2., map->GetTileHeight()/2.));
+			Renderer::getCamera().setAxisX(Vector3d(map->GetTileWidth(), map->GetTileHeight(), map->GetTileHeight()));
+			Renderer::getCamera().setAxisY(Vector3d(-map->GetTileWidth(), map->GetTileHeight(), map->GetTileHeight()));
 			Renderer::getCamera().setAxisZ(Vector3d(0, 0, 1));
 		}
 

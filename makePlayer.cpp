@@ -5,7 +5,6 @@ void makePlayer(hb::GameObject* player, const Tmx::Map* map, int obj_grp, int ob
 {
 	// Get Tmx object representing the new Player GameObject
 	const Tmx::Object* obj = map->GetObjectGroup(obj_grp)->GetObject(obj_id);
-
 	// Define GameObject status data and instantiate it
 	struct Data
 	{
@@ -13,7 +12,7 @@ void makePlayer(hb::GameObject* player, const Tmx::Map* map, int obj_grp, int ob
 		hb::Vector2d last_direction; //new hb::Vector2d(0, -1));
 		bool running; //false);
 		hb::SpriteComponent* player_sprite; //player->getComponent<hb::SpriteComponent>());
-		bool is_grounded = false;
+		int is_grounded = 0;
 		unsigned int grounded_sensor_id;
 		std::set<std::string> obstacles;
 	};
@@ -21,8 +20,8 @@ void makePlayer(hb::GameObject* player, const Tmx::Map* map, int obj_grp, int ob
 
 	b2BodyDef body_def;
 	body_def.type = b2_dynamicBody;
-	body_def.position = b2Vec2(player->getPosition().x, player->getPosition().y-1);
-	body_def.fixedRotation = true;
+	body_def.position = b2Vec2(player->getPosition().x+0.5, player->getPosition().y-0.5);
+	//body_def.fixedRotation = true;
 	auto rigid_body = new hb::RigidBody2dComponent(body_def);
 	// Define the player GameObject
 	player->addComponents({
@@ -90,20 +89,20 @@ void makePlayer(hb::GameObject* player, const Tmx::Map* map, int obj_grp, int ob
 			data->player_sprite->play();
 
 		//hb::Renderer::getCamera().setPosition(player->getPosition());
+		rigid_body->getB2Body()->SetLinearVelocity(b2Vec2(data->direction.x, rigid_body->getB2Body()->GetLinearVelocity().y));
 	});
 
 
 	fc->addListener("sensorStart", [=](hb::DataRepository& collision)
 	{
 		if (collision.getPointer<hb::Fixture2dData>("fixtureData")->id == data->grounded_sensor_id)
-			data->is_grounded = true;
+			++data->is_grounded;
 	});
 
 	fc->addListener("sensorEnd", [=](hb::DataRepository& collision)
 	{
-		hb_log("sensorEnd: " << collision.getPointer<hb::Fixture2dData>("fixtureData")->id);
 		if (collision.getPointer<hb::Fixture2dData>("fixtureData")->id == data->grounded_sensor_id)
-			data->is_grounded = false;
+			--data->is_grounded;
 	});
 
 	// Define input listeners
@@ -122,23 +121,16 @@ void makePlayer(hb::GameObject* player, const Tmx::Map* map, int obj_grp, int ob
 				b2Vec2 v = rigid_body->getB2Body()->GetLinearVelocity();
 				v.y = -7;
 				rigid_body->getB2Body()->SetLinearVelocity(v);
-				data->direction.y = -7;
 			}
 		}
 		else if (code == hb::Keyboard::Key::A and data->direction.x >= 0)
 		{
-			b2Vec2 v = rigid_body->getB2Body()->GetLinearVelocity();
-			v.x = -value;
-			rigid_body->getB2Body()->SetLinearVelocity(v);
 			data->direction.x = -value;
 			data->last_direction = data->direction;
 			data->player_sprite->setFrameOrder({3, 4, 5, 4});
 		}
 		else if (code == hb::Keyboard::Key::D and data->direction.x <= 0)
 		{
-			b2Vec2 v = rigid_body->getB2Body()->GetLinearVelocity();
-			v.x = value;
-			rigid_body->getB2Body()->SetLinearVelocity(v);
 			data->direction.x = value;
 			data->last_direction = data->direction;
 			data->player_sprite->setFrameOrder({6, 7, 8, 7});
@@ -159,17 +151,14 @@ void makePlayer(hb::GameObject* player, const Tmx::Map* map, int obj_grp, int ob
 		hb::Keyboard::Key code = event.code;
 		if (code == hb::Keyboard::Key::A and data->direction.x < 0)
 		{
-			b2Vec2 v = rigid_body->getB2Body()->GetLinearVelocity();
-			v.x = 0;
-			rigid_body->getB2Body()->SetLinearVelocity(v);
 			data->direction.x = 0;
 		}
 		else if (code == hb::Keyboard::Key::D and data->direction.x > 0)
 		{
-			b2Vec2 v = rigid_body->getB2Body()->GetLinearVelocity();
-			v.x = 0;
-			rigid_body->getB2Body()->SetLinearVelocity(v);
 			data->direction.x = 0;
+		}
+		else if (code == hb::Keyboard::Key::W)
+		{
 		}
 	});
 

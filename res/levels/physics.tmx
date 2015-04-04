@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="32" tileheight="32" backgroundcolor="#787878" nextobjectid="37">
+ <objectgroup name="Object Layer 1">
+  <object id="3" type="Wall" x="0" y="544" width="960" height="32">
+   <properties>
+    <property name="friction" value="0.5"/>
+   </properties>
+  </object>
+  <object id="4" type="DynamicBody" x="249.498" y="155.272" width="32" height="32" rotation="11.4">
+   <properties>
+    <property name="friction" value="0.5"/>
+   </properties>
+  </object>
+  <object id="5" type="DynamicBody" x="332.524" y="172.783" width="32" height="32" rotation="11.4">
+   <properties>
+    <property name="friction" value="0.5"/>
+   </properties>
+  </object>
+  <object id="6" type="DynamicBody" x="477.333" y="224" width="32" height="32">
+   <properties>
+    <property name="friction" value="0.5"/>
+   </properties>
+  </object>
+  <object id="7" type="DynamicBody" x="362.667" y="332" width="32" height="32">
+   <properties>
+    <property name="friction" value="0.5"/>
+   </properties>
+  </object>
+  <object id="8" type="DynamicBody" x="533.333" y="53.3333" width="32" height="32">
+   <properties>
+    <property name="friction" value="0.5"/>
+   </properties>
+  </object>
+  <object id="9" type="DynamicBody" x="450.667" y="256" width="32" height="32">
+   <properties>
+    <property name="friction" value="0.5"/>
+   </properties>
+  </object>
+  <object id="10" type="DynamicBody" x="424.844" y="82.5687" width="64" height="64" rotation="47.0914">
+   <properties>
+    <property name="friction" value="0.5"/>
+   </properties>
+  </object>
+  <object id="11" type="DynamicBody" x="545.333" y="230.667" width="30.6667" height="102.667" rotation="25">
+   <properties>
+    <property name="friction" value="0.5"/>
+   </properties>
+  </object>
+  <object id="12" type="DynamicBody" x="170.667" y="88" width="114.667" height="28">
+   <properties>
+    <property name="friction" value="0.5"/>
+   </properties>
+  </object>
+  <object id="13" type="DynamicBody" x="316.163" y="244.875" width="32" height="32" rotation="11.4">
+   <properties>
+    <property name="friction" value="0.5"/>
+   </properties>
+  </object>
+  <object id="14" type="DynamicBody" x="382.667" y="277.333" width="116" height="28" rotation="25">
+   <properties>
+    <property name="friction" value="0.5"/>
+   </properties>
+  </object>
+  <object id="16" type="DynamicBody" x="556" y="372" width="32" height="32">
+   <properties>
+    <property name="friction" value="0.5"/>
+   </properties>
+  </object>
+  <object id="17" type="DynamicBody" x="438.667" y="412" width="32" height="32">
+   <properties>
+    <property name="friction" value="0.5"/>
+   </properties>
+  </object>
+  <object id="18" type="DynamicBody" x="145.333" y="309.333" width="32" height="32">
+   <properties>
+    <property name="friction" value="0.5"/>
+   </properties>
+  </object>
+  <object id="19" type="Player" x="365.333" y="461.333" width="32" height="32" rotation="25">
+   <properties>
+    <property name="friction" value="0.5"/>
+   </properties>
+  </object>
+  <object id="20" type="DynamicBody" x="301.688" y="426.656" width="32" height="32" rotation="-311.604">
+   <properties>
+    <property name="friction" value="0.5"/>
+   </properties>
+  </object>
+  <object id="21" type="DynamicBody" x="250.634" y="443.46" width="32" height="32" rotation="-286.604">
+   <properties>
+    <property name="friction" value="0.5"/>
+   </properties>
+  </object>
+  <object id="22" type="DynamicBody" x="285.333" y="336" width="32" height="32" rotation="25">
+   <properties>
+    <property name="friction" value="0.5"/>
+   </properties>
+  </object>
+  <object id="23" type="DynamicBody" x="236.606" y="377.459" width="32" height="32" rotation="11.4">
+   <properties>
+    <property name="friction" value="0.5"/>
+   </properties>
+  </object>
+  <object id="24" type="DynamicBody" x="211.798" y="333.748" width="32" height="32" rotation="-38.0835">
+   <properties>
+    <property name="friction" value="0.5"/>
+   </properties>
+  </object>
+  <object id="25" type="DynamicBody" x="395.242" y="222.625" width="32" height="32" rotation="11.4">
+   <properties>
+    <property name="friction" value="0.5"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="26" type="DynamicBody" x="516" y="121.333" width="32" height="32">
+   <properties>
+    <property name="friction" value="0.5"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="27" type="DynamicBody" x="577.333" y="214.667" width="32" height="32">
+   <properties>
+    <property name="friction" value="0.5"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="28" type="DynamicBody" x="349.333" y="34.6667" width="49.3333" height="49.3333">
+   <properties>
+    <property name="friction" value="0.5"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="29" type="DynamicBody" x="141.333" y="189.333" width="70.6667" height="70.6667">
+   <properties>
+    <property name="friction" value="0.5"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="30" type="DynamicBody" x="500" y="453.333" width="32" height="32">
+   <properties>
+    <property name="friction" value="0.5"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="31" type="DynamicBody" x="616" y="454.667" width="32" height="32">
+   <properties>
+    <property name="friction" value="0.5"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="32" type="DynamicBody" x="354.667" y="381.333" width="32" height="32">
+   <properties>
+    <property name="friction" value="0.5"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="33" type="DynamicBody" x="294.667" y="277.333" width="32" height="32">
+   <properties>
+    <property name="friction" value="0.5"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="34" type="Wall" x="0" y="64" width="32" height="480">
+   <properties>
+    <property name="friction" value="0.5"/>
+   </properties>
+  </object>
+  <object id="36" type="Wall" x="928" y="64" width="32" height="480">
+   <properties>
+    <property name="friction" value="0.5"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>

@@ -5,6 +5,7 @@
 #include <queue>
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
+#include "../Core/Color.h"
 #include "../Core/Vector2d.h"
 #include "../Core/Vector3d.h"
 #include "Camera.h"
@@ -28,6 +29,7 @@ namespace hb
 		static Window& getWindow();
 		static void addDrawable(std::pair<Vector3d, sf::Drawable*> drawable);
 		static void draw();
+		static void setClearColor(const Color& color);
 
 	private:
 		class Comparison
@@ -39,9 +41,10 @@ namespace hb
 				return (lhs.first.z > rhs.first.z);
 			}
 		};
-		static std::unique_ptr<Window> m_window;
-		static Camera m_camera;
-		static std::priority_queue<std::pair<Vector3d, sf::Drawable*>, std::vector<std::pair<Vector3d, sf::Drawable*>>, Comparison> m_drawables;
+		static std::unique_ptr<Window> s_window;
+		static Camera s_camera;
+		static sf::Color s_clear_color;
+		static std::priority_queue<std::pair<Vector3d, sf::Drawable*>, std::vector<std::pair<Vector3d, sf::Drawable*>>, Comparison> s_drawables;
 	};
 
 	//! @}

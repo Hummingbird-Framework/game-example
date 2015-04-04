@@ -37,7 +37,7 @@ void TmxObjectTypeFactory::makeObject(const Tmx::Map* map, int obj_grp, int obj)
 	auto it = s_factory_table.find(object->GetType());
 	if (it == s_factory_table.end())
 	{
-		hb_log_d("TmxObjectTypeFactory: Type " << object->GetType() << " not registered, skipping object.\n");
+		hb_log_d("TmxObjectTypeFactory: Type `" << object->GetType() << "` not registered, skipping object.");
 		return;
 	}
 	GameObject* go = new GameObject(object->GetId());
