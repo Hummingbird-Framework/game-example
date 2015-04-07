@@ -77,7 +77,7 @@ m_post_init(std::move(post_init))
 				for (int x = 0; x < layer->GetWidth(); ++x)
 				{
 					if (layer->GetTileTilesetIndex(x, y) == -1) continue;
-					int gid = layer->GetTileId(x, y);
+					int gid = layer->GetTileGid(x, y);
 					const Tmx::Tileset *tileset = map->FindTileset(gid);
 					int lid = gid - tileset->GetFirstGid();
 					std::vector<int> anim;

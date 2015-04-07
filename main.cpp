@@ -66,6 +66,7 @@ int main(int argc, char const *argv[])
 	hb::TmxRegisterFactory("Bridge", makeBridge);
 	hb::TmxRegisterFactory("Door", makeDoor);
 	hb::TmxRegisterFactory("DynamicBody", makeDynamicBody);
+	hb::TmxRegisterFactory("ForceArea", makeForceArea);
 
 	hb::Physics2d::getB2World()->SetGravity(b2Vec2(0, 10));
 

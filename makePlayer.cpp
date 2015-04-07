@@ -21,6 +21,7 @@ void makePlayer(hb::GameObject* player, const Tmx::Map* map, int obj_grp, int ob
 	b2BodyDef body_def;
 	body_def.type = b2_dynamicBody;
 	body_def.position = b2Vec2(player->getPosition().x+0.5, player->getPosition().y-0.5);
+	body_def.linearDamping = 0.5f;
 	//body_def.fixedRotation = true;
 	auto rigid_body = new hb::RigidBody2dComponent(body_def);
 	// Define the player GameObject
